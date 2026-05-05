@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,7 +28,7 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
 
-    <!-- NAVIGATION (Matches Home Page Structure) -->
+    <!-- NAVIGATION -->
     <nav class="sticky top-0 z-50 glass dark:bg-slate-900/90 border-b dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -73,7 +73,6 @@
     <main class="max-w-7xl mx-auto px-4 py-16">
         <div class="grid lg:grid-cols-3 gap-8">
             
-            <!-- Contact Info Cards -->
             <div class="space-y-6">
                 <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-xl flex items-center justify-center mb-4">
@@ -100,38 +99,60 @@
                 </div>
             </div>
 
-            <!-- Contact Form Area -->
             <div class="lg:col-span-2">
                 <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-100 dark:border-slate-700 shadow-sm">
                     <h2 class="text-2xl font-bold mb-6">Send us a Message</h2>
-                    <form action="https://formspree.io/f/xqenqpej" method="POST" class="space-y-4">
+                    
+                    <!-- UPDATED FORM -->
+                    <form id="contactForm" class="space-y-4">
+                        <!-- Web3Forms Access Key -->
+                        <input type="hidden" name="access_key" value="eea3b3e3-50be-4105-b086-6d229690983f">
+                        
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold">Full Name</label>
-                                <input type="text" placeholder="Your Name" class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary">
+                                <input type="text" name="name" required placeholder="Your Name" class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-sm font-semibold">Email Address</label>
-                                <input type="email" placeholder="Your Email" class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary">
+                                <input type="email" name="email" required placeholder="Your Email" class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary">
                             </div>
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-semibold">Subject</label>
-                            <input type="text" placeholder="Regarding..." class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary">
+                            <input type="text" name="subject" required placeholder="Regarding..." class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary">
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-semibold">Your Message</label>
-                            <textarea rows="5" placeholder="How can we help you?" class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea name="message" required rows="5" placeholder="How can we help you?" class="w-full bg-slate-50 dark:bg-slate-700 border-none rounded-xl p-4 focus:ring-2 focus:ring-primary"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition">Submit Message</button>
+                        <button type="submit" id="submitBtn" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                            <span>Submit Message</span>
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- FOOTER (Matches Home Page) -->
+    <!-- THANK YOU MODAL -->
+    <div id="thankYouModal" class="fixed inset-0 z-[100] flex items-center justify-center hidden px-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+        <div class="glass dark:bg-slate-800 p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center relative z-10 border border-white/20">
+            <div class="w-20 h-20 bg-green-100 dark:bg-green-900/30 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa fa-check text-4xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Message Sent!</h2>
+            <p class="text-slate-500 dark:text-slate-400 mb-8">Thank you for contacting Nepali Guide. We will get back to you shortly.</p>
+            <button onclick="closeModal()" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-400 py-16">
+        <!-- ... (Footer content remains same) ... -->
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-1">
                 <div class="flex items-center gap-2 mb-6">
@@ -181,6 +202,53 @@
                 html.classList.add('dark');
                 icon.classList.replace('fa-moon', 'fa-sun');
             }
+        }
+
+        // FORM HANDLING
+        const form = document.getElementById('contactForm');
+        const modal = document.getElementById('thankYouModal');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Change button state
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending...';
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                if (response.status == 200) {
+                    modal.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Submission failed.");
+            })
+            .then(function() {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            });
+        });
+
+        function closeModal() {
+            modal.classList.add('hidden');
         }
     </script>
 </body>
