@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tools & Calculators - Nepali Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); }
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .dark .glass { background: rgba(15, 23, 42, 0.9); }
+        .tool-card { transition: all 0.3s ease; }
+        .tool-card:hover { transform: translateY(-5px); }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- NAVIGATION (Matches Original exactly) -->
+    <nav class="sticky top-0 z-50 glass dark:bg-slate-900/90 border-b dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="bg-primary text-white p-2 rounded-lg font-bold text-xl shadow-md">NG</div>
+                    <span class="text-xl font-bold tracking-tight text-primary dark:text-white">Nepali <span class="text-red-500">Guide</span></span>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-primary font-medium">Home</a>
+                    <a href="#" class="hover:text-primary font-medium">MCQs</a>
+                    <a href="#" class="hover:text-primary font-medium">Mock Test</a>
+                    <a href="#" class="hover:text-primary font-medium">Blogs</a>
+                    <a href="tools.html" class="text-primary font-bold">Tools</a>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800">
+                        <i id="dark-icon" class="fa fa-moon"></i>
+                    </button>
+                    <a href="login.html" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition">Login</a>
+                </div>
+
+                <div class="md:hidden flex items-center gap-4">
+                    <button onclick="toggleDarkMode()"><i class="fa fa-moon"></i></button>
+                    <i class="fa fa-bars text-2xl"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="gradient-bg text-white py-12 md:py-20 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-6">Complete Calculator Portal</h1>
+            <p class="text-lg text-blue-100 mb-8">Quick, accurate, and easy-to-use calculators for every need. Find over 210 tools in one place.</p>
+            
+            <!-- SEARCH BAR -->
+            <div class="relative max-w-2xl mx-auto">
+                <input type="text" id="toolSearch" onkeyup="searchTools()" placeholder="Search from 210+ calculators..." 
+                class="w-full py-4 px-12 rounded-2xl text-slate-900 dark:text-white dark:bg-slate-800 border-none focus:ring-4 focus:ring-secondary shadow-2xl">
+                <i class="fa fa-search absolute left-4 top-5 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- TOOLS CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        
+        <!-- FINANCIAL SECTION -->
+        <div class="mb-16 section-container" id="section-finance">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-lg text-primary">💰</span>
+                Financial Calculators
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="grid-finance"></div>
+        </div>
+
+        <!-- HEALTH SECTION -->
+        <div class="mb-16 section-container" id="section-health">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="bg-green-100 dark:bg-green-900/40 p-2 rounded-lg text-green-600">🏋️</span>
+                Fitness & Health
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="grid-health"></div>
+        </div>
+
+        <!-- MATH SECTION -->
+        <div class="mb-16 section-container" id="section-math">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="bg-red-100 dark:bg-red-900/40 p-2 rounded-lg text-red-600">➗</span>
+                Math Calculators
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="grid-math"></div>
+        </div>
+
+        <!-- OTHER SECTION -->
+        <div class="mb-16 section-container" id="section-other">
+            <h2 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                <span class="bg-purple-100 dark:bg-purple-900/40 p-2 rounded-lg text-purple-600">🔧</span>
+                Other Useful Tools
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="grid-other"></div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER (Matches Original exactly) -->
+    <footer class="bg-slate-900 text-slate-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+            <div>
+                <div class="flex items-center gap-2 mb-6 justify-center md:justify-start">
+                    <div class="bg-primary text-white p-2 rounded-lg font-bold shadow-md">NG</div>
+                    <span class="text-xl font-bold text-white">Nepali Guide</span>
+                </div>
+                <p class="text-sm">The #1 community-driven platform for Nepali students and PSC aspirants.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Resources</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-primary">Current Affairs</a></li>
+                    <li><a href="#" class="hover:text-primary">Mock Tests</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Support</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="Contact.html" class="hover:text-primary">Contact Us</a></li>
+                    <li><a href="Privacy.html" class="hover:text-primary">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6">Social</h4>
+                <div class="flex gap-4 justify-center md:justify-start">
+                    <a href="#"><i class="fab fa-facebook text-xl"></i></a>
+                    <a href="#"><i class="fab fa-youtube text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const tools = {
+            finance: ["Mortgage Calculator", "Loan Calculator", "Auto Loan Calculator", "Interest Calculator", "Payment Calculator", "Retirement Calculator", "Amortization Calculator", "Investment Calculator", "Currency Calculator", "Inflation Calculator", "Finance Calculator", "Mortgage Payoff Calculator", "Income Tax Calculator", "Compound Interest Calculator", "Salary Calculator", "401K Calculator", "Interest Rate Calculator", "Sales Tax Calculator", "House Affordability Calculator", "Savings Calculator", "Rent Calculator", "Marriage Tax Calculator", "Estate Tax Calculator", "Pension Calculator", "Social Security Calculator", "Annuity Calculator", "Annuity Payout Calculator", "Credit Card Calculator", "Credit Cards Payoff Calculator", "Debt Payoff Calculator", "Debt Consolidation Calculator", "Repayment Calculator", "Student Loan Calculator", "College Cost Calculator", "Simple Interest Calculator", "CD Calculator", "Bond Calculator", "Mutual Fund Calculator", "Roth IRA Calculator", "IRA Calculator", "RMD Calculator", "VAT Calculator", "Cash Back or Low Interest Calculator", "Auto Lease Calculator", "Depreciation Calculator", "Average Return Calculator", "Margin Calculator", "Discount Calculator", "Business Loan Calculator", "Debt-to-Income Ratio Calculator", "Real Estate Calculator", "Take-Home-Paycheck Calculator", "Personal Loan Calculator", "Boat Loan Calculator", "Lease Calculator", "Refinance Calculator", "Budget Calculator", "Rental Property Calculator", "IRR Calculator", "ROI Calculator", "APR Calculator", "FHA Loan Calculator", "VA Mortgage Calculator", "Home Equity Loan Calculator", "HELOC Calculator", "Down Payment Calculator", "Rent vs. Buy Calculator", "Payback Period Calculator", "Present Value Calculator", "Future Value Calculator", "Commission Calculator", "Mortgage Calculator UK", "Canadian Mortgage Calculator", "Mortgage Amortization Calculator", "Percent Off Calculator"],
+            health: ["BMI Calculator", "Calorie Calculator", "Body Fat Calculator", "BMR Calculator", "Macro Calculator", "Ideal Weight Calculator", "Pregnancy Calculator", "Pregnancy Weight Gain Calculator", "Pregnancy Conception Calculator", "Due Date Calculator", "Pace Calculator", "Army Body Fat Calculator", "Carbohydrate Calculator", "Lean Body Mass Calculator", "Healthy Weight Calculator", "Calories Burned Calculator", "One Rep Max Calculator", "Target Heart Rate Calculator", "Protein Calculator", "Fat Intake Calculator", "TDEE Calculator", "Ovulation Calculator", "Conception Calculator", "Period Calculator", "GFR Calculator", "Body Type Calculator", "Body Surface Area Calculator", "BAC Calculator", "Anorexic BMI Calculator", "Weight Watcher Points Calculator", "Overweight Calculator"],
+            math: ["Scientific Calculator", "Fraction Calculator", "Percentage Calculator", "Triangle Calculator", "Volume Calculator", "Standard Deviation Calculator", "Random Number Generator", "Number Sequence Calculator", "Percent Error Calculator", "Exponent Calculator", "Binary Calculator", "Hex Calculator", "Half-Life Calculator", "Quadratic Formula Calculator", "Slope Calculator", "Log Calculator", "Area Calculator", "Sample Size Calculator", "Probability Calculator", "Statistics Calculator", "Mean, Median, Mode, Range Calculator", "Permutation and Combination Calculator", "Z-score Calculator", "Confidence Interval Calculator", "Ratio Calculator", "Distance Calculator", "Circle Calculator", "Surface Area Calculator", "Pythagorean Theorem Calculator", "Right Triangle Calculator", "Root Calculator", "Least Common Multiple Calculator", "Greatest Common Factor Calculator", "Factor Calculator", "Rounding Calculator", "Matrix Calculator", "Scientific Notation Calculator", "Big Number Calculator", "Prime Factorization Calculator", "Common Factor Calculator", "Basic Calculator", "Long Division Calculator", "Average Calculator", "P-value Calculator"],
+            other: ["Age Calculator", "Date Calculator", "Time Calculator", "Hours Calculator", "GPA Calculator", "Grade Calculator", "Height Calculator", "Concrete Calculator", "IP Subnet Calculator", "Bra Size Calculator", "Password Generator", "Dice Roller", "Conversion Calculator", "Fuel Cost Calculator", "Voltage Drop Calculator", "BTU Calculator", "Square Footage Calculator", "Time Card Calculator", "Time Zone Calculator", "Love Calculator", "GDP Calculator", "Gas Mileage Calculator", "Horsepower Calculator", "Engine Horsepower Calculator", "Stair Calculator", "Resistor Calculator", "Ohms Law Calculator", "Electricity Calculator", "Shoe Size Conversion", "Tip Calculator", "Mileage Calculator", "Density Calculator", "Mass Calculator", "Weight Calculator", "Speed Calculator", "Molarity Calculator", "Molecular Weight Calculator", "Roman Numeral Converter", "Golf Handicap Calculator", "Sleep Calculator", "Tire Size Calculator", "Roofing Calculator", "Tile Calculator", "Mulch Calculator", "Gravel Calculator", "Wind Chill Calculator", "Heat Index Calculator", "Dew Point Calculator", "Bandwidth Calculator", "Base64 Encode / Decode", "URL Encode / Decode", "Time Duration Calculator", "Day Counter", "Day of the Week Calculator"]
+        };
+
+        function renderGrid(id, list) {
+            const grid = document.getElementById(id);
+            list.forEach(item => {
+                grid.innerHTML += `
+                    <div class="tool-card bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 cursor-pointer group hover:bg-primary hover:text-white">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-sm">${item}</span>
+                            <i class="fa fa-chevron-right text-xs opacity-0 group-hover:opacity-100"></i>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        renderGrid('grid-finance', tools.finance);
+        renderGrid('grid-health', tools.health);
+        renderGrid('grid-math', tools.math);
+        renderGrid('grid-other', tools.other);
+
+        function searchTools() {
+            let filter = document.getElementById('toolSearch').value.toLowerCase();
+            let cards = document.querySelectorAll('.tool-card');
+            cards.forEach(card => {
+                let text = card.innerText.toLowerCase();
+                card.style.display = text.includes(filter) ? "" : "none";
+            });
+        }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const icon = document.getElementById('dark-icon');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        }
+    </script>
+</body>
+</html>
