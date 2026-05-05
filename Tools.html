@@ -21,230 +21,1513 @@
     </script>
     <style>
         .gradient-bg { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); }
-        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .glass { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); }
         .ad-portal { background: #f1f5f9; border: 2px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold; }
         .dark .ad-portal { background: #1e293b; border-color: #334155; color: #475569; }
-        
-        /* Matching your original card style */
-        .tool-card {
-            @apply bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 
-            transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer flex flex-col items-center text-center group;
-        }
-        .tool-icon-box {
-            @apply w-10 h-10 mb-3 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110;
-        }
+
+        /* Modal */
+        #calc-modal { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:1rem; }
+        #calc-modal.open { display:flex; }
+        #modal-box { background:#fff; border-radius:1.5rem; width:100%; max-width:540px; max-height:90vh; overflow-y:auto; box-shadow:0 25px 60px rgba(0,0,0,0.3); }
+        .dark #modal-box { background:#1e293b; }
+        #modal-box::-webkit-scrollbar { width:6px; }
+        #modal-box::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:3px; }
+
+        .calc-btn { display:inline-flex; align-items:center; justify-content:center; padding:0.6rem 1.2rem; border-radius:0.75rem; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all .2s; }
+        .btn-primary { background:#2563eb; color:#fff; border:none; }
+        .btn-primary:hover { background:#1d4ed8; transform:translateY(-1px); }
+        .btn-secondary { background:#f1f5f9; color:#334155; border:none; }
+        .dark .btn-secondary { background:#334155; color:#cbd5e1; }
+        .btn-secondary:hover { background:#e2e8f0; }
+
+        .calc-input { width:100%; padding:0.65rem 1rem; border:2px solid #e2e8f0; border-radius:0.75rem; font-size:0.9rem; outline:none; transition:border .2s; background:#f8fafc; }
+        .dark .calc-input { background:#0f172a; border-color:#334155; color:#f1f5f9; }
+        .calc-input:focus { border-color:#2563eb; }
+        .calc-select { width:100%; padding:0.65rem 1rem; border:2px solid #e2e8f0; border-radius:0.75rem; font-size:0.9rem; outline:none; background:#f8fafc; }
+        .dark .calc-select { background:#0f172a; border-color:#334155; color:#f1f5f9; }
+
+        .result-box { background:linear-gradient(135deg,#2563eb,#1e40af); color:#fff; border-radius:1rem; padding:1.25rem; margin-top:1rem; }
+        .result-row { display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0; border-bottom:1px solid rgba(255,255,255,0.15); }
+        .result-row:last-child { border:none; }
+        .result-label { font-size:0.8rem; opacity:0.8; }
+        .result-value { font-weight:700; font-size:1rem; }
+
+        /* Sci calc */
+        .sci-btn { padding:0.55rem; border-radius:0.6rem; font-size:0.8rem; font-weight:600; cursor:pointer; border:none; transition:all .15s; }
+        .sci-btn:hover { filter:brightness(1.1); transform:scale(1.05); }
+
+        /* Password strength */
+        .strength-bar { height:6px; border-radius:3px; transition:all .4s; }
+
+        /* Tool card */
+        .tool-card { background:#fff; border:1px solid #e2e8f0; border-radius:1.25rem; padding:1.25rem 1rem; display:flex; flex-direction:column; align-items:center; text-align:center; cursor:pointer; transition:all .25s; }
+        .dark .tool-card { background:#1e293b; border-color:#334155; }
+        .tool-card:hover { box-shadow:0 8px 30px rgba(37,99,235,0.15); transform:translateY(-3px); border-color:#2563eb; }
+        .tool-icon { width:44px; height:44px; border-radius:0.75rem; display:flex; align-items:center; justify-content:center; margin-bottom:0.75rem; font-size:1.1rem; transition:transform .25s; }
+        .tool-card:hover .tool-icon { transform:scale(1.15); }
+
+        /* Search highlight */
+        .tool-card.hidden-card { display:none; }
+
+        /* Love hearts */
+        @keyframes heartbeat { 0%,100%{transform:scale(1);} 50%{transform:scale(1.3);} }
+        .heart-anim { animation:heartbeat 0.6s ease infinite; display:inline-block; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
 
-    <!-- NAVIGATION (KEEPING YOUR ORIGINAL STRUCTURE) -->
-    <nav class="sticky top-0 z-50 glass dark:bg-slate-900/90 border-b dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2">
-                    <div <a href="index.html" class="bg-primary text-white p-2 rounded-lg font-bold text-xl shadow-md">NG </a></div>
-                    <span class="text-xl font-bold tracking-tight text-primary dark:text-white">Nepali <span class="text-red-500">Guide</span></span>
-                </div>
-
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="index.html" class="hover:text-primary font-medium">Home</a>
-                    <a href="#" class="hover:text-primary font-medium">MCQs</a>
-                    <a href="#" class="hover:text-primary font-medium">Mock Test</a>
-                    <a href="#" class="hover:text-primary font-medium">Blogs</a>
-                    <a href="Tools.html" class="text-primary font-bold">Tools</a>
-                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800">
-                        <i id="dark-icon" class="fa fa-moon"></i>
-                    </button>
-                    <a href="login.html" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition">Login</a>
-                </div>
-
-                <div class="md:hidden flex items-center gap-4">
-                    <button onclick="toggleDarkMode()"><i class="fa fa-moon"></i></button>
-                    <i class="fa fa-bars text-2xl"></i>
-                </div>
+<!-- NAVIGATION -->
+<nav class="sticky top-0 z-50 glass dark:bg-slate-900/90 border-b dark:border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="bg-primary text-white p-2 rounded-lg font-bold text-xl shadow-md">NG</a>
+                <span class="text-xl font-bold tracking-tight text-primary dark:text-white">Nepali <span class="text-red-500">Guide</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="hover:text-primary font-medium">Home</a>
+                <a href="#" class="hover:text-primary font-medium">MCQs</a>
+                <a href="#" class="hover:text-primary font-medium">Mock Test</a>
+                <a href="#" class="hover:text-primary font-medium">Blogs</a>
+                <a href="Tools.html" class="text-primary font-bold border-b-2 border-primary pb-1">Tools</a>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700">
+                    <i id="dark-icon" class="fa fa-moon"></i>
+                </button>
+                <a href="login.html" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition">Login</a>
+            </div>
+            <div class="md:hidden flex items-center gap-4">
+                <button onclick="toggleDarkMode()"><i class="fa fa-moon"></i></button>
+                <i class="fa fa-bars text-2xl"></i>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- HERO SECTION (MATCHING ORIGINAL STYLE) -->
-    <header class="gradient-bg text-white py-12 px-4 mb-8">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="md:w-1/2 text-center md:text-left">
-                <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Professional Utility Tools</h1>
-                <p class="text-blue-100 mb-6">210+ precision calculators for finance, health, and education.</p>
-                <div class="relative max-w-md mx-auto md:mx-0">
-                    <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" id="toolSearch" onkeyup="searchTools()" placeholder="Search tools..." 
-                    class="w-full py-3 px-12 rounded-xl text-slate-900 focus:ring-4 focus:ring-secondary outline-none">
-                </div>
-            </div>
-            <div class="md:w-1/3 hidden md:block">
-                <img src="https://illustrations.popsy.co/white/calculator.svg" alt="Tools" class="w-64 mx-auto">
+<!-- HERO -->
+<header class="gradient-bg text-white py-12 px-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="md:w-1/2 text-center md:text-left">
+            <span class="bg-blue-400/30 text-blue-100 px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wider">30+ Free Tools</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold mt-4 mb-4">Professional Utility Tools</h1>
+            <p class="text-blue-100 mb-6">BMI, Loan, Age, GPA, Tax — all tools in one place. 100% Free & Works Offline.</p>
+            <div class="relative max-w-md mx-auto md:mx-0">
+                <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" id="toolSearch" oninput="searchTools()" placeholder="Search tools e.g. BMI, Loan, GPA..."
+                    class="w-full py-3 px-12 rounded-xl text-slate-900 focus:ring-4 focus:ring-secondary outline-none text-sm">
             </div>
         </div>
-    </header>
+        <div class="md:w-1/3 hidden md:block">
+            <img src="https://illustrations.popsy.co/white/calculator.svg" alt="Tools" class="w-64 mx-auto drop-shadow-2xl">
+        </div>
+    </div>
+</header>
 
-    <!-- MAIN CONTENT GRID (2 COLUMNS LIKE ORIGINAL) -->
-    <main class="max-w-7xl mx-auto px-4 grid lg:grid-cols-3 gap-8 pb-16">
-        
-        <!-- LEFT CONTENT: TOOLS LIST (lg:col-span-2) -->
-        <div class="lg:col-span-2 space-y-12">
-            
-            <!-- ADS PORTAL TOP -->
-            <div class="ad-portal w-full h-24 rounded-2xl mb-8">Google Adsense Banner</div>
+<!-- MAIN -->
+<main class="max-w-7xl mx-auto px-4 grid lg:grid-cols-3 gap-8 py-10 pb-16">
 
-            <!-- CATEGORY: FINANCIAL -->
-            <section id="financial-sec">
-                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-                    <i class="fa fa-coins text-secondary"></i> Financial Calculators
-                </h2>
-                <div id="financial-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <!-- Loaded via JS -->
+    <!-- LEFT CONTENT -->
+    <div class="lg:col-span-2 space-y-10">
+
+        <!-- TOP AD -->
+        <div class="ad-portal w-full h-20 rounded-2xl">Google Adsense Banner</div>
+
+        <!-- HEALTH & FITNESS -->
+        <section>
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2">
+                <span class="w-8 h-8 bg-red-100 text-red-500 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-heart-pulse"></i></span>
+                Health & Fitness
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="health-grid">
+                <div class="tool-card" onclick="openCalc('bmi')">
+                    <div class="tool-icon bg-red-100 text-red-500"><i class="fa fa-weight-scale"></i></div>
+                    <h3 class="font-bold text-sm">BMI Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Body Mass Index</p>
                 </div>
-            </section>
+                <div class="tool-card" onclick="openCalc('calorie')">
+                    <div class="tool-icon bg-orange-100 text-orange-500"><i class="fa fa-fire"></i></div>
+                    <h3 class="font-bold text-sm">Calorie Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Daily calorie needs</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('bmr')">
+                    <div class="tool-icon bg-pink-100 text-pink-500"><i class="fa fa-lungs"></i></div>
+                    <h3 class="font-bold text-sm">BMR Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Basal Metabolic Rate</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('bodyfat')">
+                    <div class="tool-icon bg-red-100 text-red-400"><i class="fa fa-person"></i></div>
+                    <h3 class="font-bold text-sm">Body Fat Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">US Navy Formula</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('tdee')">
+                    <div class="tool-icon bg-yellow-100 text-yellow-500"><i class="fa fa-bolt"></i></div>
+                    <h3 class="font-bold text-sm">TDEE Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Total Daily Energy</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('duedate')">
+                    <div class="tool-icon bg-rose-100 text-rose-500"><i class="fa fa-baby"></i></div>
+                    <h3 class="font-bold text-sm">Due Date Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Pregnancy due date</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('ovulation')">
+                    <div class="tool-icon bg-fuchsia-100 text-fuchsia-500"><i class="fa fa-calendar-heart"></i></div>
+                    <h3 class="font-bold text-sm">Ovulation Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Fertile window</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('sleep')">
+                    <div class="tool-icon bg-indigo-100 text-indigo-500"><i class="fa fa-moon"></i></div>
+                    <h3 class="font-bold text-sm">Sleep Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Best sleep times</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('height')">
+                    <div class="tool-icon bg-teal-100 text-teal-500"><i class="fa fa-arrows-up-down"></i></div>
+                    <h3 class="font-bold text-sm">Height Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Predict adult height</p>
+                </div>
+            </div>
+        </section>
 
-            <!-- CATEGORY: FITNESS -->
-            <section id="fitness-sec">
-                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-                    <i class="fa fa-heart-pulse text-red-500"></i> Fitness & Health
-                </h2>
-                <div id="fitness-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
-            </section>
+        <!-- FINANCIAL -->
+        <section>
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2">
+                <span class="w-8 h-8 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-coins"></i></span>
+                Financial
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="tool-card" onclick="openCalc('loan')">
+                    <div class="tool-icon bg-green-100 text-green-600"><i class="fa fa-hand-holding-dollar"></i></div>
+                    <h3 class="font-bold text-sm">Loan / EMI Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Monthly EMI + Interest</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('compound')">
+                    <div class="tool-icon bg-emerald-100 text-emerald-600"><i class="fa fa-chart-line"></i></div>
+                    <h3 class="font-bold text-sm">Compound Interest</h3>
+                    <p class="text-xs text-slate-400 mt-1">Investment growth</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('salary')">
+                    <div class="tool-icon bg-lime-100 text-lime-600"><i class="fa fa-money-bill-wave"></i></div>
+                    <h3 class="font-bold text-sm">Salary Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Nepal take-home pay</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('tax')">
+                    <div class="tool-icon bg-teal-100 text-teal-600"><i class="fa fa-file-invoice-dollar"></i></div>
+                    <h3 class="font-bold text-sm">Income Tax (Nepal)</h3>
+                    <p class="text-xs text-slate-400 mt-1">FY 2081/82 slabs</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('discount')">
+                    <div class="tool-icon bg-cyan-100 text-cyan-600"><i class="fa fa-tag"></i></div>
+                    <h3 class="font-bold text-sm">Discount Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Sale price finder</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('sip')">
+                    <div class="tool-icon bg-blue-100 text-blue-600"><i class="fa fa-piggy-bank"></i></div>
+                    <h3 class="font-bold text-sm">SIP / Investment</h3>
+                    <p class="text-xs text-slate-400 mt-1">Maturity calculator</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('fuel')">
+                    <div class="tool-icon bg-amber-100 text-amber-600"><i class="fa fa-gas-pump"></i></div>
+                    <h3 class="font-bold text-sm">Fuel Cost Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Trip fuel cost NPR</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('tip')">
+                    <div class="tool-icon bg-orange-100 text-orange-500"><i class="fa fa-utensils"></i></div>
+                    <h3 class="font-bold text-sm">Tip Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Bill splitting</p>
+                </div>
+            </div>
+        </section>
 
-            <!-- ADS PORTAL MID -->
-            <div class="ad-portal w-full h-32 rounded-2xl my-12">In-Feed Native Ad Portal</div>
+        <!-- MID AD -->
+        <div class="ad-portal w-full h-28 rounded-2xl">In-Feed Native Ad Portal</div>
 
-            <!-- CATEGORY: MATH -->
-            <section id="math-sec">
-                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-                    <i class="fa fa-calculator text-blue-500"></i> Mathematics
-                </h2>
-                <div id="math-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
-            </section>
+        <!-- MATH -->
+        <section>
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2">
+                <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-calculator"></i></span>
+                Mathematics
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="tool-card" onclick="openCalc('scientific')">
+                    <div class="tool-icon bg-blue-100 text-blue-600"><i class="fa fa-square-root-variable"></i></div>
+                    <h3 class="font-bold text-sm">Scientific Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">sin, cos, log, sqrt</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('percentage')">
+                    <div class="tool-icon bg-sky-100 text-sky-600"><i class="fa fa-percent"></i></div>
+                    <h3 class="font-bold text-sm">Percentage Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">3 calculation modes</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('fraction')">
+                    <div class="tool-icon bg-violet-100 text-violet-600"><i class="fa fa-divide"></i></div>
+                    <h3 class="font-bold text-sm">Fraction Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Add, subtract, multiply</p>
+                </div>
+            </div>
+        </section>
 
-            <!-- CATEGORY: OTHER -->
-            <section id="other-sec">
-                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-                    <i class="fa fa-screwdriver-wrench text-purple-500"></i> Other Utilities
-                </h2>
-                <div id="other-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
-            </section>
+        <!-- OTHER -->
+        <section>
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2">
+                <span class="w-8 h-8 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-sm"><i class="fa fa-screwdriver-wrench"></i></span>
+                Other Utilities
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="tool-card" onclick="openCalc('age')">
+                    <div class="tool-icon bg-purple-100 text-purple-600"><i class="fa fa-calendar-days"></i></div>
+                    <h3 class="font-bold text-sm">Age Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Lok Sewa eligible check</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('gpa')">
+                    <div class="tool-icon bg-indigo-100 text-indigo-600"><i class="fa fa-graduation-cap"></i></div>
+                    <h3 class="font-bold text-sm">GPA Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">TU / NEB grading</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('grade')">
+                    <div class="tool-icon bg-blue-100 text-blue-600"><i class="fa fa-star"></i></div>
+                    <h3 class="font-bold text-sm">Grade Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Weighted average</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('password')">
+                    <div class="tool-icon bg-slate-100 text-slate-600"><i class="fa fa-key"></i></div>
+                    <h3 class="font-bold text-sm">Password Generator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Strong & secure</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('love')">
+                    <div class="tool-icon bg-pink-100 text-pink-500"><i class="fa fa-heart"></i></div>
+                    <h3 class="font-bold text-sm">Love Calculator</h3>
+                    <p class="text-xs text-slate-400 mt-1">Fun compatibility</p>
+                </div>
+                <div class="tool-card" onclick="openCalc('loksewa')">
+                    <div class="tool-icon bg-red-100 text-red-600"><i class="fa fa-landmark"></i></div>
+                    <h3 class="font-bold text-sm">Lok Sewa Eligibility</h3>
+                    <p class="text-xs text-slate-400 mt-1">PSC age checker 🇳🇵</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTTOM AD -->
+        <div class="ad-portal w-full h-24 rounded-2xl">Bottom Ad Space</div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="space-y-6">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
+            <h3 class="font-bold text-lg mb-4">Quick Navigation</h3>
+            <ul class="space-y-3 text-sm">
+                <li><a href="#" class="flex items-center gap-2 text-primary hover:underline font-medium"><i class="fa fa-heart-pulse w-4"></i> Health & Fitness (9)</a></li>
+                <li><a href="#" class="flex items-center gap-2 text-green-600 hover:underline font-medium"><i class="fa fa-coins w-4"></i> Financial (8)</a></li>
+                <li><a href="#" class="flex items-center gap-2 text-blue-600 hover:underline font-medium"><i class="fa fa-calculator w-4"></i> Mathematics (3)</a></li>
+                <li><a href="#" class="flex items-center gap-2 text-purple-600 hover:underline font-medium"><i class="fa fa-screwdriver-wrench w-4"></i> Utilities (6)</a></li>
+            </ul>
         </div>
 
-        <!-- RIGHT SIDEBAR (SAME AS ORIGINAL) -->
-        <div class="space-y-8">
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
-                <h3 class="font-bold text-lg mb-4">Quick Navigation</h3>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="#financial-sec" class="text-primary hover:underline">💰 Financial (57)</a></li>
-                    <li><a href="#fitness-sec" class="text-primary hover:underline">🏋️ Health (27)</a></li>
-                    <li><a href="#math-sec" class="text-primary hover:underline">➗ Math (44)</a></li>
-                    <li><a href="#other-sec" class="text-primary hover:underline">🔧 Utilities (54)</a></li>
-                </ul>
-            </div>
-
-            <!-- SIDEBAR AD -->
-            <div class="ad-portal w-full h-64 rounded-3xl">Vertical Sidebar Ad</div>
-
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
-                <h3 class="font-bold text-lg mb-4">Need Help?</h3>
-                <p class="text-sm text-slate-500 mb-4">If you can't find a specific calculator, contact our support team.</p>
-                <a href="Contact.html" class="block text-center py-2 bg-slate-100 dark:bg-slate-700 rounded-xl font-bold">Contact Us</a>
+        <!-- POPULAR -->
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
+            <h3 class="font-bold text-lg mb-4 flex items-center gap-2"><i class="fa fa-fire text-orange-500"></i> Most Used</h3>
+            <div class="space-y-2">
+                <button onclick="openCalc('bmi')" class="w-full text-left p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-600 transition flex items-center gap-2">
+                    <i class="fa fa-weight-scale text-red-400 w-4"></i> BMI Calculator
+                </button>
+                <button onclick="openCalc('age')" class="w-full text-left p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-600 transition flex items-center gap-2">
+                    <i class="fa fa-calendar-days text-purple-400 w-4"></i> Age Calculator
+                </button>
+                <button onclick="openCalc('loan')" class="w-full text-left p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-600 transition flex items-center gap-2">
+                    <i class="fa fa-hand-holding-dollar text-green-400 w-4"></i> Loan EMI Calculator
+                </button>
+                <button onclick="openCalc('gpa')" class="w-full text-left p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-600 transition flex items-center gap-2">
+                    <i class="fa fa-graduation-cap text-indigo-400 w-4"></i> GPA Calculator
+                </button>
+                <button onclick="openCalc('loksewa')" class="w-full text-left p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm font-medium hover:bg-blue-50 dark:hover:bg-slate-600 transition flex items-center gap-2">
+                    <i class="fa fa-landmark text-red-400 w-4"></i> Lok Sewa Eligibility
+                </button>
             </div>
         </div>
-    </main>
 
-    <!-- FOOTER (ORIGINAL - DO NOT CHANGE) -->
-    <footer class="bg-slate-900 text-slate-400 py-16">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center gap-2 mb-6">
-                    <div class="bg-primary text-white p-2 rounded-lg font-bold shadow-md">NG</div>
-                    <span class="text-xl font-bold text-white">Nepali Guide</span>
-                </div>
-                <p class="text-sm leading-relaxed">The #1 community-driven platform for Nepali students and PSC aspirants. Prepare, Practice, and Succeed.</p>
+        <!-- SIDEBAR AD -->
+        <div class="ad-portal w-full h-64 rounded-3xl">Vertical Sidebar Ad</div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
+            <h3 class="font-bold text-lg mb-4">Need Help?</h3>
+            <p class="text-sm text-slate-500 mb-4">Can't find a specific calculator? Contact our team.</p>
+            <a href="Contact.html" class="block text-center py-2 bg-slate-100 dark:bg-slate-700 rounded-xl font-bold hover:bg-primary hover:text-white transition">Contact Us</a>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-slate-900 text-slate-400 py-16">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div>
+            <div class="flex items-center gap-2 mb-6">
+                <div class="bg-primary text-white p-2 rounded-lg font-bold shadow-md">NG</div>
+                <span class="text-xl font-bold text-white">Nepali Guide</span>
             </div>
+            <p class="text-sm leading-relaxed">The #1 community-driven platform for Nepali students and PSC aspirants. Prepare, Practice, and Succeed.</p>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Resources</h4>
+            <ul class="space-y-4 text-sm">
+                <li><a href="#" class="hover:text-primary">Daily Current Affairs</a></li>
+                <li><a href="#" class="hover:text-primary">Subjective Q&A</a></li>
+                <li><a href="#" class="hover:text-primary">Model Sets</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Support</h4>
+            <ul class="space-y-4 text-sm">
+                <li><a href="About.html" class="hover:text-primary">About</a></li>
+                <li><a href="Contact.html" class="hover:text-primary">Contact</a></li>
+                <li><a href="Privacy" class="hover:text-primary">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Follow</h4>
+            <div class="flex gap-4 text-xl">
+                <a href="https://www.facebook.com/nepaliguide" target="_blank" class="hover:text-primary transition"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/nepali_guide_official" target="_blank" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@nepaliguideofficial" target="_blank" class="hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-xs">
+        &copy; 2025 Nepali Guide. Designed for Nepali Aspirants.
+    </div>
+</footer>
+
+<!-- ===================== MODAL ===================== -->
+<div id="calc-modal" onclick="closeOnBackdrop(event)">
+    <div id="modal-box" class="dark:text-slate-100">
+        <!-- Header -->
+        <div class="gradient-bg text-white p-6 rounded-t-3xl flex justify-between items-center">
             <div>
-                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Resources</h4>
-                <ul class="space-y-4 text-sm">
-                    <li><a href="#" class="hover:text-primary">Daily Current Affairs</a></li>
-                    <li><a href="#" class="hover:text-primary">Subjective Q&A</a></li>
-                    <li><a href="#" class="hover:text-primary">Model Sets</a></li>
-                </ul>
+                <h2 id="modal-title" class="text-xl font-extrabold"></h2>
+                <p id="modal-subtitle" class="text-blue-200 text-sm mt-1"></p>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Support</h4>
-                <ul class="space-y-4 text-sm">
-                    <li><a href="About.html" class="hover:text-primary">About </a></li>
-                    <li><a href="Contact.html" class="hover:text-primary">Contact </a></li>
-                    <li><a href="Privacy" class="hover:text-primary">Privacy Policy</a></li>
-                </ul>
+            <button onclick="closeCalc()" class="w-9 h-9 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-lg font-bold transition">×</button>
+        </div>
+        <!-- Body -->
+        <div id="modal-body" class="p-6"></div>
+    </div>
+</div>
+
+<!-- ===================== SCRIPTS ===================== -->
+<script>
+// ── Dark Mode ──────────────────────────────────────────
+function toggleDarkMode() {
+    const html = document.documentElement;
+    const icon = document.getElementById('dark-icon');
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        icon.classList.replace('fa-sun','fa-moon');
+    } else {
+        html.classList.add('dark');
+        icon.classList.replace('fa-moon','fa-sun');
+    }
+}
+
+// ── Search ─────────────────────────────────────────────
+function searchTools() {
+    const q = document.getElementById('toolSearch').value.toLowerCase();
+    document.querySelectorAll('.tool-card').forEach(c => {
+        c.style.display = c.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+}
+
+// ── Modal helpers ──────────────────────────────────────
+function openCalc(id) {
+    document.getElementById('calc-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    buildCalc(id);
+}
+function closeCalc() {
+    document.getElementById('calc-modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+function closeOnBackdrop(e) {
+    if (e.target === document.getElementById('calc-modal')) closeCalc();
+}
+function setModal(title, subtitle, bodyHTML) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-subtitle').textContent = subtitle;
+    document.getElementById('modal-body').innerHTML = bodyHTML;
+}
+function resultHTML(rows) {
+    return `<div class="result-box">${rows.map(r=>`<div class="result-row"><span class="result-label">${r[0]}</span><span class="result-value">${r[1]}</span></div>`).join('')}</div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  CALCULATOR DEFINITIONS
+// ═══════════════════════════════════════════════════════
+function buildCalc(id) {
+    switch(id) {
+
+    // ── 1. BMI ─────────────────────────────────────────
+    case 'bmi':
+        setModal('BMI Calculator','Body Mass Index — Know your health status',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Weight (kg)</label>
+                <input id="b-wt" type="number" class="calc-input" placeholder="e.g. 65"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Height (cm)</label>
+                <input id="b-ht" type="number" class="calc-input" placeholder="e.g. 170"></div>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Follow </h4>
-                <div class="flex gap-4 text-xl">
-                    <a href="https://www.facebook.com/nepaliguide" target="_blank" class="hover:text-primary transition"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/nepali_guide_official" target="_blank" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/@nepaliguideofficial" target="_blank" class="hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Age</label>
+                <input id="b-age" type="number" class="calc-input" placeholder="e.g. 25"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Gender</label>
+                <select id="b-gender" class="calc-select"><option>Male</option><option>Female</option></select></div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcBMI()"><i class="fa fa-calculator mr-2"></i>Calculate BMI</button>
+            <div id="bmi-result"></div>
+        </div>`);
+        break;
+
+    // ── 2. Calorie ─────────────────────────────────────
+    case 'calorie':
+        setModal('Calorie Calculator','Find your daily calorie needs (Mifflin-St Jeor)',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Weight (kg)</label><input id="c-wt" type="number" class="calc-input" placeholder="65"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Height (cm)</label><input id="c-ht" type="number" class="calc-input" placeholder="170"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Age</label><input id="c-age" type="number" class="calc-input" placeholder="25"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Gender</label><select id="c-gender" class="calc-select"><option>Male</option><option>Female</option></select></div>
+            </div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Activity Level</label>
+            <select id="c-act" class="calc-select">
+                <option value="1.2">Sedentary (Office work, no exercise)</option>
+                <option value="1.375">Lightly Active (1-3 days/week)</option>
+                <option value="1.55">Moderately Active (3-5 days/week)</option>
+                <option value="1.725">Very Active (6-7 days/week)</option>
+                <option value="1.9">Extra Active (Physical job + exercise)</option>
+            </select></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcCalorie()"><i class="fa fa-fire mr-2"></i>Calculate</button>
+            <div id="cal-result"></div>
+        </div>`);
+        break;
+
+    // ── 3. BMR ─────────────────────────────────────────
+    case 'bmr':
+        setModal('BMR Calculator','Basal Metabolic Rate — calories at complete rest',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Weight (kg)</label><input id="bmr-wt" type="number" class="calc-input" placeholder="65"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Height (cm)</label><input id="bmr-ht" type="number" class="calc-input" placeholder="170"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Age</label><input id="bmr-age" type="number" class="calc-input" placeholder="25"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Gender</label><select id="bmr-gender" class="calc-select"><option>Male</option><option>Female</option></select></div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcBMR()"><i class="fa fa-lungs mr-2"></i>Calculate BMR</button>
+            <div id="bmr-result"></div>
+        </div>`);
+        break;
+
+    // ── 4. Body Fat ────────────────────────────────────
+    case 'bodyfat':
+        setModal('Body Fat Calculator','US Navy Formula',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Gender</label>
+            <select id="bf-gender" class="calc-select" onchange="toggleHip()"><option>Male</option><option>Female</option></select></div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Height (cm)</label><input id="bf-ht" type="number" class="calc-input" placeholder="170"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Waist (cm)</label><input id="bf-waist" type="number" class="calc-input" placeholder="80"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Neck (cm)</label><input id="bf-neck" type="number" class="calc-input" placeholder="37"></div>
+                <div id="hip-field"><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Hip (cm) — Female</label><input id="bf-hip" type="number" class="calc-input" placeholder="95"></div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcBodyFat()"><i class="fa fa-person mr-2"></i>Calculate</button>
+            <div id="bf-result"></div>
+        </div>`);
+        document.getElementById('hip-field').style.display='none';
+        break;
+
+    // ── 5. TDEE ────────────────────────────────────────
+    case 'tdee':
+        setModal('TDEE Calculator','Total Daily Energy Expenditure + Macros',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Weight (kg)</label><input id="td-wt" type="number" class="calc-input" placeholder="65"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Height (cm)</label><input id="td-ht" type="number" class="calc-input" placeholder="170"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Age</label><input id="td-age" type="number" class="calc-input" placeholder="25"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Gender</label><select id="td-gender" class="calc-select"><option>Male</option><option>Female</option></select></div>
+            </div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Activity</label>
+            <select id="td-act" class="calc-select">
+                <option value="1.2">Sedentary</option><option value="1.375">Lightly Active</option>
+                <option value="1.55" selected>Moderately Active</option><option value="1.725">Very Active</option><option value="1.9">Extra Active</option>
+            </select></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Goal</label>
+            <select id="td-goal" class="calc-select"><option value="0">Maintain Weight</option><option value="-500">Weight Loss (−500 cal)</option><option value="500">Muscle Gain (+500 cal)</option></select></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcTDEE()"><i class="fa fa-bolt mr-2"></i>Calculate TDEE</button>
+            <div id="tdee-result"></div>
+        </div>`);
+        break;
+
+    // ── 6. Due Date ────────────────────────────────────
+    case 'duedate':
+        setModal('Due Date Calculator','Pregnancy due date & current week',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Last Menstrual Period (LMP) Date</label>
+            <input id="dd-lmp" type="date" class="calc-input"></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Average Cycle Length (days)</label>
+            <input id="dd-cycle" type="number" class="calc-input" value="28" placeholder="28"></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcDueDate()"><i class="fa fa-baby mr-2"></i>Calculate Due Date</button>
+            <div id="dd-result"></div>
+        </div>`);
+        break;
+
+    // ── 7. Ovulation ───────────────────────────────────
+    case 'ovulation':
+        setModal('Ovulation Calculator','Find your fertile window',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">First Day of Last Period</label>
+            <input id="ov-lmp" type="date" class="calc-input"></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Cycle Length (days)</label>
+            <input id="ov-cycle" type="number" class="calc-input" value="28" placeholder="28"></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcOvulation()"><i class="fa fa-calendar-heart mr-2"></i>Calculate</button>
+            <div id="ov-result"></div>
+        </div>`);
+        break;
+
+    // ── 8. Sleep ───────────────────────────────────────
+    case 'sleep':
+        setModal('Sleep Calculator','Best wake-up times based on sleep cycles',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <button class="calc-btn btn-primary" onclick="calcSleepNow()"><i class="fa fa-bed mr-2"></i>If I Sleep NOW</button>
+                <div></div>
+            </div>
+            <div class="flex items-center gap-3"><div class="flex-1 h-px bg-slate-200 dark:bg-slate-600"></div><span class="text-xs text-slate-400">OR</span><div class="flex-1 h-px bg-slate-200 dark:bg-slate-600"></div></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">I want to wake up at</label>
+            <input id="sl-wake" type="time" class="calc-input" value="06:00"></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcSleepBedtime()"><i class="fa fa-moon mr-2"></i>When should I sleep?</button>
+            <div id="sleep-result"></div>
+        </div>`);
+        break;
+
+    // ── 9. Height ──────────────────────────────────────
+    case 'height':
+        setModal('Height Calculator','Predict child adult height + unit converter',`
+        <div class="space-y-4">
+            <h3 class="font-bold text-sm text-slate-500 uppercase">Child Height Predictor (Mid-Parental Formula)</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Father Height (cm)</label><input id="h-dad" type="number" class="calc-input" placeholder="175"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Mother Height (cm)</label><input id="h-mom" type="number" class="calc-input" placeholder="162"></div>
+            </div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Child Gender</label>
+            <select id="h-gender" class="calc-select"><option>Boy</option><option>Girl</option></select></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcHeight()"><i class="fa fa-arrows-up-down mr-2"></i>Predict Height</button>
+            <div id="height-result"></div>
+            <div class="border-t dark:border-slate-700 pt-4">
+                <h3 class="font-bold text-sm text-slate-500 uppercase mb-3">Unit Converter</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">cm</label><input id="h-cm" type="number" class="calc-input" oninput="convertHeight('cm')" placeholder="170"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">feet / inch</label><input id="h-ft" type="text" class="calc-input" oninput="convertHeight('ft')" placeholder="5'7&quot;"></div>
                 </div>
             </div>
+        </div>`);
+        break;
+
+    // ── 10. Loan / EMI ─────────────────────────────────
+    case 'loan':
+        setModal('Loan / EMI Calculator','Monthly EMI, interest & amortization',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Loan Amount (NPR)</label><input id="l-amt" type="number" class="calc-input" placeholder="500000"></div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Annual Interest Rate (%)</label><input id="l-rate" type="number" class="calc-input" placeholder="12" step="0.1"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Loan Term (Years)</label><input id="l-term" type="number" class="calc-input" placeholder="5"></div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcLoan()"><i class="fa fa-hand-holding-dollar mr-2"></i>Calculate EMI</button>
+            <div id="loan-result"></div>
+        </div>`);
+        break;
+
+    // ── 11. Compound Interest ──────────────────────────
+    case 'compound':
+        setModal('Compound Interest Calculator','Watch your investment grow',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Principal Amount (NPR)</label><input id="ci-p" type="number" class="calc-input" placeholder="100000"></div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Annual Rate (%)</label><input id="ci-r" type="number" class="calc-input" placeholder="10" step="0.1"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Time (Years)</label><input id="ci-t" type="number" class="calc-input" placeholder="5"></div>
+            </div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Compounding Frequency</label>
+            <select id="ci-n" class="calc-select"><option value="1">Annually</option><option value="2">Semi-Annually</option><option value="4">Quarterly</option><option value="12">Monthly</option><option value="365">Daily</option></select></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcCompound()"><i class="fa fa-chart-line mr-2"></i>Calculate</button>
+            <div id="ci-result"></div>
+        </div>`);
+        break;
+
+    // ── 12. Salary ─────────────────────────────────────
+    case 'salary':
+        setModal('Nepal Salary Calculator','Take-home pay with PF, CIT & SSF deductions',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Gross Monthly Salary (NPR)</label><input id="sal-gross" type="number" class="calc-input" placeholder="50000"></div>
+            <div class="grid grid-cols-3 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">PF (%)</label><input id="sal-pf" type="number" class="calc-input" value="10"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">CIT (%)</label><input id="sal-cit" type="number" class="calc-input" value="1"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">SSF (%)</label><input id="sal-ssf" type="number" class="calc-input" value="0"></div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcSalary()"><i class="fa fa-money-bill-wave mr-2"></i>Calculate</button>
+            <div id="sal-result"></div>
+        </div>`);
+        break;
+
+    // ── 13. Income Tax ─────────────────────────────────
+    case 'tax':
+        setModal('Nepal Income Tax Calculator','FY 2081/82 — IRD Tax Slabs',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Annual Taxable Income (NPR)</label><input id="tx-income" type="number" class="calc-input" placeholder="600000"></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Marital Status</label>
+            <select id="tx-status" class="calc-select"><option value="single">Single / Unmarried</option><option value="married">Married</option></select></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcTax()"><i class="fa fa-file-invoice-dollar mr-2"></i>Calculate Tax</button>
+            <div id="tax-result"></div>
+        </div>`);
+        break;
+
+    // ── 14. Discount ───────────────────────────────────
+    case 'discount':
+        setModal('Discount Calculator','Find sale price & savings',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-3 gap-2 mb-2">
+                <button class="calc-btn btn-secondary text-xs" onclick="setDiscMode(1)">Original→Sale</button>
+                <button class="calc-btn btn-secondary text-xs" onclick="setDiscMode(2)">% Discount?</button>
+                <button class="calc-btn btn-secondary text-xs" onclick="setDiscMode(3)">Original Price?</button>
+            </div>
+            <div id="disc-mode1">
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Original Price</label><input id="d-orig" type="number" class="calc-input" placeholder="1000"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Discount %</label><input id="d-pct" type="number" class="calc-input" placeholder="20"></div>
+                </div>
+            </div>
+            <div id="disc-mode2" class="hidden">
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Original Price</label><input id="d-o2" type="number" class="calc-input" placeholder="1000"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Sale Price</label><input id="d-s2" type="number" class="calc-input" placeholder="800"></div>
+                </div>
+            </div>
+            <div id="disc-mode3" class="hidden">
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Sale Price</label><input id="d-s3" type="number" class="calc-input" placeholder="800"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Discount %</label><input id="d-p3" type="number" class="calc-input" placeholder="20"></div>
+                </div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcDiscount()"><i class="fa fa-tag mr-2"></i>Calculate</button>
+            <div id="disc-result"></div>
+        </div>`);
+        window._discMode=1;
+        break;
+
+    // ── 15. SIP ────────────────────────────────────────
+    case 'sip':
+        setModal('SIP / Investment Calculator','Monthly investment maturity value',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Monthly Investment (NPR)</label><input id="sip-amt" type="number" class="calc-input" placeholder="5000"></div>
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Expected Return (%/year)</label><input id="sip-rate" type="number" class="calc-input" placeholder="12" step="0.1"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Time Period (Years)</label><input id="sip-time" type="number" class="calc-input" placeholder="10"></div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcSIP()"><i class="fa fa-piggy-bank mr-2"></i>Calculate</button>
+            <div id="sip-result"></div>
+        </div>`);
+        break;
+
+    // ── 16. Fuel ───────────────────────────────────────
+    case 'fuel':
+        setModal('Fuel Cost Calculator','Trip fuel cost in NPR',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Distance (km)</label><input id="f-dist" type="number" class="calc-input" placeholder="100"></div>
+                <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Mileage (km/litre)</label><input id="f-mpg" type="number" class="calc-input" placeholder="15"></div>
+            </div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Fuel Price (NPR/litre)</label>
+            <select id="f-price" class="calc-select">
+                <option value="180">Petrol — NPR 180/L</option>
+                <option value="163">Diesel — NPR 163/L</option>
+                <option value="100">LPG — NPR 100/L (est)</option>
+                <option value="">Custom</option>
+            </select>
+            <input id="f-custom" type="number" class="calc-input mt-2 hidden" placeholder="Custom price per litre"></div>
+            <label class="flex items-center gap-2 text-sm cursor-pointer"><input id="f-rt" type="checkbox"> Round Trip</label>
+            <button class="calc-btn btn-primary w-full" onclick="calcFuel()"><i class="fa fa-gas-pump mr-2"></i>Calculate</button>
+            <div id="fuel-result"></div>
+        </div>`);
+        document.getElementById('f-price').addEventListener('change',function(){
+            document.getElementById('f-custom').classList.toggle('hidden', this.value!=='');
+        });
+        break;
+
+    // ── 17. Tip ────────────────────────────────────────
+    case 'tip':
+        setModal('Tip Calculator','Bill splitting made easy',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Bill Amount (NPR)</label><input id="tip-bill" type="number" class="calc-input" placeholder="1500" oninput="calcTip()"></div>
+            <div>
+                <label class="text-xs font-bold text-slate-500 uppercase mb-2 block">Tip Percentage</label>
+                <div class="flex gap-2 flex-wrap mb-2">
+                    <button class="calc-btn btn-secondary" onclick="setTip(10)">10%</button>
+                    <button class="calc-btn btn-secondary" onclick="setTip(15)">15%</button>
+                    <button class="calc-btn btn-secondary" onclick="setTip(20)">20%</button>
+                    <button class="calc-btn btn-secondary" onclick="setTip(25)">25%</button>
+                </div>
+                <input id="tip-pct" type="number" class="calc-input" value="15" placeholder="Custom %" oninput="calcTip()">
+            </div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Number of People</label><input id="tip-ppl" type="number" class="calc-input" value="1" min="1" oninput="calcTip()"></div>
+            <div id="tip-result"></div>
+        </div>`);
+        break;
+
+    // ── 18. Scientific ─────────────────────────────────
+    case 'scientific':
+        setModal('Scientific Calculator','sin, cos, tan, log, ln, sqrt, power',`
+        <div>
+            <div class="bg-slate-900 text-white p-4 rounded-xl mb-3 min-h-[60px] flex flex-col justify-end">
+                <div id="sci-expr" class="text-slate-400 text-xs min-h-[16px]"></div>
+                <div id="sci-disp" class="text-2xl font-mono text-right">0</div>
+            </div>
+            <div class="mb-2 flex gap-2">
+                <button class="calc-btn btn-secondary text-xs flex-1" onclick="sciToggleDeg()"><span id="sci-deg-label">DEG</span></button>
+                <button class="calc-btn btn-secondary text-xs flex-1" onclick="sciToggle2nd()">2nd</button>
+            </div>
+            <div class="grid grid-cols-5 gap-1.5">
+                ${[['sin','cos','tan','log','ln'],['sin⁻¹','cos⁻¹','tan⁻¹','eˣ','10ˣ'],['x²','x³','xʸ','√','∛'],['π','e','(',')',','],['7','8','9','÷','%'],['4','5','6','×','1/x'],['1','2','3','-','⌫'],['0','.','±','+','=']].map(row=>row.map(b=>{
+                    const col = ['='].includes(b)?'bg-primary text-white':['÷','×','+','-'].includes(b)?'bg-secondary text-white':'bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100';
+                    return `<button class="sci-btn ${col}" onclick="sciBtn('${b}')">${b}</button>`;
+                }).join('')).join('')}
+            </div>
+            <div class="mt-3 p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-xs text-slate-500 max-h-24 overflow-y-auto" id="sci-history"></div>
+        </div>`);
+        window._sciDeg=true; window._sci2nd=false; window._sciExpr=''; window._sciClear=false;
+        break;
+
+    // ── 19. Percentage ─────────────────────────────────
+    case 'percentage':
+        setModal('Percentage Calculator','3 modes of percentage calculation',`
+        <div class="space-y-4">
+            <div class="grid grid-cols-3 gap-2">
+                <button class="calc-btn btn-secondary text-xs" onclick="setPctMode(1)">X% of Y</button>
+                <button class="calc-btn btn-secondary text-xs" onclick="setPctMode(2)">X is ?% of Y</button>
+                <button class="calc-btn btn-secondary text-xs" onclick="setPctMode(3)">% Change</button>
+            </div>
+            <div id="pct-mode1">
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Percentage (%)</label><input id="p-pct" type="number" class="calc-input" placeholder="20"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Of Value</label><input id="p-val" type="number" class="calc-input" placeholder="500"></div>
+                </div>
+            </div>
+            <div id="pct-mode2" class="hidden">
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">X (value)</label><input id="p-x2" type="number" class="calc-input" placeholder="100"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Of Y (total)</label><input id="p-y2" type="number" class="calc-input" placeholder="500"></div>
+                </div>
+            </div>
+            <div id="pct-mode3" class="hidden">
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">From Value</label><input id="p-from" type="number" class="calc-input" placeholder="100"></div>
+                    <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">To Value</label><input id="p-to" type="number" class="calc-input" placeholder="150"></div>
+                </div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcPct()"><i class="fa fa-percent mr-2"></i>Calculate</button>
+            <div id="pct-result"></div>
+        </div>`);
+        window._pctMode=1;
+        break;
+
+    // ── 20. Fraction ───────────────────────────────────
+    case 'fraction':
+        setModal('Fraction Calculator','Add, Subtract, Multiply, Divide fractions',`
+        <div class="space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="flex flex-col items-center gap-1 flex-1">
+                    <input id="fr-n1" type="number" class="calc-input text-center" placeholder="1">
+                    <div class="w-full h-0.5 bg-slate-300 dark:bg-slate-600"></div>
+                    <input id="fr-d1" type="number" class="calc-input text-center" placeholder="2">
+                </div>
+                <div class="w-10 flex-shrink-0">
+                    <select id="fr-op" class="calc-select text-center text-lg font-bold p-2">
+                        <option value="+">+</option><option value="-">−</option><option value="*">×</option><option value="/">÷</option>
+                    </select>
+                </div>
+                <div class="flex flex-col items-center gap-1 flex-1">
+                    <input id="fr-n2" type="number" class="calc-input text-center" placeholder="1">
+                    <div class="w-full h-0.5 bg-slate-300 dark:bg-slate-600"></div>
+                    <input id="fr-d2" type="number" class="calc-input text-center" placeholder="3">
+                </div>
+            </div>
+            <button class="calc-btn btn-primary w-full" onclick="calcFraction()"><i class="fa fa-divide mr-2"></i>Calculate</button>
+            <div id="fr-result"></div>
+        </div>`);
+        break;
+
+    // ── 21. Age ────────────────────────────────────────
+    case 'age':
+        setModal('Age Calculator','Exact age + Lok Sewa eligibility check',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Date of Birth</label><input id="ag-dob" type="date" class="calc-input"></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Calculate Age As Of</label><input id="ag-target" type="date" class="calc-input"></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcAge()"><i class="fa fa-calendar-days mr-2"></i>Calculate Age</button>
+            <div id="age-result"></div>
+        </div>`);
+        document.getElementById('ag-target').valueAsDate = new Date();
+        break;
+
+    // ── 22. GPA ────────────────────────────────────────
+    case 'gpa':
+        setModal('GPA Calculator','TU & NEB grading system',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Grading System</label>
+            <select id="gpa-sys" class="calc-select"><option value="tu">Tribhuvan University (TU)</option><option value="neb">NEB / School</option></select></div>
+            <div id="gpa-rows" class="space-y-2"></div>
+            <button onclick="addGPARow()" class="calc-btn btn-secondary w-full text-sm"><i class="fa fa-plus mr-2"></i>Add Subject</button>
+            <button class="calc-btn btn-primary w-full" onclick="calcGPA()"><i class="fa fa-graduation-cap mr-2"></i>Calculate GPA</button>
+            <div id="gpa-result"></div>
+        </div>`);
+        window._gpaRows=0;
+        addGPARow(); addGPARow(); addGPARow();
+        break;
+
+    // ── 23. Grade ──────────────────────────────────────
+    case 'grade':
+        setModal('Grade Calculator','Weighted average grade',`
+        <div class="space-y-4">
+            <div id="grade-rows" class="space-y-2">
+                <div class="grid grid-cols-3 gap-2 text-xs font-bold text-slate-500 uppercase px-1"><span>Assignment</span><span>Score/Total</span><span>Weight %</span></div>
+            </div>
+            <button onclick="addGradeRow()" class="calc-btn btn-secondary w-full text-sm"><i class="fa fa-plus mr-2"></i>Add Assignment</button>
+            <button class="calc-btn btn-primary w-full" onclick="calcGrade()"><i class="fa fa-star mr-2"></i>Calculate Grade</button>
+            <div id="grade-result"></div>
+        </div>`);
+        window._gradeRows=0;
+        addGradeRow(); addGradeRow(); addGradeRow();
+        break;
+
+    // ── 24. Password ───────────────────────────────────
+    case 'password':
+        setModal('Password Generator','Strong & secure password',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Length: <span id="pw-len-label">16</span></label>
+            <input id="pw-len" type="range" min="8" max="64" value="16" class="w-full accent-primary" oninput="document.getElementById('pw-len-label').textContent=this.value;genPassword()"></div>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+                <label class="flex items-center gap-2 cursor-pointer"><input id="pw-upper" type="checkbox" checked class="accent-primary" onchange="genPassword()"> Uppercase (A-Z)</label>
+                <label class="flex items-center gap-2 cursor-pointer"><input id="pw-lower" type="checkbox" checked class="accent-primary" onchange="genPassword()"> Lowercase (a-z)</label>
+                <label class="flex items-center gap-2 cursor-pointer"><input id="pw-num" type="checkbox" checked class="accent-primary" onchange="genPassword()"> Numbers (0-9)</label>
+                <label class="flex items-center gap-2 cursor-pointer"><input id="pw-sym" type="checkbox" class="accent-primary" onchange="genPassword()"> Symbols (!@#$)</label>
+            </div>
+            <div class="bg-slate-900 text-green-400 font-mono p-4 rounded-xl text-sm break-all min-h-[60px] flex items-center" id="pw-output">Click Generate</div>
+            <div id="pw-strength" class="space-y-1">
+                <div class="flex justify-between text-xs"><span class="text-slate-500">Strength</span><span id="pw-str-label" class="font-bold"></span></div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-1.5"><div id="pw-str-bar" class="strength-bar h-1.5 rounded-full w-0"></div></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="calc-btn btn-primary" onclick="genPassword()"><i class="fa fa-rotate mr-2"></i>Generate</button>
+                <button class="calc-btn btn-secondary" onclick="copyPassword()"><i class="fa fa-copy mr-2"></i>Copy</button>
+            </div>
+        </div>`);
+        genPassword();
+        break;
+
+    // ── 25. Love ───────────────────────────────────────
+    case 'love':
+        setModal('Love Calculator','Fun compatibility check 💕',`
+        <div class="space-y-4 text-center">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Your Name</label><input id="lv-n1" type="text" class="calc-input text-center" placeholder="Your name..."></div>
+            <div class="text-2xl text-red-400"><i class="fa fa-heart heart-anim"></i></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Partner's Name</label><input id="lv-n2" type="text" class="calc-input text-center" placeholder="Their name..."></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcLove()"><i class="fa fa-heart mr-2"></i>Calculate Love %</button>
+            <div id="love-result"></div>
+        </div>`);
+        break;
+
+    // ── 26. Lok Sewa ───────────────────────────────────
+    case 'loksewa':
+        setModal('Lok Sewa Age Eligibility','Nepal PSC age checker 🇳🇵',`
+        <div class="space-y-4">
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Date of Birth</label><input id="ls-dob" type="date" class="calc-input"></div>
+            <div><label class="text-xs font-bold text-slate-500 uppercase mb-1 block">Select Post</label>
+            <select id="ls-post" class="calc-select">
+                <option value="18,35">Kharidar (18–35 years)</option>
+                <option value="18,35">Nayab Subba (18–35 years)</option>
+                <option value="21,35">Officer Level (21–35 years)</option>
+                <option value="21,40">Gazetted Officer (21–40 years)</option>
+                <option value="18,40">Technical Post (18–40 years)</option>
+            </select></div>
+            <button class="calc-btn btn-primary w-full" onclick="calcLokSewa()"><i class="fa fa-landmark mr-2"></i>Check Eligibility</button>
+            <div id="ls-result"></div>
+            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 text-xs text-blue-700 dark:text-blue-300">
+                <p class="font-bold mb-2">📋 PSC Age Limits Reference:</p>
+                <div class="space-y-1">
+                    <div class="flex justify-between"><span>Kharidar / Nayab Subba</span><span class="font-bold">18–35 yrs</span></div>
+                    <div class="flex justify-between"><span>Officer Level (Third)</span><span class="font-bold">21–35 yrs</span></div>
+                    <div class="flex justify-between"><span>Gazetted Officer</span><span class="font-bold">21–40 yrs</span></div>
+                    <div class="flex justify-between"><span>Technical Posts</span><span class="font-bold">18–40 yrs</span></div>
+                </div>
+            </div>
+        </div>`);
+        break;
+    }
+}
+
+// ═══════════════════════════════════════════════════════
+//  CALCULATION FUNCTIONS
+// ═══════════════════════════════════════════════════════
+
+function fmt(n) { return Number(n).toLocaleString('en-IN', {maximumFractionDigits:2}); }
+function r2(n) { return Math.round(n*100)/100; }
+
+// BMI
+function calcBMI() {
+    const w=+document.getElementById('b-wt').value, h=+document.getElementById('b-ht').value/100;
+    if(!w||!h) return alert('Please enter weight and height.');
+    const bmi=r2(w/(h*h));
+    let cat='',color='',emoji='';
+    if(bmi<18.5){cat='Underweight';color='text-blue-400';emoji='🔵';}
+    else if(bmi<25){cat='Normal Weight';color='text-green-400';emoji='🟢';}
+    else if(bmi<30){cat='Overweight';color='text-yellow-400';emoji='🟡';}
+    else{cat='Obese';color='text-red-400';emoji='🔴';}
+    document.getElementById('bmi-result').innerHTML=`
+    ${resultHTML([['BMI Value',bmi],['Category',`${emoji} ${cat}`]])}
+    <div class="mt-3 space-y-1 text-xs">
+        ${[['Underweight','< 18.5','bg-blue-500'],['Normal','18.5 – 24.9','bg-green-500'],['Overweight','25 – 29.9','bg-yellow-500'],['Obese','≥ 30','bg-red-500']].map(([l,r,c])=>`
+        <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full ${c}"></div><span class="flex-1 text-slate-500">${l}</span><span class="font-bold">${r}</span></div>`).join('')}
+    </div>`;
+}
+
+// Calorie
+function calcCalorie() {
+    const w=+document.getElementById('c-wt').value,h=+document.getElementById('c-ht').value,
+        a=+document.getElementById('c-age').value,g=document.getElementById('c-gender').value,
+        act=+document.getElementById('c-act').value;
+    if(!w||!h||!a) return alert('Fill all fields.');
+    let bmr = g==='Male' ? 10*w+6.25*h-5*a+5 : 10*w+6.25*h-5*a-161;
+    const tdee=r2(bmr*act);
+    document.getElementById('cal-result').innerHTML=resultHTML([
+        ['BMR (at rest)',`${fmt(r2(bmr))} kcal/day`],
+        ['Maintenance',`${fmt(tdee)} kcal/day`],
+        ['Weight Loss (−500)',`${fmt(tdee-500)} kcal/day`],
+        ['Muscle Gain (+500)',`${fmt(tdee+500)} kcal/day`]
+    ]);
+}
+
+// BMR
+function calcBMR() {
+    const w=+document.getElementById('bmr-wt').value,h=+document.getElementById('bmr-ht').value,
+        a=+document.getElementById('bmr-age').value,g=document.getElementById('bmr-gender').value;
+    if(!w||!h||!a) return alert('Fill all fields.');
+    const hb = g==='Male' ? 88.36+13.4*w+4.8*h-5.7*a : 447.6+9.2*w+3.1*h-4.3*a;
+    const mf = g==='Male' ? 10*w+6.25*h-5*a+5 : 10*w+6.25*h-5*a-161;
+    document.getElementById('bmr-result').innerHTML=resultHTML([
+        ['Harris-Benedict',`${fmt(r2(hb))} kcal/day`],
+        ['Mifflin-St Jeor',`${fmt(r2(mf))} kcal/day`],
+        ['Average',`${fmt(r2((hb+mf)/2))} kcal/day`]
+    ]);
+}
+
+// Body Fat
+function toggleHip() {
+    document.getElementById('hip-field').style.display=document.getElementById('bf-gender').value==='Female'?'':'none';
+}
+function calcBodyFat() {
+    const g=document.getElementById('bf-gender').value, h=+document.getElementById('bf-ht').value,
+        w=+document.getElementById('bf-waist').value, n=+document.getElementById('bf-neck').value;
+    if(!h||!w||!n) return alert('Fill required fields.');
+    let bf;
+    if(g==='Male') {
+        bf = 495/(1.0324 - 0.19077*Math.log10(w-n) + 0.15456*Math.log10(h)) - 450;
+    } else {
+        const hip=+document.getElementById('bf-hip').value;
+        if(!hip) return alert('Enter hip measurement for female.');
+        bf = 495/(1.29579 - 0.35004*Math.log10(w+hip-n) + 0.22100*Math.log10(h)) - 450;
+    }
+    bf=r2(bf);
+    const weight=70; // approximate
+    document.getElementById('bf-result').innerHTML=resultHTML([
+        ['Body Fat %',`${bf}%`],
+        ['Category', bf<10?'Essential Fat':bf<20?'Athletic':bf<25?'Fitness':bf<30?'Average':'Obese']
+    ]);
+}
+
+// TDEE
+function calcTDEE() {
+    const w=+document.getElementById('td-wt').value,h=+document.getElementById('td-ht').value,
+        a=+document.getElementById('td-age').value,g=document.getElementById('td-gender').value,
+        act=+document.getElementById('td-act').value,goal=+document.getElementById('td-goal').value;
+    if(!w||!h||!a) return alert('Fill all fields.');
+    let bmr = g==='Male' ? 10*w+6.25*h-5*a+5 : 10*w+6.25*h-5*a-161;
+    const tdee=r2(bmr*act), target=r2(tdee+goal);
+    const p=r2(target*0.3/4), c=r2(target*0.4/4), f=r2(target*0.3/9);
+    document.getElementById('tdee-result').innerHTML=resultHTML([
+        ['TDEE',`${fmt(tdee)} kcal/day`],
+        ['Target Calories',`${fmt(target)} kcal/day`],
+        ['Protein',`${p}g / day`],
+        ['Carbohydrates',`${c}g / day`],
+        ['Fat',`${f}g / day`]
+    ]);
+}
+
+// Due Date
+function calcDueDate() {
+    const lmp=document.getElementById('dd-lmp').value, cycle=+document.getElementById('dd-cycle').value||28;
+    if(!lmp) return alert('Enter LMP date.');
+    const d=new Date(lmp);
+    d.setDate(d.getDate()+(280+(cycle-28)));
+    const today=new Date(), diff=Math.floor((today-new Date(lmp))/(1000*60*60*24));
+    const weeks=Math.floor(diff/7), days=diff%7;
+    const tri=weeks<14?'1st Trimester':weeks<28?'2nd Trimester':'3rd Trimester';
+    document.getElementById('dd-result').innerHTML=resultHTML([
+        ['Due Date',d.toDateString()],
+        ['Current Pregnancy',`${weeks} weeks, ${days} days`],
+        ['Trimester',tri]
+    ]);
+}
+
+// Ovulation
+function calcOvulation() {
+    const lmp=document.getElementById('ov-lmp').value, cycle=+document.getElementById('ov-cycle').value||28;
+    if(!lmp) return alert('Enter LMP date.');
+    const d=new Date(lmp);
+    const ovDay=new Date(d); ovDay.setDate(d.getDate()+cycle-14);
+    const fertStart=new Date(ovDay); fertStart.setDate(ovDay.getDate()-5);
+    const fertEnd=new Date(ovDay); fertEnd.setDate(ovDay.getDate()+1);
+    document.getElementById('ov-result').innerHTML=resultHTML([
+        ['Ovulation Date',ovDay.toDateString()],
+        ['Fertile Window',`${fertStart.toDateString()} — ${fertEnd.toDateString()}`],
+        ['Next Period',new Date(d.getTime()+cycle*86400000).toDateString()]
+    ]);
+}
+
+// Sleep
+function calcSleepNow() {
+    const now=new Date(), cycles=[];
+    for(let i=5;i<=6;i++) {
+        const t=new Date(now.getTime()+(15+i*90)*60000);
+        cycles.push(`${i} cycles → <b>${t.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</b>`);
+    }
+    document.getElementById('sleep-result').innerHTML=`<div class="result-box space-y-2 text-sm">${cycles.map(c=>`<div>${c}</div>`).join('')}<div class="text-blue-200 text-xs pt-2">Sleep now and wake at these times for a complete cycle.</div></div>`;
+}
+function calcSleepBedtime() {
+    const wake=document.getElementById('sl-wake').value;
+    if(!wake) return alert('Enter wake time.');
+    const [hh,mm]=wake.split(':').map(Number);
+    const wakeMs = (hh*60+mm)*60000;
+    const cycles=[];
+    for(let i=5;i<=6;i++) {
+        const bedMs = wakeMs - (i*90+15)*60000;
+        const total = ((bedMs % 86400000)+86400000)%86400000;
+        const bh=Math.floor(total/3600000), bm=Math.floor((total%3600000)/60000);
+        cycles.push(`${i} cycles → <b>${String(bh).padStart(2,'0')}:${String(bm).padStart(2,'0')}</b>`);
+    }
+    document.getElementById('sleep-result').innerHTML=`<div class="result-box space-y-2 text-sm">${cycles.map(c=>`<div>${c}</div>`).join('')}<div class="text-blue-200 text-xs pt-2">Go to bed at one of these times to wake refreshed.</div></div>`;
+}
+
+// Height
+function calcHeight() {
+    const dad=+document.getElementById('h-dad').value, mom=+document.getElementById('h-mom').value, g=document.getElementById('h-gender').value;
+    if(!dad||!mom) return alert('Enter both parent heights.');
+    let predicted = g==='Boy' ? (dad+mom+13)/2 : (dad+mom-13)/2;
+    predicted=r2(predicted);
+    const ft=Math.floor(predicted/30.48), inch=r2((predicted/2.54)%12);
+    document.getElementById('height-result').innerHTML=resultHTML([
+        ['Predicted Height',`${predicted} cm`],
+        ['In Feet',`${ft}' ${inch}"`],
+        ['Range',`${predicted-8.5} – ${predicted+8.5} cm`]
+    ]);
+}
+function convertHeight(from) {
+    if(from==='cm') {
+        const cm=+document.getElementById('h-cm').value;
+        if(!cm) return;
+        const totalIn=cm/2.54, ft=Math.floor(totalIn), inch=r2(totalIn%1*12);
+        document.getElementById('h-ft').value=`${ft}'${inch}"`;
+    } else {
+        const val=document.getElementById('h-ft').value;
+        const match=val.match(/(\d+)'?\s*(\d*\.?\d*)"/);
+        if(!match) return;
+        const cm=r2(+match[1]*30.48+(+match[2]||0)*2.54);
+        document.getElementById('h-cm').value=cm;
+    }
+}
+
+// Loan
+function calcLoan() {
+    const P=+document.getElementById('l-amt').value, r=+document.getElementById('l-rate').value/12/100, n=+document.getElementById('l-term').value*12;
+    if(!P||!r||!n) return alert('Fill all fields.');
+    const emi = r===0 ? P/n : r2(P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1));
+    const total=r2(emi*n), interest=r2(total-P);
+    document.getElementById('loan-result').innerHTML=resultHTML([
+        ['Monthly EMI',`NPR ${fmt(emi)}`],
+        ['Total Payment',`NPR ${fmt(total)}`],
+        ['Total Interest',`NPR ${fmt(interest)}`],
+        ['Principal',`NPR ${fmt(P)}`]
+    ]);
+}
+
+// Compound Interest
+function calcCompound() {
+    const P=+document.getElementById('ci-p').value, r=+document.getElementById('ci-r').value/100,
+        t=+document.getElementById('ci-t').value, n=+document.getElementById('ci-n').value;
+    if(!P||!r||!t) return alert('Fill all fields.');
+    const A=r2(P*Math.pow(1+r/n,n*t)), interest=r2(A-P);
+    document.getElementById('ci-result').innerHTML=resultHTML([
+        ['Final Amount',`NPR ${fmt(A)}`],
+        ['Interest Earned',`NPR ${fmt(interest)}`],
+        ['Principal',`NPR ${fmt(P)}`],
+        ['Return %',`${r2(interest/P*100)}%`]
+    ]);
+}
+
+// Salary
+function calcSalary() {
+    const gross=+document.getElementById('sal-gross').value,
+        pf=+document.getElementById('sal-pf').value/100,
+        cit=+document.getElementById('sal-cit').value/100,
+        ssf=+document.getElementById('sal-ssf').value/100;
+    if(!gross) return alert('Enter salary.');
+    const pfAmt=r2(gross*pf), citAmt=r2(gross*cit), ssfAmt=r2(gross*ssf);
+    const total=r2(pfAmt+citAmt+ssfAmt), net=r2(gross-total);
+    document.getElementById('sal-result').innerHTML=resultHTML([
+        ['Gross Salary',`NPR ${fmt(gross)}`],
+        ['PF Deduction',`NPR ${fmt(pfAmt)}`],
+        ['CIT Deduction',`NPR ${fmt(citAmt)}`],
+        ['SSF Deduction',`NPR ${fmt(ssfAmt)}`],
+        ['Total Deduction',`NPR ${fmt(total)}`],
+        ['Net Take-Home',`NPR ${fmt(net)}`]
+    ]);
+}
+
+// Tax (Nepal FY 2081/82)
+function calcTax() {
+    const income=+document.getElementById('tx-income').value, status=document.getElementById('tx-status').value;
+    if(!income) return alert('Enter income.');
+    // Nepal IRD slabs
+    let tax=0, rem=income, slabs;
+    if(status==='married') {
+        slabs=[[600000,0],[200000,0.10],[300000,0.20],[900000,0.30],[Infinity,0.36]];
+    } else {
+        slabs=[[500000,0],[100000,0.10],[200000,0.20],[1200000,0.30],[Infinity,0.36]];
+    }
+    for(const [limit,rate] of slabs) {
+        const taxable=Math.min(rem,limit);
+        tax+=taxable*rate; rem-=taxable;
+        if(rem<=0) break;
+    }
+    tax=r2(tax);
+    document.getElementById('tax-result').innerHTML=resultHTML([
+        ['Annual Income',`NPR ${fmt(income)}`],
+        ['Total Tax',`NPR ${fmt(tax)}`],
+        ['Monthly Tax',`NPR ${fmt(r2(tax/12))}`],
+        ['Effective Rate',`${r2(tax/income*100)}%`],
+        ['Net Annual',`NPR ${fmt(income-tax)}`]
+    ]);
+}
+
+// Discount
+let _discMode=1;
+function setDiscMode(m) { _discMode=m; [1,2,3].forEach(i=>document.getElementById(`disc-mode${i}`).classList.toggle('hidden',i!==m)); }
+function calcDiscount() {
+    let rows=[];
+    if(_discMode===1) {
+        const o=+document.getElementById('d-orig').value, p=+document.getElementById('d-pct').value;
+        if(!o||!p) return alert('Fill fields.'); 
+        const save=r2(o*p/100), sale=r2(o-save);
+        rows=[['Original Price',`NPR ${fmt(o)}`],['Discount',`${p}%`],['You Save',`NPR ${fmt(save)}`],['Sale Price',`NPR ${fmt(sale)}`]];
+    } else if(_discMode===2) {
+        const o=+document.getElementById('d-o2').value, s=+document.getElementById('d-s2').value;
+        rows=[['Original',`NPR ${fmt(o)}`],['Sale Price',`NPR ${fmt(s)}`],['Discount %',`${r2((o-s)/o*100)}%`],['You Saved',`NPR ${fmt(o-s)}`]];
+    } else {
+        const s=+document.getElementById('d-s3').value, p=+document.getElementById('d-p3').value;
+        const orig=r2(s/(1-p/100));
+        rows=[['Sale Price',`NPR ${fmt(s)}`],['Discount',`${p}%`],['Original Price',`NPR ${fmt(orig)}`]];
+    }
+    document.getElementById('disc-result').innerHTML=resultHTML(rows);
+}
+
+// SIP
+function calcSIP() {
+    const P=+document.getElementById('sip-amt').value, r=+document.getElementById('sip-rate').value/12/100, n=+document.getElementById('sip-time').value*12;
+    if(!P||!r||!n) return alert('Fill all fields.');
+    const maturity=r2(P*(Math.pow(1+r,n)-1)/r*(1+r));
+    const invested=P*n;
+    document.getElementById('sip-result').innerHTML=resultHTML([
+        ['Total Invested',`NPR ${fmt(invested)}`],
+        ['Wealth Gained',`NPR ${fmt(r2(maturity-invested))}`],
+        ['Maturity Value',`NPR ${fmt(maturity)}`],
+        ['Return %',`${r2((maturity-invested)/invested*100)}%`]
+    ]);
+}
+
+// Fuel
+function calcFuel() {
+    const dist=+document.getElementById('f-dist').value, mpg=+document.getElementById('f-mpg').value;
+    let price=+document.getElementById('f-price').value||+document.getElementById('f-custom').value;
+    const rt=document.getElementById('f-rt').checked;
+    if(!dist||!mpg||!price) return alert('Fill all fields.');
+    const d=rt?dist*2:dist, litres=r2(d/mpg), cost=r2(litres*price);
+    document.getElementById('fuel-result').innerHTML=resultHTML([
+        ['Distance',`${d} km ${rt?'(round trip)':''}`],
+        ['Fuel Needed',`${litres} litres`],
+        ['Total Cost',`NPR ${fmt(cost)}`]
+    ]);
+}
+
+// Tip
+function setTip(v) { document.getElementById('tip-pct').value=v; calcTip(); }
+function calcTip() {
+    const bill=+document.getElementById('tip-bill').value,
+        pct=+document.getElementById('tip-pct').value,
+        ppl=+document.getElementById('tip-ppl').value||1;
+    if(!bill) return;
+    const tip=r2(bill*pct/100), total=r2(bill+tip), per=r2(total/ppl);
+    document.getElementById('tip-result').innerHTML=resultHTML([
+        ['Tip Amount',`NPR ${fmt(tip)}`],
+        ['Total Bill',`NPR ${fmt(total)}`],
+        ['Per Person',`NPR ${fmt(per)}`]
+    ]);
+}
+
+// Scientific
+let _sciExpr='', _sciDeg=true, _sci2nd=false, _sciHist=[], _sciClear=false;
+function sciBtn(b) {
+    const disp=document.getElementById('sci-disp');
+    const exprEl=document.getElementById('sci-expr');
+    if(b==='=') {
+        try {
+            let expr=_sciExpr.replace(/×/g,'*').replace(/÷/g,'/');
+            const res=eval(expr);
+            _sciHist.unshift(`${_sciExpr} = ${r2(res)}`);
+            if(_sciHist.length>10) _sciHist.pop();
+            document.getElementById('sci-history').innerHTML=_sciHist.map(h=>`<div class="text-slate-500">${h}</div>`).join('');
+            disp.textContent=r2(res);
+            exprEl.textContent=_sciExpr;
+            _sciExpr=String(r2(res));
+            _sciClear=true;
+        } catch(e){ disp.textContent='Error'; _sciExpr=''; }
+        return;
+    }
+    if(b==='⌫') { _sciExpr=_sciExpr.slice(0,-1); }
+    else if(b==='π') { _sciExpr+='Math.PI'; }
+    else if(b==='e') { _sciExpr+='Math.E'; }
+    else if(b==='±') { _sciExpr=_sciExpr?`-(${_sciExpr})`:_sciExpr; }
+    else if(b==='x²') { _sciExpr=`Math.pow((${_sciExpr}),2)`; }
+    else if(b==='x³') { _sciExpr=`Math.pow((${_sciExpr}),3)`; }
+    else if(b==='xʸ') { _sciExpr+=`**`; }
+    else if(b==='√') { _sciExpr=`Math.sqrt(${_sciExpr})`; }
+    else if(b==='∛') { _sciExpr=`Math.cbrt(${_sciExpr})`; }
+    else if(b==='1/x') { _sciExpr=`1/(${_sciExpr})`; }
+    else if(b==='log') { _sciExpr=`Math.log10(${_sciExpr})`; }
+    else if(b==='ln') { _sciExpr=`Math.log(${_sciExpr})`; }
+    else if(b==='eˣ') { _sciExpr=`Math.exp(${_sciExpr})`; }
+    else if(b==='10ˣ') { _sciExpr=`Math.pow(10,${_sciExpr})`; }
+    else if(['sin','cos','tan'].includes(b)) {
+        const fn=_sci2nd?`Math.a${b}`:( _sciDeg?`(v=>Math.${b}(v*Math.PI/180))`:` Math.${b}`);
+        _sciExpr=_sci2nd?`(Math.a${b}(${_sciExpr})${_sciDeg?'*180/Math.PI':''})`:`Math.${b}(${_sciExpr}${_sciDeg?'*Math.PI/180':''})`;
+    }
+    else if(['sin⁻¹','cos⁻¹','tan⁻¹'].includes(b)) {
+        const fn=b.replace('⁻¹','').replace('sin','asin').replace('cos','acos').replace('tan','atan');
+        _sciExpr=`(Math.${fn}(${_sciExpr})${_sciDeg?'*180/Math.PI':''})`;
+    }
+    else { if(_sciClear && /\d/.test(b)){ _sciExpr=''; } _sciExpr+=b; }
+    _sciClear=false;
+    disp.textContent=_sciExpr||'0';
+}
+function sciToggleDeg() { _sciDeg=!_sciDeg; document.getElementById('sci-deg-label').textContent=_sciDeg?'DEG':'RAD'; }
+function sciToggle2nd() { _sci2nd=!_sci2nd; }
+
+// Percentage
+let _pctMode=1;
+function setPctMode(m) { _pctMode=m; [1,2,3].forEach(i=>document.getElementById(`pct-mode${i}`).classList.toggle('hidden',i!==m)); }
+function calcPct() {
+    let rows=[];
+    if(_pctMode===1) {
+        const p=+document.getElementById('p-pct').value, v=+document.getElementById('p-val').value;
+        rows=[['Result',r2(p/100*v)],['Formula',`${p}% × ${v}`]];
+    } else if(_pctMode===2) {
+        const x=+document.getElementById('p-x2').value, y=+document.getElementById('p-y2').value;
+        rows=[['Percentage',`${r2(x/y*100)}%`],['Ratio',`${x} / ${y}`]];
+    } else {
+        const f=+document.getElementById('p-from').value, t=+document.getElementById('p-to').value;
+        const chg=r2((t-f)/f*100);
+        rows=[['Change',`${chg > 0 ? '+' : ''}${chg}%`],['Direction',chg>=0?'📈 Increase':'📉 Decrease'],['Difference',r2(t-f)]];
+    }
+    document.getElementById('pct-result').innerHTML=resultHTML(rows);
+}
+
+// Fraction
+function gcd(a,b){ return b?gcd(b,a%b):a; }
+function calcFraction() {
+    const n1=+document.getElementById('fr-n1').value, d1=+document.getElementById('fr-d1').value,
+        n2=+document.getElementById('fr-n2').value, d2=+document.getElementById('fr-d2').value,
+        op=document.getElementById('fr-op').value;
+    if(!d1||!d2) return alert('Denominators cannot be zero.');
+    let rn,rd;
+    if(op==='+'){rn=n1*d2+n2*d1;rd=d1*d2;}
+    else if(op==='-'){rn=n1*d2-n2*d1;rd=d1*d2;}
+    else if(op==='*'){rn=n1*n2;rd=d1*d2;}
+    else{rn=n1*d2;rd=d1*n2;}
+    const g=gcd(Math.abs(rn),Math.abs(rd));
+    const sn=rn/g, sd=rd/g;
+    document.getElementById('fr-result').innerHTML=resultHTML([
+        ['Result',`${sn} / ${sd}`],
+        ['Decimal',r2(sn/sd)],
+        ['Simplified',`${sn}/${sd}`]
+    ]);
+}
+
+// Age
+function calcAge() {
+    const dob=new Date(document.getElementById('ag-dob').value), target=new Date(document.getElementById('ag-target').value);
+    if(!dob||isNaN(dob)) return alert('Enter date of birth.');
+    let years=target.getFullYear()-dob.getFullYear(), months=target.getMonth()-dob.getMonth(), days=target.getDate()-dob.getDate();
+    if(days<0){months--;days+=new Date(target.getFullYear(),target.getMonth(),0).getDate();}
+    if(months<0){years--;months+=12;}
+    const totalYears=r2((target-dob)/(365.25*86400000));
+    const eligible18_35=totalYears>=18&&totalYears<=35, eligible21_35=totalYears>=21&&totalYears<=35;
+    document.getElementById('age-result').innerHTML=`
+    ${resultHTML([
+        ['Exact Age',`${years} yrs, ${months} mos, ${days} days`],
+        ['Total Years',r2(totalYears)],
+        ['Lok Sewa (Kharidar)',eligible18_35?'✅ Eligible':'❌ Not Eligible'],
+        ['Lok Sewa (Officer)',eligible21_35?'✅ Eligible':'❌ Not Eligible']
+    ])}`;
+}
+
+// GPA
+let _gpaRows=0;
+function addGPARow() {
+    _gpaRows++;
+    const div=document.createElement('div');
+    div.className='grid grid-cols-3 gap-2';
+    div.id=`gpa-row-${_gpaRows}`;
+    div.innerHTML=`
+    <input type="text" class="calc-input text-xs" placeholder="Subject ${_gpaRows}">
+    <input type="number" class="calc-input text-xs" placeholder="Marks (0-100)" step="0.1" min="0" max="100">
+    <input type="number" class="calc-input text-xs" placeholder="Credits" min="1" max="5">`;
+    document.getElementById('gpa-rows').appendChild(div);
+}
+function calcGPA() {
+    const rows=document.getElementById('gpa-rows').querySelectorAll('div');
+    let totalCredit=0, totalGradePoint=0;
+    rows.forEach(row=>{
+        const [,marks,credits]=row.querySelectorAll('input');
+        const m=+marks.value, c=+credits.value;
+        if(!m||!c) return;
+        let gp;
+        if(m>=90) gp=4.0; else if(m>=80) gp=3.6; else if(m>=70) gp=3.2;
+        else if(m>=60) gp=2.8; else if(m>=50) gp=2.4; else if(m>=40) gp=2.0; else gp=0;
+        totalGradePoint+=gp*c; totalCredit+=c;
+    });
+    if(!totalCredit) return alert('Enter at least one subject.');
+    const gpa=r2(totalGradePoint/totalCredit);
+    const div=gpa>=3.6?'Distinction':gpa>=3.0?'First Division':gpa>=2.4?'Second Division':gpa>=2.0?'Pass':'Fail';
+    document.getElementById('gpa-result').innerHTML=resultHTML([
+        ['GPA',gpa],['Division',div],['Total Credits',totalCredit]
+    ]);
+}
+
+// Grade
+let _gradeRows=0;
+function addGradeRow() {
+    _gradeRows++;
+    const div=document.createElement('div');
+    div.className='grid grid-cols-3 gap-2';
+    div.innerHTML=`
+    <input type="text" class="calc-input text-xs" placeholder="Assignment ${_gradeRows}">
+    <input type="text" class="calc-input text-xs" placeholder="e.g. 45/50">
+    <input type="number" class="calc-input text-xs" placeholder="Weight %">`;
+    document.getElementById('grade-rows').appendChild(div);
+}
+function calcGrade() {
+    const rows=document.getElementById('grade-rows').querySelectorAll('div:not(.grid-cols-3:first-child)');
+    let totalWeight=0, weightedScore=0;
+    document.getElementById('grade-rows').querySelectorAll('div').forEach(row=>{
+        const inputs=row.querySelectorAll('input');
+        if(inputs.length<3) return;
+        const scoreStr=inputs[1].value, weight=+inputs[2].value;
+        if(!scoreStr||!weight) return;
+        const parts=scoreStr.split('/');
+        const score=parts.length===2?+parts[0]/+parts[1]*100:+parts[0];
+        weightedScore+=score*weight; totalWeight+=weight;
+    });
+    if(!totalWeight) return alert('Enter at least one assignment.');
+    const avg=r2(weightedScore/totalWeight);
+    const letter=avg>=90?'A+':avg>=80?'A':avg>=70?'B+':avg>=60?'B':avg>=50?'C':'F';
+    document.getElementById('grade-result').innerHTML=resultHTML([
+        ['Weighted Average',`${avg}%`],['Letter Grade',letter],['Total Weight',`${totalWeight}%`]
+    ]);
+}
+
+// Password
+function genPassword() {
+    const len=+document.getElementById('pw-len').value;
+    const upper='ABCDEFGHIJKLMNOPQRSTUVWXYZ', lower='abcdefghijklmnopqrstuvwxyz', nums='0123456789', syms='!@#$%^&*()_+-=[]{}|;:,.<>?';
+    let chars='';
+    if(document.getElementById('pw-upper').checked) chars+=upper;
+    if(document.getElementById('pw-lower').checked) chars+=lower;
+    if(document.getElementById('pw-num').checked) chars+=nums;
+    if(document.getElementById('pw-sym').checked) chars+=syms;
+    if(!chars) { document.getElementById('pw-output').textContent='Select at least one option'; return; }
+    let pwd='';
+    for(let i=0;i<len;i++) pwd+=chars[Math.floor(Math.random()*chars.length)];
+    document.getElementById('pw-output').textContent=pwd;
+    // Strength
+    let score=0;
+    if(document.getElementById('pw-upper').checked) score++;
+    if(document.getElementById('pw-lower').checked) score++;
+    if(document.getElementById('pw-num').checked) score++;
+    if(document.getElementById('pw-sym').checked) score++;
+    if(len>=16) score++; if(len>=24) score++;
+    const labels=['Weak','Fair','Good','Strong','Very Strong','Excellent'];
+    const colors=['bg-red-500','bg-orange-500','bg-yellow-500','bg-blue-500','bg-green-500','bg-emerald-500'];
+    const idx=Math.min(score-1,5);
+    document.getElementById('pw-str-label').textContent=labels[idx]||'Weak';
+    document.getElementById('pw-str-bar').className=`strength-bar h-1.5 rounded-full ${colors[idx]||'bg-red-500'}`;
+    document.getElementById('pw-str-bar').style.width=`${(idx+1)/6*100}%`;
+}
+function copyPassword() {
+    const pwd=document.getElementById('pw-output').textContent;
+    navigator.clipboard.writeText(pwd).then(()=>{ const btn=event.target.closest('button'); btn.innerHTML='<i class="fa fa-check mr-2"></i>Copied!'; setTimeout(()=>btn.innerHTML='<i class="fa fa-copy mr-2"></i>Copy',2000); });
+}
+
+// Love
+function calcLove() {
+    const n1=document.getElementById('lv-n1').value.trim(), n2=document.getElementById('lv-n2').value.trim();
+    if(!n1||!n2) return alert('Enter both names.');
+    let seed=0;
+    for(const c of (n1+n2).toLowerCase()) seed+=c.charCodeAt(0);
+    const pct=(seed*17+n1.length*13+n2.length*7)%61+40;
+    const msgs=['💙 You are good friends!','💛 There is potential here!','💚 A lovely match!','❤️ Strong connection!','💕 Made for each other!','💖 A perfect love story!'];
+    const msg=msgs[Math.floor(pct/17)%msgs.length];
+    document.getElementById('love-result').innerHTML=`
+    <div class="result-box text-center">
+        <div class="text-5xl font-extrabold mb-2">${pct}%</div>
+        <div class="text-blue-200 text-sm">${n1} ❤️ ${n2}</div>
+        <div class="mt-3 text-base font-bold">${msg}</div>
+        <div class="mt-2 flex justify-center">
+            ${'❤️'.repeat(Math.round(pct/20))}
         </div>
-        <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-xs">
-            &copy; 2025 Nepali Guide. Designed for Nepali Aspirants.
-        </div>
-    </footer>
+    </div>`;
+}
 
-    <script>
-        function toggleDarkMode() {
-            const html = document.documentElement;
-            const icon = document.getElementById('dark-icon');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                icon.classList.replace('fa-sun', 'fa-moon');
-            } else {
-                html.classList.add('dark');
-                icon.classList.replace('fa-moon', 'fa-sun');
-            }
-        }
-
-        const toolList = {
-            financial: ["Mortgage Calculator", "Loan Calculator", "Auto Loan Calculator", "Interest Calculator", "Payment Calculator", "Retirement Calculator", "Amortization Calculator", "Investment Calculator", "Currency Calculator", "Inflation Calculator", "Finance Calculator", "Mortgage Payoff", "Income Tax", "Compound Interest", "Salary Calculator", "401K Calculator", "Interest Rate", "Sales Tax", "House Affordability", "Savings", "Rent Calculator", "Marriage Tax", "Estate Tax", "Pension Calculator", "Social Security", "Annuity Calculator", "Credit Card", "Debt Payoff", "CD Calculator", "Bond Calculator", "Mutual Fund", "VAT Calculator", "Margin Calculator", "Discount Calculator", "Business Loan", "Real Estate", "Lease Calculator", "Refinance Calculator", "Budget Calculator", "ROI Calculator", "APR Calculator", "HELOC Calculator", "Down Payment", "Rent vs Buy", "Commission Calculator", "Percent Off"],
-            fitness: ["BMI Calculator", "Calorie Calculator", "Body Fat", "BMR Calculator", "Macro Calculator", "Ideal Weight", "Pregnancy Calculator", "Due Date", "Pace Calculator", "Army Body Fat", "Carbohydrate", "Healthy Weight", "One Rep Max", "Protein Calculator", "Fat Intake", "TDEE Calculator", "Ovulation", "Period Calculator", "Body Type", "BAC Calculator"],
-            math: ["Scientific Calculator", "Fraction", "Percentage", "Triangle", "Volume", "Standard Deviation", "Random Number", "Percent Error", "Exponent", "Binary", "Hex Calculator", "Log Calculator", "Area Calculator", "Probability", "Statistics", "Mean Median Mode", "Z-score", "Ratio Calculator", "Distance", "Circle", "Pythagorean", "Root Calculator", "LCM Calculator", "GCF Calculator", "Matrix", "Average Calculator"],
-            other: ["Age Calculator", "Date Calculator", "Time Calculator", "Hours Calculator", "GPA Calculator", "Grade Calculator", "Height Calculator", "Concrete Calculator", "Subnet Calculator", "Bra Size", "Password Generator", "Dice Roller", "Fuel Cost", "BTU Calculator", "Square Footage", "Time Zone", "Love Calculator", "GDP Calculator", "Gas Mileage", "Horsepower", "Stair Calculator", "Ohms Law", "Shoe Size", "Tip Calculator", "Molarity", "Sleep Calculator", "Roofing Calculator"]
-        };
-
-        function render() {
-            const grids = { financial: 'financial-grid', fitness: 'health-grid', math: 'math-grid', other: 'other-grid' };
-            const colors = { financial: 'bg-green-100 text-green-600', fitness: 'bg-red-100 text-red-600', math: 'bg-blue-100 text-blue-600', other: 'bg-purple-100 text-purple-600' };
-            const icons = { financial: 'fa-coins', fitness: 'fa-heart-pulse', math: 'fa-calculator', other: 'fa-gears' };
-
-            for (const cat in toolList) {
-                const grid = document.getElementById(`${cat}-grid`);
-                toolList[cat].forEach(name => {
-                    const card = document.createElement('a');
-                    card.href = "#";
-                    card.className = "tool-card";
-                    card.innerHTML = `
-                        <div class="tool-icon-box ${colors[cat]}">
-                            <i class="fa ${icons[cat]}"></i>
-                        </div>
-                        <h3 class="font-bold text-xs leading-tight">${name}</h3>
-                    `;
-                    grid.appendChild(card);
-                });
-            }
-        }
-
-        function searchTools() {
-            const q = document.getElementById('toolSearch').value.toLowerCase();
-            const cards = document.querySelectorAll('.tool-card');
-            cards.forEach(c => {
-                c.style.display = c.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
-            });
-        }
-
-        window.onload = render;
-    </script>
+// Lok Sewa
+function calcLokSewa() {
+    const dob=new Date(document.getElementById('ls-dob').value);
+    if(!dob||isNaN(dob)) return alert('Enter date of birth.');
+    const today=new Date();
+    const years=r2((today-dob)/(365.25*86400000));
+    const [min,max]=document.getElementById('ls-post').value.split(',').map(Number);
+    const eligible=years>=min&&years<=max;
+    const timeLeft=max-years;
+    document.getElementById('ls-result').innerHTML=`
+    ${resultHTML([
+        ['Your Age',`${Math.floor(years)} years`],
+        ['Required',`${min}–${max} years`],
+        ['Status',eligible?'✅ ELIGIBLE':'❌ NOT ELIGIBLE'],
+        [eligible?'Time Remaining':'Years Until Eligible',eligible?`${r2(timeLeft)} years left`:`${r2(min-years)} years to go`]
+    ])}`;
+}
+</script>
 </body>
 </html>
