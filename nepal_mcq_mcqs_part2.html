@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepal Geography MCQ - Part 2 | Nepali Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { primary: '#2563eb', secondary: '#f59e0b' } } }
+        }
+    </script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); }
+        .glass { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); }
+        .dark .glass { background: rgba(15,23,42,0.9); }
+
+        .option-card {
+            border: 2px solid #e2e8f0; border-radius: 14px; padding: 14px 16px;
+            cursor: pointer; transition: all 0.25s ease; display: flex;
+            align-items: flex-start; gap: 12px;
+        }
+        .dark .option-card { border-color: #334155; }
+        .option-card:hover { border-color: #2563eb; background: rgba(37,99,235,0.03); }
+        .dark .option-card:hover { background: rgba(37,99,235,0.08); }
+        .option-card.selected { border-color: #2563eb; background: rgba(37,99,235,0.06); }
+        .dark .option-card.selected { background: rgba(37,99,235,0.12); }
+        .option-card.selected .opt-label { background: #2563eb; color: white; }
+        .option-card.correct-answer { border-color: #059669; background: rgba(5,150,105,0.08); }
+        .option-card.correct-answer .opt-label { background: #059669; color: white; }
+        .option-card.wrong-answer { border-color: #dc2626; background: rgba(220,38,38,0.08); }
+        .option-card.wrong-answer .opt-label { background: #dc2626; color: white; }
+
+        .opt-label {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.8rem; flex-shrink: 0; transition: all 0.2s ease;
+        }
+
+        .timer-warning { animation: timerPulse 1s ease-in-out infinite; }
+        @keyframes timerPulse { 0%,100% { color: #dc2626; } 50% { color: #fca5a5; } }
+        .progress-fill { transition: width 0.5s ease; }
+        .modal-overlay { background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+
+        @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        .slide-up { animation: slideUp 0.4s ease forwards; }
+        @keyframes countUp { from { opacity:0; transform:scale(0.5); } to { opacity:1; transform:scale(1); } }
+        .count-up { animation: countUp 0.6s cubic-bezier(0.4,0,0.2,1) forwards; }
+
+        .clear-response-btn:hover { background: #fef2f2; color: #dc2626; }
+        .dark .clear-response-btn:hover { background: rgba(220,38,38,0.1); }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- NAVIGATION -->
+    <nav class="sticky top-0 z-50 glass dark:bg-slate-900/90 border-b dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="bg-primary text-white p-2 rounded-lg font-bold text-xl shadow-md">NG</a>
+                    <span class="text-xl font-bold tracking-tight text-primary dark:text-white">Nepali <span class="text-red-500">Guide</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="hover:text-primary font-medium">Home</a>
+                    <a href="mcqs.html" class="text-primary font-bold">MCQs</a>
+                    <a href="mock-tests.html" class="hover:text-primary font-medium">Mock Test</a>
+                    <a href="blogs.html" class="hover:text-primary font-medium">Blogs</a>
+                    <a href="Tools.html" class="hover:text-primary font-medium">Tools</a>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800">
+                        <i id="dark-icon" class="fa fa-moon"></i>
+                    </button>
+                    <a href="login.html" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition">Login</a>
+                </div>
+                <div class="md:hidden flex items-center gap-4">
+                    <button onclick="toggleDarkMode()"><i class="fa fa-moon"></i></button>
+                    <i class="fa fa-bars text-2xl"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- TEST HEADER BAR -->
+    <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase">Geography</span>
+                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 hidden sm:block">नेपालको भूगोल — Part 2</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                        <span id="timer" class="text-lg font-bold font-mono text-slate-800 dark:text-white">15:00</span>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-4 text-xs text-slate-500">
+                        <span><i class="fa fa-check-circle text-emerald-500 mr-1"></i><span id="answered-count">0</span></span>
+                        <span><i class="fa fa-bookmark text-amber-500 mr-1"></i><span id="marked-count">0</span></span>
+                        <span><i class="fa fa-circle text-slate-300 dark:text-slate-600 mr-1"></i><span id="remaining-count">25</span></span>
+                    </div>
+                    <button onclick="openSubmitModal()" class="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-xl font-bold text-sm transition">
+                        <i class="fa fa-paper-plane mr-1.5"></i><span class="hidden sm:inline">Submit</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-2 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                <div id="progress-bar" class="progress-fill h-full bg-gradient-to-r from-primary to-blue-400 rounded-full" style="width:0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN TEST AREA -->
+    <div class="max-w-3xl mx-auto px-3 sm:px-4 py-5 sm:py-6">
+
+        <!-- QUESTION AREA -->
+        <div id="question-container" class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm p-5 sm:p-6 md:p-8 slide-up"></div>
+
+        <!-- NAVIGATION BUTTONS -->
+        <div class="flex items-center justify-between gap-2 sm:gap-3 mt-5">
+            <button onclick="prevQuestion()" id="prev-btn" class="flex-1 sm:flex-none sm:w-auto items-center justify-center gap-2 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                <i class="fa fa-arrow-left text-xs"></i> <span class="hidden sm:inline">Previous</span>
+            </button>
+            <div class="flex items-center gap-2">
+                <button onclick="clearResponse()" class="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition clear-response-btn">
+                    <i class="fa fa-eraser text-xs"></i> <span class="hidden sm:inline">Clear</span>
+                </button>
+                <button onclick="markForReview()" id="mark-btn" class="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-3 rounded-xl border border-amber-300 dark:border-amber-700 text-sm font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition">
+                    <i class="fa fa-bookmark text-xs"></i> <span id="mark-btn-text">Mark</span>
+                </button>
+            </div>
+            <button onclick="nextQuestion()" id="next-btn" class="flex-1 sm:flex-none sm:w-auto items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-blue-700 transition">
+                <span>Next</span> <i class="fa fa-arrow-right text-xs"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- SUBMIT MODAL -->
+    <div id="submit-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-overlay">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full mx-4 shadow-2xl slide-up">
+            <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center"><i class="fa fa-exclamation-triangle text-2xl text-red-500"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold mb-2 text-slate-900 dark:text-white">Submit Test?</h3>
+                <p class="text-sm text-slate-500 mb-2">Are you sure you want to submit?</p>
+                <div id="modal-stats" class="text-sm text-slate-600 dark:text-slate-400 space-y-1 mb-5 py-3 border-y border-slate-100 dark:border-slate-700"></div>
+                <div class="flex gap-3">
+                    <button onclick="closeSubmitModal()" class="flex-1 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition">Cancel</button>
+                    <button onclick="submitTest()" class="flex-1 py-3 rounded-xl bg-red-500 text-white font-semibold text-sm hover:bg-red-600 transition">Yes, Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULT PAGE -->
+    <div id="result-page" class="hidden">
+        <div class="max-w-3xl mx-auto px-3 sm:px-4 py-8 sm:py-10">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-xl overflow-hidden">
+                <div id="result-header" class="p-6 sm:p-8 md:p-10 text-center"></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 border-t border-slate-100 dark:border-slate-700" id="result-stats-grid"></div>
+                <div class="border-t border-slate-100 dark:border-slate-700 p-4 sm:p-6 md:p-8">
+                    <h3 class="font-bold text-base sm:text-lg mb-4 text-slate-900 dark:text-white"><i class="fa fa-list-check text-primary mr-2"></i>Answer Review</h3>
+                    <div id="review-container" class="space-y-3 sm:space-y-4"></div>
+                </div>
+                <div class="border-t border-slate-100 dark:border-slate-700 p-4 sm:p-6 flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="mcqs.html" class="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition text-center"><i class="fa fa-arrow-left mr-2"></i>Back to MCQs</a>
+                    <button onclick="location.reload()" class="px-5 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-blue-700 transition text-center"><i class="fa fa-redo mr-2"></i>Retry Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-16 mt-10">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+                <div class="flex items-center gap-2 mb-6"><div class="bg-primary text-white p-2 rounded-lg font-bold shadow-md">NG</div><span class="text-xl font-bold text-white">Nepali Guide</span></div>
+                <p class="text-sm leading-relaxed">The #1 community-driven platform for Nepali students and PSC aspirants. Prepare, Practice, and Succeed.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Resources</h4>
+                <ul class="space-y-4 text-sm"><li><a href="mcqs.html" class="hover:text-primary">Daily Current Affairs</a></li><li><a href="mcqs.html" class="hover:text-primary">Subjective Q&A</a></li><li><a href="mcqs.html" class="hover:text-primary">Model Sets</a></li></ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Support</h4>
+                <ul class="space-y-4 text-sm"><li><a href="About.html" class="hover:text-primary">About</a></li><li><a href="Contact.html" class="hover:text-primary">Contact</a></li><li><a href="Privacy" class="hover:text-primary">Privacy Policy</a></li></ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Follow</h4>
+                <div class="flex gap-4 text-xl">
+                    <a href="https://www.facebook.com/nepaliguide" target="_blank" class="hover:text-primary transition"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/nepali_guide_official?igsh=MWQ4OW5yODl5aWV5NA==" target="_blank" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@nepaliguideofficial" target="_blank" class="hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-xs">&copy; 2025 Nepali Guide. Designed for Nepali Aspirants.</div>
+    </footer>
+
+<script>
+const questions = [
+    { q: "२६. नेपालको प्रमाणिक समय तलका मध्ये कुन देशान्तरले निर्धारण गर्दछ ?", o: ["83° 15'", "86° 15'", "85° 15'", "84° 15'"], a: 1 },
+    { q: "२७. नेपालको प्रमाणिक समय दिइएका मध्ये कुन देशान्तरलाई आधार मानी निर्धारण गरिएको छ?", o: ["८६ डिग्री १५ मिनेट पूर्वी", "८८ डिग्री ४५ मिनेट पूर्वी", "९२ डिग्री ७५ मिनेट पूर्वी", "९६ डिग्री १५ मिनेट पूर्वी"], a: 0 },
+    { q: "२८. नेपालको प्रमाणिक समय ग्रीनबीच मानक समयभन्दा कति समयको अन्तरमा हुने गरी निर्धारण गरिएको छ?", o: ["५ घण्टा ४५ मिनेट अगाडि", "५ घण्टा ४५ मिनेट पछाडि", "५ घण्टा १५ मिनेट अगाडि", "५ घण्टा १५ मिनेट पछाडि"], a: 0 },
+    { q: "२९. नेपालको प्रमाणिक समय कुन मितिदेखि लागु भएको हो?", o: ["२०४२ बैशाख १", "२०४१ बैशाख १", "२०४३ बैशाख १", "२०४५ बैशाख १"], a: 0 },
+    { q: "३०. नेपालको प्रमाणित समय कहिले देखि लागु भएको हो ?", o: ["वि.सं. २०४१ वैशाख १", "वि.सं. २०४२ वैशाख १", "वि.सं. २०४५ जेठ १", "वि.सं. २०४१ असोज १"], a: 1 },
+    { q: "३१. नेपालका भारतसँगमात्र सिमाना जोडिने प्रदेशहरू कतिवटा रहेका छन्?", o: ["७", "५", "४", "२"], a: 3 },
+    { q: "३२. चीनले मात्र छोएको नेपालको कुन प्रदेश हो?", o: ["कर्णाली", "गण्डकी", "कोशी", "बागमती"], a: 0 },
+    { q: "३३. चीन र भारत दुवै देशसँग सीमा जोडिएको प्रदेश देहायको मध्ये कुन होइन ?", o: ["बागमती", "कोशी", "सुदूरपश्चिम", "कर्णाली"], a: 3 },
+    { q: "३४. भारतसँग मात्र जोडिएका नेपालका कति जिल्ला छन् ?", o: ["२५", "२४", "२६", "२८"], a: 0 },
+    { q: "३५. भारतसँग मात्र सिमाना जोडिएका नेपालका कतिवटा जिल्लाहरू छन् ?", o: ["२५", "३६", "२४", "३०"], a: 0 },
+    { q: "३६. चीन र भारत दुवै देशलाई छुने नेपालका जिल्ला कति वटा छन् ?", o: ["२", "३", "४", "५"], a: 0 },
+    { q: "३७. चीन र भारत दुवै देशलाई छुने नेपालका दुई जिल्ला कुन-कुन हुन् ?", o: ["ताप्लेजुङ र बाजुरा", "झापा र दार्चुला", "इलाम र दार्चुला", "ताप्लेजुङ र दार्चुला"], a: 3 },
+    { q: "३८. तलका मध्ये कुन जिल्लाको सिमानाले चीन र भारतको सिमानालाई छुन्छ?", o: ["हुम्ला", "पाँचथर", "दार्चुला", "इलाम"], a: 2 },
+    { q: "३९. तलका मध्ये चीनसँग सिमाना नजोडिएको जिल्ला कुन हो?", o: ["सिन्धुपाल्चोक", "दोलखा", "पर्वत", "बझाङ"], a: 2 },
+    { q: "४०. नेपालमा कतिवटा जिल्लाले चीन र भारतलाई छोएका छैनन् ?", o: ["३७ वटा", "३५ वटा", "३८ वटा", "४० वटा"], a: 0 },
+    { q: "४१. तलका कुराहरू विचार गर्नुहोस् र सही विकल्प छान्नुहोस्: १) नेपालका ५० वटा जिल्लाले भारतको सिमाना हुँदैनन् २) चीनसँग नेपालका १३ वटा जिल्लाको मात्र सिमाना जोडिएको छ ३) नेपालका ६ वटा प्रदेशले भारतको सिमाना छुन्छन्", o: ["१ मात्र", "२ मात्र", "१ र ३", "२ र ३"], a: 2 },
+    { q: "४२. नेपालको लिम्पियाधुरा, लिपुलेक र कालापानी सहितको अद्यावधिक नक्सा कहिले प्रकाशन गरिएको हो ?", o: ["२०७७ जेठ", "२०७७ असार", "२०७६ चैत्र", "२०७५ जेठ"], a: 0 },
+    { q: "४३. नेपाल सरकारले नेपालको भूभाग लिम्पियाधुरा, कालापानी र लिपुलेकसमेत समेटेर तयार गरेको नयाँ नक्सा कहिले सार्वजनिक गरेको हो?", o: ["वि.सं. २०७७ असार ७ गते", "वि.सं. २०७७ जेठ ७ गते", "वि.सं. २०७६ चैत्र २१ गते", "वि.सं. २०७७ चैत्र २१ गते"], a: 1 },
+    { q: "४४. नेपालको कूल क्षेत्रफलको कति प्रतिशत भूभाग हिमाली प्रदेशले ओगटेको छ?", o: ["१५", "१७", "२०", "६८"], a: 0 },
+    { q: "४५. नेपालको दक्षिणतर्फको समथर भूभागलाई के भनिन्छ ?", o: ["तराई", "भित्री मधेश", "भावर क्षेत्र", "टाँड क्षेत्र"], a: 0 },
+    { q: "४६. तराई प्रदेश भनेर कति मिटर उचाइसम्मको भूभागलाई चिनिन्छ ?", o: ["समुन्द्री सतहबाट ६०० मिटरसम्म", "समुन्द्री सतहबाट ८०० मिटरसम्म", "समुन्द्री सतहबाट १२०० मिटरसम्म", "समुन्द्री सतहबाट ५०० मिटरसम्म"], a: 0 },
+    { q: "४७. नेपालको तराई क्षेत्र समुन्द्री सतहबाट कति मिटर उचाइसम्म रहेको छ?", o: ["२००", "४००", "६००", "८००"], a: 2 },
+    { q: "४८. भावर प्रदेश कहाँ पर्दछ ?", o: ["तराईको दक्षिण", "चुरे पर्वतको दक्षिण", "महाभारत पर्वतको उत्तर", "महाभारत पर्वत र हिमालय पर्वतको बीच"], a: 1 },
+    { q: "४९. भावर प्रदेशले नेपालको कूल भूभागको कति प्रतिशत क्षेत्रफल ओगटेको छ?", o: ["२.५%", "३.५%", "४.५%", "५.५%"], a: 2 },
+    { q: "५०. भावर प्रदेशका बारेमा निम्न कथन अध्ययन गरी सही जवाफ छान्नुहोस्: अ) खास तराईको उत्तर र चुरे पर्वतमालाको दक्षिणमा अवस्थित छ। आ) फुस्रो र बालुवायुक्त माटोले बनेको छ। इ) यसको अवस्थिति पाँच सय मिटरसम्मको उचाइमा सीमित छ। ई) भावरको पेटीमा चारकोसे झाडी अवस्थित छ।", o: ["अ र आ ठीक", "अ र इ ठीक", "अ, आ र ई ठीक", "अ, इ र ई ठीक"], a: 2 }
+];
+
+let currentQ = 0;
+let userAnswers = new Array(questions.length).fill(-1);
+let markedForReview = new Array(questions.length).fill(false);
+let timerSeconds = 15 * 60;
+let timerInterval = null;
+let testSubmitted = false;
+
+function init() { renderQuestion(); startTimer(); updateCounts(); }
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        if (testSubmitted) return;
+        timerSeconds--;
+        if (timerSeconds <= 0) { timerSeconds = 0; submitTest(); }
+        const m = Math.floor(timerSeconds / 60), s = timerSeconds % 60;
+        const el = document.getElementById('timer');
+        el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        if (timerSeconds <= 120) el.classList.add('timer-warning');
+    }, 1000);
+}
+
+function updateCounts() {
+    const answered = userAnswers.filter(a => a !== -1).length;
+    const marked = markedForReview.filter(m => m).length;
+    document.getElementById('answered-count').textContent = answered;
+    document.getElementById('marked-count').textContent = marked;
+    document.getElementById('remaining-count').textContent = questions.length - answered;
+    document.getElementById('progress-bar').style.width = `${(answered / questions.length) * 100}%`;
+}
+
+function renderQuestion() {
+    const q = questions[currentQ];
+    const labels = ['अ', 'आ', 'इ', 'ई'];
+    let html = `
+        <div class="flex items-center gap-3 mb-5">
+            <span class="text-xs font-bold text-slate-400">प्रश्न ${currentQ + 1} of ${questions.length}</span>
+        </div>
+        <h2 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white leading-relaxed mb-7">${q.q}</h2>
+        <div class="space-y-3">
+    `;
+    q.o.forEach((opt, i) => {
+        const sel = userAnswers[currentQ] === i;
+        html += `<div class="option-card ${sel ? 'selected' : ''}" onclick="selectOption(${i})">
+            <div class="opt-label ${sel ? '' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'}">${labels[i]}</div>
+            <span class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed pt-0.5">${opt}</span>
+        </div>`;
+    });
+    html += '</div>';
+    document.getElementById('question-container').innerHTML = html;
+    document.getElementById('prev-btn').disabled = currentQ === 0;
+    document.getElementById('next-btn').innerHTML = currentQ === questions.length - 1 ? 'Finish <i class="fa fa-flag-checkered text-xs"></i>' : 'Next <i class="fa fa-arrow-right text-xs"></i>';
+    document.getElementById('mark-btn-text').textContent = markedForReview[currentQ] ? 'Unmark' : 'Mark';
+    updateCounts();
+}
+
+function selectOption(idx) { if (testSubmitted) return; userAnswers[currentQ] = idx; renderQuestion(); }
+function clearResponse() { if (testSubmitted) return; userAnswers[currentQ] = -1; renderQuestion(); }
+function markForReview() { if (testSubmitted) return; markedForReview[currentQ] = !markedForReview[currentQ]; renderQuestion(); }
+function nextQuestion() { if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } else openSubmitModal(); }
+function prevQuestion() { if (currentQ > 0) { currentQ--; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } }
+
+function openSubmitModal() {
+    const answered = userAnswers.filter(a => a !== -1).length;
+    const marked = markedForReview.filter(m => m).length;
+    document.getElementById('modal-stats').innerHTML = `<div class="flex justify-between"><span>Answered:</span><strong class="text-emerald-600">${answered}</strong></div><div class="flex justify-between"><span>Marked:</span><strong class="text-amber-600">${marked}</strong></div><div class="flex justify-between"><span>Not Attempted:</span><strong class="text-red-500">${questions.length - answered}</strong></div>`;
+    const m = document.getElementById('submit-modal'); m.classList.remove('hidden'); m.classList.add('flex');
+}
+function closeSubmitModal() { const m = document.getElementById('submit-modal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+
+function submitTest() {
+    testSubmitted = true; clearInterval(timerInterval); closeSubmitModal(); showResults();
+}
+
+function showResults() {
+    document.querySelector('.max-w-3xl.mx-auto.px-3.sm\\:px-4.py-5\\:sm:py-6').classList.add('hidden');
+    document.querySelector('.bg-white.dark\\:bg-slate-800.border-b').classList.add('hidden');
+    document.getElementById('result-page').classList.remove('hidden');
+
+    let correct = 0, wrong = 0, unanswered = 0;
+    questions.forEach((q, i) => { if (userAnswers[i] === -1) unanswered++; else if (userAnswers[i] === q.a) correct++; else wrong++; });
+
+    const neg = wrong * 0.20;
+    const total = Math.max(0, correct - neg);
+    const pct = Math.max(0, (total / questions.length) * 100);
+
+    let grade, gradeColor, gradeBg, msg;
+    if (pct >= 70) { grade='Excellent'; gradeColor='text-emerald-400'; gradeBg='from-emerald-500 to-emerald-700'; msg='Outstanding! तपाईंले उत्कृष्ट प्रदर्शन गर्नुभयो।'; }
+    else if (pct >= 50) { grade='Good'; gradeColor='text-blue-400'; gradeBg='from-blue-500 to-blue-700'; msg='Good attempt! थप प्रयास गर्नुहोस्।'; }
+    else if (pct >= 30) { grade='Average'; gradeColor='text-amber-400'; gradeBg='from-amber-500 to-amber-700'; msg='सुधार गर्नुहोस्। कमजोर भागमा ध्यान दिनुहोस्।'; }
+    else { grade='Needs Work'; gradeColor='text-red-400'; gradeBg='from-red-500 to-red-700'; msg='चिन्ता नगर्नुहोला! पुन: अभ्यास गर्नुहोस्।'; }
+
+    document.getElementById('result-header').className = `p-6 sm:p-8 md:p-10 text-center bg-gradient-to-br ${gradeBg} text-white`;
+    document.getElementById('result-header').innerHTML = `
+        <div class="count-up text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2">${total.toFixed(1)}<span class="text-xl font-medium opacity-80">/${questions.length}</span></div>
+        <div class="text-base sm:text-lg font-semibold ${gradeColor} mb-1">${grade}</div>
+        <p class="text-white/70 text-sm max-w-md mx-auto">${msg}</p>`;
+
+    document.getElementById('result-stats-grid').innerHTML = `
+        <div class="p-4 text-center border-r border-b border-slate-100 dark:border-slate-700"><div class="text-xl sm:text-2xl font-bold text-emerald-600 count-up" style="animation-delay:0.1s">${correct}</div><div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">सही</div></div>
+        <div class="p-4 text-center border-b border-slate-100 dark:border-slate-700"><div class="text-xl sm:text-2xl font-bold text-red-500 count-up" style="animation-delay:0.2s">${wrong}</div><div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">गलत</div></div>
+        <div class="p-4 text-center border-r border-slate-100 dark:border-slate-700"><div class="text-xl sm:text-2xl font-bold text-slate-400 count-up" style="animation-delay:0.3s">${unanswered}</div><div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">छोडिएको</div></div>
+        <div class="p-4 text-center"><div class="text-xl sm:text-2xl font-bold text-red-400 count-up" style="animation-delay:0.4s">-${neg.toFixed(1)}</div><div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">नेगेटिभ</div></div>`;
+
+    const labels = ['अ','आ','इ','ई'];
+    let reviewHTML = '';
+    questions.forEach((q, i) => {
+        const ok = userAnswers[i] === q.a;
+        const bad = userAnswers[i] !== -1 && userAnswers[i] !== q.a;
+        const skip = userAnswers[i] === -1;
+        const icon = ok ? '<i class="fa fa-check-circle text-emerald-500"></i>' : bad ? '<i class="fa fa-times-circle text-red-500"></i>' : '<i class="fa fa-minus-circle text-slate-400"></i>';
+        const bc = ok ? 'border-emerald-200 dark:border-emerald-800' : bad ? 'border-red-200 dark:border-red-800' : 'border-slate-100 dark:border-slate-700';
+        reviewHTML += `<div class="rounded-xl border ${bc} p-3 sm:p-4">
+            <div class="flex items-start gap-3 mb-2"><div class="mt-0.5">${icon}</div><div class="flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Q${i+26}</span><p class="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-0.5">${q.q}</p></div></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 ml-8">${q.o.map((opt, oi) => {
+                let cls = 'bg-slate-50 dark:bg-slate-700/50 text-slate-500';
+                if (oi === q.a) cls = 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-semibold';
+                if (oi === userAnswers[i] && oi !== q.a) cls = 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 line-through';
+                return `<div class="text-xs px-3 py-2 rounded-lg ${cls}"><span class="font-bold mr-1">${labels[oi]}.</span>${opt}</div>`;
+            }).join('')}</div>
+            ${bad ? '<p class="text-[11px] text-red-500 mt-2 ml-8"><i class="fa fa-info-circle mr-1"></i>गलत उत्तर। नेगेटिभ मार्किङ लागेको छ।</p>' : ''}
+            ${skip ? '<p class="text-[11px] text-slate-400 mt-2 ml-8"><i class="fa fa-info-circle mr-1"></i>उत्तर दिइएको। कुनै मार्क लागेन।</p>' : ''}
+        </div>`;
+    });
+    document.getElementById('review-container').innerHTML = reviewHTML;
+}
+
+function toggleDarkMode() {
+    const h = document.documentElement, i = document.getElementById('dark-icon');
+    if (h.classList.contains('dark')) { h.classList.remove('dark'); i.classList.replace('fa-sun','fa-moon'); }
+    else { h.classList.add('dark'); i.classList.replace('fa-moon','fa-sun'); }
+}
+
+document.addEventListener('keydown', e => {
+    if (testSubmitted) return;
+    if (e.key === 'ArrowRight' || e.key === 'n') nextQuestion();
+    if (e.key === 'ArrowLeft' || e.key === 'p') prevQuestion();
+    if (e.key === '1' || e.key === 'a') selectOption(0);
+    if (e.key === '2' || e.key === 'b') selectOption(1);
+    if (e.key === '3' || e.key === 'c') selectOption(2);
+    if (e.key === '4' || e.key === 'e') selectOption(3);
+    if (e.key === 'm') markForReview();
+});
+
+init();
+</script>
+</body>
+</html>
