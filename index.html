@@ -24,6 +24,25 @@
         .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
         .ad-portal { background: #f1f5f9; border: 2px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold; }
         .dark .ad-portal { background: #1e293b; border-color: #334155; color: #475569; }
+
+        .cat-hero-gk { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+        .cat-hero-current-affairs { background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); }
+        .cat-hero-nea { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); }
+        .cat-hero-ntc { background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); }
+        .cat-hero-nrb { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+        .cat-hero-caan { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); }
+        .cat-hero-rbb { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .cat-hero-nbl { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); }
+        .cat-hero-adbl { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .cat-hero-nasu { background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%); }
+        .cat-hero-kharidar { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); }
+        .cat-hero-officer { background: linear-gradient(135deg, #475569 0%, #334155 100%); }
+        .cat-hero-verbal-reasoning { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
+        .cat-hero-non-verbal-reasoning { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .cat-hero-arithmetic-reasoning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+
+        .post-card { transition: all 0.3s ease; }
+        .post-card:hover { transform: translateY(-4px); }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
@@ -33,7 +52,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center gap-2">
-                   <a href="index.html" class="bg-primary text-white p-2 rounded-lg font-bold text-xl shadow-md">NG</a>
+                   <a href="index.html" onclick="goHome(event)" class="bg-primary text-white p-2 rounded-lg font-bold text-xl shadow-md">NG</a>
                     <span class="text-xl font-bold tracking-tight text-primary dark:text-white">Nepali <span class="text-red-500">Guide</span></span>
                 </div>
 
@@ -43,7 +62,7 @@
                         <input type="text" placeholder="Search topics..." class="bg-slate-100 dark:bg-slate-800 border-none rounded-full py-2 px-4 pl-10 text-sm focus:ring-2 focus:ring-primary w-64">
                         <i class="fa fa-search absolute left-3 top-2.5 text-slate-400"></i>
                     </div>
-                    <a href="index.html" class="hover:text-primary font-medium">Home</a>
+                    <a href="index.html" onclick="goHome(event)" class="hover:text-primary font-medium">Home</a>
                     <a href="mcqs.html" class="hover:text-primary font-medium">MCQs</a>
                     <a href="mock-tests.html" class="hover:text-primary font-medium">Mock Tests</a>
                     <a href="blogs.html" class="hover:text-primary font-medium">Blogs</a>
@@ -62,222 +81,292 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <header class="gradient-bg text-white py-16 md:py-24 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-            <div class="md:w-1/2 text-center md:text-left">
-                <span class="bg-blue-400/30 text-blue-100 px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wider">#1 Loksewa Platform</span>
-                <h1 class="text-4xl md:text-6xl font-extrabold mt-4 mb-6 leading-tight">Your Success starts with Nepali Guide.</h1>
-                <p class="text-lg text-blue-100 mb-8">Access the most comprehensive collection of Nepal PSC study materials, live mock tests, and daily current affairs.</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <button class="bg-secondary hover:bg-orange-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-1">Take Free Mock Test</button>
-                    <button class="bg-white/10 hover:bg-white/20 border border-white/30 px-8 py-4 rounded-xl font-bold text-lg backdrop-blur-sm transition">Browse Syllabus</button>
-                </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-                <div class="relative">
-                    <div class="absolute -top-4 -left-4 w-24 h-24 bg-orange-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-                    <img src="https://illustrations.popsy.co/white/studying.svg" alt="Education" class="w-80 md:w-[450px]">
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- ==================== ORIGINAL HOMEPAGE ==================== -->
+    <div id="homepage">
 
-    <!-- BANNER AD PORTAL -->
-    <div class="max-w-7xl mx-auto px-4 mt-8">
-        <div class="ad-portal w-full h-24 rounded-2xl">
-            Advertisement Portal Space (Google Adsense / Local Ad)
-        </div>
-    </div>
-
-    <!-- 15 STUDY CATEGORIES -->
-    <section class="max-w-7xl mx-auto px-4 py-16">
-        <div class="flex justify-between items-end mb-10">
-            <div>
-                <h2 class="text-3xl font-bold">Study Categories</h2>
-                <p class="text-slate-500 mt-2">Targeted preparation for Nepal's top organizations and exams</p>
-            </div>
-            <a href="#" class="text-primary font-bold hover:underline">View All</a>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-primary mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-atlas text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">GK</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 text-red-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-newspaper text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">CURRENT AFFAIRS</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-bolt text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">NEA</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-phone text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">NTC</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-green-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-building-columns text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">NRB</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 text-sky-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-plane text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">CAAN</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 text-red-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-piggy-bank text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">RBB</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-coins text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">NBL</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-seedling text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">ADBL</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-user-tie text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">NASU</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 text-orange-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-file-signature text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">KHARIDAR</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-slate-100 dark:bg-slate-700 text-slate-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-briefcase text-xl"></i>
-                </div>
-                <h3 class="font-bold text-sm">OFFICER</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900/30 text-pink-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-comment-dots text-xl"></i>
-                </div>
-                <h3 class="font-bold text-xs">VERBAL REASONING</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-shapes text-xl"></i>
-                </div>
-                <h3 class="font-bold text-xs">NON VERBAL REASONING</h3>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
-                <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
-                    <i class="fa fa-calculator text-xl"></i>
-                </div>
-                <h3 class="font-bold text-xs">ARITHMETIC REASONING</h3>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN CONTENT AREA -->
-    <main class="max-w-7xl mx-auto px-4 grid lg:grid-cols-3 gap-8 pb-16">
-        <div class="lg:col-span-2 space-y-8">
-            <h2 class="text-2xl font-bold flex items-center gap-2">
-                <i class="fa fa-bolt text-secondary"></i> Latest Updates
-            </h2>
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col md:flex-row gap-6 hover:shadow-lg transition">
-                <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=300" class="w-full md:w-48 h-48 object-cover rounded-2xl" alt="Post">
-                <div class="flex-1">
-                    <div class="flex gap-2 mb-3">
-                        <span class="bg-blue-100 text-primary text-xs font-bold px-3 py-1 rounded-full">GEOGRAPHY</span>
-                        <span class="text-slate-400 text-xs py-1">5 Mins Read</span>
+        <!-- HERO SECTION -->
+        <header class="gradient-bg text-white py-16 md:py-24 px-4">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <span class="bg-blue-400/30 text-blue-100 px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wider">#1 Loksewa Platform</span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold mt-4 mb-6 leading-tight">Your Success starts with Nepali Guide.</h1>
+                    <p class="text-lg text-blue-100 mb-8">Access the most comprehensive collection of Nepal PSC study materials, live mock tests, and daily current affairs.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="mock-tests.html" class="bg-secondary hover:bg-orange-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg transition transform hover:-translate-y-1 text-center">Take Free Mock Test</a>
+                        <a href="mcqs.html" class="bg-white/10 hover:bg-white/20 border border-white/30 px-8 py-4 rounded-xl font-bold text-lg backdrop-blur-sm transition text-center">Browse Syllabus</a>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 hover:text-primary cursor-pointer">Major River Systems of Nepal: Important MCQs for Kharidar Exam</h3>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">A comprehensive guide to the Koshi, Gandaki, and Karnali systems with expected questions...</p>
-                    <div class="flex justify-between items-center">
-                        <div class="flex gap-4">
-                            <button class="text-green-600 hover:text-green-700"><i class="fab fa-whatsapp"></i></button>
-                            <button class="text-blue-500 hover:text-blue-600"><i class="fab fa-facebook"></i></button>
-                        </div>
-                        <a href="#" class="font-bold text-primary">Read More →</a>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="absolute -top-4 -left-4 w-24 h-24 bg-orange-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                        <img src="https://illustrations.popsy.co/white/studying.svg" alt="Education" class="w-80 md:w-[450px]">
                     </div>
                 </div>
             </div>
+        </header>
 
-            <!-- FEED AD PORTAL -->
-            <div class="ad-portal w-full h-32 rounded-3xl">
-                Feed Advertisement Space (Google Ads / Product Ad)
+        <!-- BANNER AD PORTAL -->
+        <div class="max-w-7xl mx-auto px-4 mt-8">
+            <div class="ad-portal w-full h-24 rounded-2xl">
+                Advertisement Portal Space (Google Adsense / Local Ad)
             </div>
+        </div>
 
-            <div class="bg-slate-900 rounded-3xl p-6 text-white overflow-hidden relative">
-                <h2 class="text-xl font-bold mb-4">Video Learning</h2>
-                <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl">
-                    <iframe class="w-full h-full"
+        <!-- 15 STUDY CATEGORIES -->
+        <section class="max-w-7xl mx-auto px-4 py-16">
+            <div class="flex justify-between items-end mb-10">
+                <div>
+                    <h2 class="text-3xl font-bold">Study Categories</h2>
+                    <p class="text-slate-500 mt-2">Targeted preparation for Nepal's top organizations and exams</p>
+                </div>
+                <a href="#" class="text-primary font-bold hover:underline">View All</a>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <a onclick="openCategory(event, 'gk')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-primary mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-atlas text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">GK</h3>
+                </a>
+                <a onclick="openCategory(event, 'current-affairs')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 text-red-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-newspaper text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">CURRENT AFFAIRS</h3>
+                </a>
+                <a onclick="openCategory(event, 'nea')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-bolt text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">NEA</h3>
+                </a>
+                <a onclick="openCategory(event, 'ntc')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-phone text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">NTC</h3>
+                </a>
+                <a onclick="openCategory(event, 'nrb')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-green-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-building-columns text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">NRB</h3>
+                </a>
+                <a onclick="openCategory(event, 'caan')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 text-sky-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-plane text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">CAAN</h3>
+                </a>
+                <a onclick="openCategory(event, 'rbb')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 text-red-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-piggy-bank text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">RBB</h3>
+                </a>
+                <a onclick="openCategory(event, 'nbl')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-coins text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">NBL</h3>
+                </a>
+                <a onclick="openCategory(event, 'adbl')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-seedling text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">ADBL</h3>
+                </a>
+                <a onclick="openCategory(event, 'nasu')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-user-tie text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">NASU</h3>
+                </a>
+                <a onclick="openCategory(event, 'kharidar')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 text-orange-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-file-signature text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">KHARIDAR</h3>
+                </a>
+                <a onclick="openCategory(event, 'officer')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-slate-100 dark:bg-slate-700 text-slate-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-briefcase text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-sm">OFFICER</h3>
+                </a>
+                <a onclick="openCategory(event, 'verbal-reasoning')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900/30 text-pink-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-comment-dots text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xs">VERBAL REASONING</h3>
+                </a>
+                <a onclick="openCategory(event, 'non-verbal-reasoning')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-shapes text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xs">NON VERBAL REASONING</h3>
+                </a>
+                <a onclick="openCategory(event, 'arithmetic-reasoning')" class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 text-center hover:shadow-md transition cursor-pointer group">
+                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 text-amber-600 mx-auto rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fa fa-calculator text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xs">ARITHMETIC REASONING</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="max-w-7xl mx-auto px-4 grid lg:grid-cols-3 gap-8 pb-16">
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- FEED AD PORTAL -->
+                <div class="ad-portal w-full h-32 rounded-3xl">
+                    Feed Advertisement Space (Google Ads / Product Ad)
+                </div>
+
+                <div class="bg-slate-900 rounded-3xl p-6 text-white overflow-hidden relative">
+                    <h2 class="text-xl font-bold mb-4">Video Learning</h2>
+                    <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                        <iframe class="w-full h-full"
 src="https://www.youtube.com/embed/dia58GoH6vY"
 title="YouTube video player"
 frameborder="0"
 allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="space-y-8">
-            <div id="quiz-box" class="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-3xl p-8 text-white shadow-xl">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xl font-bold">Daily Mock Test</h3>
-                    <div id="timer" class="bg-white/20 px-3 py-1 rounded-lg font-mono">10:00</div>
+            <div class="space-y-8">
+
+                <!-- SIDEBAR AD PORTAL -->
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
+                    <h3 class="font-bold text-xs uppercase tracking-widest text-slate-400 mb-4 text-center">Local Sponsors</h3>
+                    <div class="ad-portal w-full h-60 rounded-xl mb-2">
+                        Vertical Ad Space
+                    </div>
                 </div>
-                <div id="quiz-container">
-                    <p class="text-lg mb-6 font-medium">Q1: What is the height of Mount Everest in meters?</p>
+
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
+                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+                        <i class="fa fa-file-pdf text-red-500"></i> Free PDF Notes
+                    </h3>
                     <div class="space-y-3">
-                        <button class="w-full text-left p-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 transition">A) 8848.86 m</button>
-                        <button class="w-full text-left p-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 transition">B) 8844.43 m</button>
-                        <button class="w-full text-left p-4 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 transition">C) 8850.00 m</button>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                            <span class="text-sm font-medium">Constitution of Nepal</span>
+                            <i class="fa fa-download text-primary cursor-pointer hover:scale-110"></i>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                            <span class="text-sm font-medium">Kharidar Syllabus 2081</span>
+                            <i class="fa fa-download text-primary cursor-pointer hover:scale-110"></i>
+                        </div>
                     </div>
-                    <button class="w-full mt-8 py-3 bg-secondary rounded-xl font-bold text-white shadow-lg">Next Question</button>
                 </div>
             </div>
+        </main>
 
-            <!-- SIDEBAR AD PORTAL -->
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
-                <h3 class="font-bold text-xs uppercase tracking-widest text-slate-400 mb-4 text-center">Local Sponsors</h3>
-                <div class="ad-portal w-full h-60 rounded-xl mb-2">
-                    Vertical Ad Space
+    </div>
+    <!-- ==================== END ORIGINAL HOMEPAGE ==================== -->
+
+    <!-- ==================== CATEGORY PAGE ==================== -->
+    <div id="category-page" class="hidden">
+
+        <!-- Category Hero -->
+        <div id="cat-hero" class="cat-hero-gk text-white py-14 px-4">
+            <div class="max-w-7xl mx-auto">
+                <button onclick="goHome()" class="flex items-center gap-2 text-white/70 hover:text-white text-sm mb-6 transition">
+                    <i class="fa fa-arrow-left"></i> Back to Home
+                </button>
+                <div class="flex items-center gap-5">
+                    <div id="cat-icon" class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl backdrop-blur-sm">
+                        <i class="fa fa-atlas"></i>
+                    </div>
+                    <div>
+                        <h1 id="cat-title" class="text-3xl md:text-4xl font-extrabold">General Knowledge</h1>
+                        <p id="cat-desc" class="text-white/80 mt-1 text-sm">Study materials, MCQs, and notes for GK preparation</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6 mt-8 text-sm">
+                    <span id="cat-post-count" class="bg-white/20 px-4 py-1.5 rounded-full font-semibold backdrop-blur-sm"><i class="fa fa-file-alt mr-1.5"></i>0 Posts</span>
+                    <span id="cat-mcq-count" class="bg-white/20 px-4 py-1.5 rounded-full font-semibold backdrop-blur-sm"><i class="fa fa-question-circle mr-1.5"></i>0 MCQs</span>
+                    <span id="cat-pdf-count" class="bg-white/20 px-4 py-1.5 rounded-full font-semibold backdrop-blur-sm"><i class="fa fa-file-pdf mr-1.5"></i>0 PDFs</span>
                 </div>
             </div>
+        </div>
 
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-700">
-                <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-                    <i class="fa fa-file-pdf text-red-500"></i> Free PDF Notes
-                </h3>
-                <div class="space-y-3">
-                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                        <span class="text-sm font-medium">Constitution of Nepal</span>
-                        <i class="fa fa-download text-primary cursor-pointer hover:scale-110"></i>
+        <!-- Category Content -->
+        <div class="max-w-7xl mx-auto px-4 py-10">
+            <div class="grid lg:grid-cols-3 gap-8">
+
+                <!-- Posts Area -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold flex items-center gap-2"><i class="fa fa-list text-primary"></i> All Posts</h2>
+                        <div class="flex items-center gap-2 text-sm text-slate-500">
+                            <button id="sort-latest" onclick="sortPosts('latest')" class="px-3 py-1.5 rounded-lg bg-primary text-white font-semibold text-xs">Latest</button>
+                            <button id="sort-popular" onclick="sortPosts('popular')" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition">Popular</button>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                        <span class="text-sm font-medium">Kharidar Syllabus 2081</span>
-                        <i class="fa fa-download text-primary cursor-pointer hover:scale-110"></i>
+
+                    <div id="cat-posts-container">
+                        <div id="empty-state" class="bg-white dark:bg-slate-800 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 p-12 text-center">
+                            <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-slate-50 dark:bg-slate-700/50 flex items-center justify-center">
+                                <i class="fa fa-inbox text-3xl text-slate-300 dark:text-slate-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">No Posts Yet</h3>
+                            <p class="text-sm text-slate-400 max-w-sm mx-auto">Posts for this category will appear here once published. Check back soon for updates.</p>
+                        </div>
+                    </div>
+
+                    <div class="ad-portal w-full h-24 rounded-2xl mt-8">
+                        Category Feed Advertisement Space
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 p-6">
+                        <h3 class="font-bold text-sm uppercase tracking-widest text-slate-400 mb-4">About This Category</h3>
+                        <p id="cat-about" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">Comprehensive study materials for exam preparation.</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">Total Posts</span>
+                                <span id="sidebar-posts" class="font-bold text-slate-800 dark:text-white">0</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">Total MCQs</span>
+                                <span id="sidebar-mcqs" class="font-bold text-slate-800 dark:text-white">0</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">Last Updated</span>
+                                <span class="font-bold text-slate-800 dark:text-white">Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 p-6">
+                        <h3 class="font-bold text-sm uppercase tracking-widest text-slate-400 mb-4">Other Categories</h3>
+                        <div id="other-cats-list" class="space-y-2"></div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 p-4">
+                        <div class="ad-portal w-full h-64 rounded-xl">
+                            Sidebar Ad Space
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 p-6">
+                        <h3 class="font-bold text-sm uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2"><i class="fa fa-file-pdf text-red-500"></i> PDF Notes</h3>
+                        <div id="cat-pdfs-container">
+                            <p class="text-sm text-slate-400 text-center py-4">No PDFs available yet</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    <!-- ==================== END CATEGORY PAGE ==================== -->
 
     <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-400 py-16">
@@ -310,8 +399,6 @@ allowfullscreen></iframe>
                 <div class="flex gap-4 text-xl">
                     <a href="https://www.facebook.com/nepaliguide" target="_blank" class="hover:text-primary transition"><i class="fab fa-facebook"></i></a>
                     <a href="https://www.instagram.com/nepali_guide_official?igsh=MWQ4OW5yODl5aWV5NA==" target="_blank" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
-                   <!-- <a href="#" class="hover:text-secondary transition"><i class="fab fa-viber"></i></a>
-                    <a href="#" class="hover:text-green-500 transition"><i class="fab fa-whatsapp"></i></a>  -->
                     <a href="https://www.youtube.com/@nepaliguideofficial" target="_blank" class="hover:text-red-500 transition"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
@@ -322,27 +409,305 @@ allowfullscreen></iframe>
     </footer>
 
     <script>
-        function toggleDarkMode() {
-            const html = document.documentElement;
-            const icon = document.getElementById('dark-icon');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                icon.classList.replace('fa-sun', 'fa-moon');
-            } else {
-                html.classList.add('dark');
-                icon.classList.replace('fa-moon', 'fa-sun');
-            }
+    // ==================== CATEGORY DATA ====================
+    const categoryData = {
+        'gk': {
+            title: 'General Knowledge',
+            icon: 'fa fa-atlas',
+            desc: 'Study materials, MCQs, and notes for GK preparation',
+            about: 'General Knowledge covers Nepal\'s geography, history, polity, culture, national symbols, and world affairs — essential for all Loksewa levels.',
+            posts: [],
+            pdfs: []
+        },
+        'current-affairs': {
+            title: 'Current Affairs',
+            icon: 'fa fa-newspaper',
+            desc: 'Daily current affairs, news analysis, and important events',
+            about: 'Stay updated with the latest national and international events, government policies, appointments, and summits relevant to PSC exams.',
+            posts: [],
+            pdfs: []
+        },
+        'nea': {
+            title: 'Nepal Electricity Authority (NEA)',
+            icon: 'fa fa-bolt',
+            desc: 'NEA exam preparation materials and mock tests',
+            about: 'Prepare for NEA Level 4/5/6/7 exams with topic-wise notes on electricity acts, general knowledge, and technical sections.',
+            posts: [],
+            pdfs: []
+        },
+        'ntc': {
+            title: 'Nepal Telecom (NTC)',
+            icon: 'fa fa-phone',
+            desc: 'NTC exam preparation materials and mock tests',
+            about: 'Comprehensive preparation for Nepal Telecom Assistant, Officer, and technical level competitive exams.',
+            posts: [],
+            pdfs: []
+        },
+        'nrb': {
+            title: 'Nepal Rastra Bank (NRB)',
+            icon: 'fa fa-building-columns',
+            desc: 'NRB exam prep — banking rules, monetary policy, economics',
+            about: 'Study materials for Nepal Rastra Bank exams covering monetary policy, banking acts, economics, and current financial affairs.',
+            posts: [],
+            pdfs: []
+        },
+        'caan': {
+            title: 'Civil Aviation Authority (CAAN)',
+            icon: 'fa fa-plane',
+            desc: 'CAAN exam preparation and aviation knowledge',
+            about: 'Prepare for CAAN exams with notes on aviation rules, air navigation, meteorology, and general administration.',
+            posts: [],
+            pdfs: []
+        },
+        'rbb': {
+            title: 'Rastriya Banijya Bank (RBB)',
+            icon: 'fa fa-piggy-bank',
+            desc: 'RBB exam preparation materials and notes',
+            about: 'Study resources for Rastriya Banijya Bank officer, assistant, and trainee level competitive examinations.',
+            posts: [],
+            pdfs: []
+        },
+        'nbl': {
+            title: 'Nepal Bank Limited (NBL)',
+            icon: 'fa fa-coins',
+            desc: 'NBL exam preparation materials and mock tests',
+            about: 'Preparation materials for Nepal Bank Limited exams including banking knowledge, general awareness, and quantitative aptitude.',
+            posts: [],
+            pdfs: []
+        },
+        'adbl': {
+            title: 'Agriculture Development Bank (ADBL)',
+            icon: 'fa fa-seedling',
+            desc: 'ADBL exam prep — agriculture, banking, and general knowledge',
+            about: 'Study materials for ADBL exams covering agriculture science, banking operations, rural development, and current affairs.',
+            posts: [],
+            pdfs: []
+        },
+        'nasu': {
+            title: 'Nayab Subba (Nasu)',
+            icon: 'fa fa-user-tie',
+            desc: 'Nasu level exam preparation — Paper I, II, III',
+            about: 'Complete preparation for Nayab Subba first, second, and third paper covering GK, IQ, English, and specific subjects.',
+            posts: [],
+            pdfs: []
+        },
+        'kharidar': {
+            title: 'Kharidar',
+            icon: 'fa fa-file-signature',
+            desc: 'Kharidar level exam preparation materials and mock tests',
+            about: 'Study resources for Kharidar first and second paper including general knowledge, science, IQ, arithmetic, and history.',
+            posts: [],
+            pdfs: []
+        },
+        'officer': {
+            title: 'Officer Level',
+            icon: 'fa fa-briefcase',
+            desc: 'Section Officer / Officer level exam preparation',
+            about: 'Advanced preparation for Section Officer and Under Secretary exams covering all papers with model sets and previous year questions.',
+            posts: [],
+            pdfs: []
+        },
+        'verbal-reasoning': {
+            title: 'Verbal Reasoning',
+            icon: 'fa fa-comment-dots',
+            desc: 'Verbal ability, comprehension, and logical reasoning',
+            about: 'Practice materials for verbal reasoning including analogy, classification, series completion, blood relations, and coding-decoding.',
+            posts: [],
+            pdfs: []
+        },
+        'non-verbal-reasoning': {
+            title: 'Non-Verbal Reasoning',
+            icon: 'fa fa-shapes',
+            desc: 'Pattern recognition, series, and visual reasoning',
+            about: 'Study materials for non-verbal reasoning covering mirror images, water images, paper folding, figure analogy, and pattern completion.',
+            posts: [],
+            pdfs: []
+        },
+        'arithmetic-reasoning': {
+            title: 'Arithmetic Reasoning',
+            icon: 'fa fa-calculator',
+            desc: 'Quantitative aptitude, math, and numerical ability',
+            about: 'Preparation materials for arithmetic reasoning including number systems, percentages, profit-loss, time-work, speed-distance, and data interpretation.',
+            posts: [],
+            pdfs: []
+        }
+    };
+
+    let currentCategory = null;
+
+    // ==================== NAVIGATION ====================
+    function openCategory(e, slug) {
+        e.preventDefault();
+        currentCategory = slug;
+        document.getElementById('homepage').classList.add('hidden');
+        document.getElementById('category-page').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        renderCategoryPage(slug);
+        history.pushState({ cat: slug }, '', `?cat=${slug}`);
+    }
+
+    function goHome(e) {
+        if (e) e.preventDefault();
+        currentCategory = null;
+        document.getElementById('homepage').classList.remove('hidden');
+        document.getElementById('category-page').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        history.pushState({}, '', window.location.pathname);
+    }
+
+    window.addEventListener('popstate', (e) => {
+        if (e.state && e.state.cat) {
+            currentCategory = e.state.cat;
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('category-page').classList.remove('hidden');
+            renderCategoryPage(e.state.cat);
+        } else {
+            goHome();
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const cat = params.get('cat');
+        if (cat && categoryData[cat]) {
+            currentCategory = cat;
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('category-page').classList.remove('hidden');
+            renderCategoryPage(cat);
+        }
+    });
+
+    // ==================== RENDER CATEGORY ====================
+    function renderCategoryPage(slug) {
+        const cat = categoryData[slug];
+        if (!cat) return;
+
+        const hero = document.getElementById('cat-hero');
+        hero.className = `cat-hero-${slug} text-white py-14 px-4`;
+        document.getElementById('cat-icon').innerHTML = `<i class="${cat.icon}"></i>`;
+        document.getElementById('cat-title').textContent = cat.title;
+        document.getElementById('cat-desc').textContent = cat.desc;
+
+        const totalMCQs = cat.posts.reduce((sum, p) => sum + (p.mcqs || 0), 0);
+        document.getElementById('cat-post-count').innerHTML = `<i class="fa fa-file-alt mr-1.5"></i>${cat.posts.length} Posts`;
+        document.getElementById('cat-mcq-count').innerHTML = `<i class="fa fa-question-circle mr-1.5"></i>${totalMCQs} MCQs`;
+        document.getElementById('cat-pdf-count').innerHTML = `<i class="fa fa-file-pdf mr-1.5"></i>${cat.pdfs.length} PDFs`;
+
+        document.getElementById('cat-about').textContent = cat.about;
+        document.getElementById('sidebar-posts').textContent = cat.posts.length;
+        document.getElementById('sidebar-mcqs').textContent = totalMCQs;
+
+        const otherCats = document.getElementById('other-cats-list');
+        otherCats.innerHTML = '';
+        Object.entries(categoryData).forEach(([key, val]) => {
+            if (key === slug) return;
+            otherCats.innerHTML += `
+                <a onclick="openCategory(event, '${key}')" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer transition group">
+                    <div class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-slate-500 group-hover:text-primary transition text-sm">
+                        <i class="${val.icon}"></i>
+                    </div>
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-300 group-hover:text-primary transition">${val.title}</span>
+                </a>
+            `;
+        });
+
+        renderPosts(cat.posts);
+        renderPdfs(cat.pdfs);
+        document.title = `${cat.title} - Nepali Guide`;
+    }
+
+    function renderPosts(posts) {
+        const container = document.getElementById('cat-posts-container');
+
+        if (posts.length === 0) {
+            container.innerHTML = `
+                <div id="empty-state" class="bg-white dark:bg-slate-800 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 p-12 text-center">
+                    <div class="w-20 h-20 mx-auto mb-5 rounded-full bg-slate-50 dark:bg-slate-700/50 flex items-center justify-center">
+                        <i class="fa fa-inbox text-3xl text-slate-300 dark:text-slate-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-700 dark:text-slate-300 mb-2">No Posts Yet</h3>
+                    <p class="text-sm text-slate-400 max-w-sm mx-auto">Posts for this category will appear here once published. Check back soon for updates.</p>
+                </div>
+            `;
+            return;
         }
 
-        let time = 600; 
-        const timerElement = document.getElementById('timer');
-        function updateTimer() {
-            const minutes = Math.floor(time / 60);
-            const seconds = time % 60;
-            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            if (time > 0) time--;
+        container.innerHTML = posts.map((post, i) => `
+            <div class="post-card bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-lg flex flex-col md:flex-row overflow-hidden mb-5" style="animation: slideUp 0.4s ease ${i * 0.05}s both;">
+                <img src="${post.image}" class="w-full md:w-52 h-44 md:h-auto object-cover flex-shrink-0" alt="${post.title}">
+                <div class="flex-1 p-5">
+                    <div class="flex items-center gap-2 mb-3 flex-wrap">
+                        <span class="bg-blue-100 dark:bg-blue-900/30 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase">${post.tag}</span>
+                        <span class="text-slate-400 text-[11px]"><i class="fa fa-clock mr-1"></i>${post.readTime}</span>
+                        <span class="text-slate-400 text-[11px]"><i class="fa fa-eye mr-1"></i>${post.views.toLocaleString()}</span>
+                        ${post.mcqs ? `<span class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 text-[10px] font-bold px-2 py-1 rounded-full">${post.mcqs} MCQs</span>` : ''}
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 hover:text-primary cursor-pointer transition leading-snug">${post.title}</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-4 line-clamp-2">${post.excerpt}</p>
+                    <div class="flex justify-between items-center mt-auto">
+                        <span class="text-[11px] text-slate-400">${post.date}</span>
+                        <a href="#" class="font-bold text-primary text-sm hover:underline">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderPdfs(pdfs) {
+        const container = document.getElementById('cat-pdfs-container');
+        if (pdfs.length === 0) {
+            container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4">No PDFs available yet</p>';
+            return;
         }
-        setInterval(updateTimer, 1000);
+        container.innerHTML = pdfs.map(pdf => `
+            <div class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl mb-2 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <div class="flex items-center gap-3">
+                    <i class="fa fa-file-pdf text-red-500"></i>
+                    <div>
+                        <span class="text-sm font-medium block">${pdf.title}</span>
+                        <span class="text-[11px] text-slate-400">${pdf.size}</span>
+                    </div>
+                </div>
+                <i class="fa fa-download text-primary cursor-pointer hover:scale-110 transition"></i>
+            </div>
+        `).join('');
+    }
+
+    // ==================== SORT ====================
+    function sortPosts(type) {
+        if (!currentCategory) return;
+        const cat = categoryData[currentCategory];
+        let sorted = [...cat.posts];
+
+        if (type === 'popular') {
+            sorted.sort((a, b) => (b.views || 0) - (a.views || 0));
+            document.getElementById('sort-popular').className = 'px-3 py-1.5 rounded-lg bg-primary text-white font-semibold text-xs';
+            document.getElementById('sort-latest').className = 'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+        } else {
+            sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+            document.getElementById('sort-latest').className = 'px-3 py-1.5 rounded-lg bg-primary text-white font-semibold text-xs';
+            document.getElementById('sort-popular').className = 'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+        }
+
+        renderPosts(sorted);
+    }
+
+    // ==================== DARK MODE ====================
+    function toggleDarkMode() {
+        const html = document.documentElement;
+        const icon = document.getElementById('dark-icon');
+        if (html.classList.contains('dark')) {
+            html.classList.remove('dark');
+            icon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            html.classList.add('dark');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `@keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }`;
+    document.head.appendChild(style);
     </script>
 </body>
 </html>
