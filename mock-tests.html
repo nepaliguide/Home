@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <title>Mock Tests - Nepali Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -19,6 +20,122 @@
         .dark .ad-portal { background: #1e293b; border-color: #334155; color: #475569; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* New design styles */
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .content-area {
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.06), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(245, 158, 11, 0.04), transparent);
+        }
+        .dark .content-area {
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.08), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(245, 158, 11, 0.04), transparent);
+        }
+        .filter-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.15);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .filter-btn:hover::before { transform: translateY(0); }
+        .filter-btn.active { transform: scale(1.05); box-shadow: 0 8px 25px -5px rgba(0,0,0,0.25); }
+
+        .test-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.4s ease;
+        }
+        .test-card:hover::before { height: 6px; }
+        .test-card:hover { transform: translateY(-6px); }
+        .test-card.card-purple::before { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+        .test-card.card-orange::before { background: linear-gradient(90deg, #ea580c, #fb923c); }
+        .test-card.card-yellow::before { background: linear-gradient(90deg, #d97706, #fbbf24); }
+        .test-card.card-blue::before { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+        .test-card.card-cyan::before { background: linear-gradient(90deg, #0891b2, #22d3ee); }
+
+        .start-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .start-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transition: width 0.5s, height 0.5s, top 0.5s, left 0.5s;
+        }
+        .start-btn:hover::after {
+            width: 300px; height: 300px;
+            top: calc(50% - 150px);
+            left: calc(50% - 150px);
+        }
+
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card .stat-icon {
+            transition: transform 0.4s ease;
+        }
+        .stat-card:hover .stat-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        .meta-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .coming-soon-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .coming-soon-card .pulse-ring {
+            animation: pulseRing 2.5s ease-out infinite;
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 0.6; }
+            70% { transform: scale(1.4); opacity: 0; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+        .float-anim {
+            animation: floatY 3s ease-in-out infinite;
+        }
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .diff-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
@@ -54,83 +171,351 @@
         </div>
     </nav>
 
-    <!-- HEADER -->
+    <!-- ORIGINAL HEADER -->
     <header class="gradient-bg text-white py-12 px-4 text-center">
         <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Loksewa Exam Hall</h1>
         <p class="text-blue-100 max-w-2xl mx-auto italic">Mock tests for Officer, Nasu, Kharidar, and Corporate Exams.</p>
     </header>
 
-    <div class="max-w-7xl mx-auto px-4 py-10">
-        
-        <!-- ALL CATEGORY FILTERS (Requested: Nasu, Officer, NTC, CAAN, NEA) -->
-        <div class="flex overflow-x-auto gap-3 mb-10 pb-4 no-scrollbar">
-            <button class="whitespace-nowrap bg-primary text-white px-6 py-2 rounded-full font-bold shadow-md">All Tests</button>
-            <button class="whitespace-nowrap bg-purple-600 text-white px-6 py-2 rounded-full font-bold shadow-sm">OFFICER</button>
-            <button class="whitespace-nowrap bg-orange-500 text-white px-6 py-2 rounded-full font-bold shadow-sm">NASU</button>
-            <button class="whitespace-nowrap bg-red-500 text-white px-6 py-2 rounded-full font-bold shadow-sm">KHARIDAR</button>
-            <button class="whitespace-nowrap bg-blue-600 text-white px-6 py-2 rounded-full font-bold shadow-sm">NTC</button>
-            <button class="whitespace-nowrap bg-yellow-500 text-white px-6 py-2 rounded-full font-bold shadow-sm">NEA</button>
-            <button class="whitespace-nowrap bg-cyan-600 text-white px-6 py-2 rounded-full font-bold shadow-sm">CAAN</button>
+    <!-- REDESIGNED CONTENT AREA -->
+    <div class="content-area min-h-screen">
+
+        <!-- Stats Bar -->
+        <div class="max-w-7xl mx-auto px-4 -mt-8 relative z-10 mb-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="stat-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-100 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none">
+                    <div class="flex items-center gap-3">
+                        <div class="stat-icon w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
+                            <i class="fa fa-file-alt text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900 dark:text-white">50+</div>
+                            <div class="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Mock Tests</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-100 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none">
+                    <div class="flex items-center gap-3">
+                        <div class="stat-icon w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-900/30 flex items-center justify-center text-amber-600">
+                            <i class="fa fa-question-circle text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900 dark:text-white">2,500+</div>
+                            <div class="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Questions</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-100 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none">
+                    <div class="flex items-center gap-3">
+                        <div class="stat-icon w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600">
+                            <i class="fa fa-users text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900 dark:text-white">12K+</div>
+                            <div class="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Aspirants</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-100 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none">
+                    <div class="flex items-center gap-3">
+                        <div class="stat-icon w-11 h-11 rounded-xl bg-rose-50 dark:bg-rose-900/30 flex items-center justify-center text-rose-600">
+                            <i class="fa fa-clock text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-slate-900 dark:text-white">Live</div>
+                            <div class="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Updated Daily</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- AD PORTAL -->
-        <div class="ad-portal w-full h-24 rounded-3xl mb-12">Portal Advertisement Space</div>
+        <div class="max-w-7xl mx-auto px-4 pb-16">
 
-        <!-- GRID OF TESTS -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- 1. OFFICER TEST CARD -->
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition group">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-purple-100 text-purple-600 text-[10px] font-black px-3 py-1 rounded-full uppercase">Officer Level</span>
-                    <span class="text-slate-400 text-sm font-mono">90 Mins</span>
+            <!-- FILTERS -->
+            <div class="mb-10">
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900 dark:text-white">Available Exams</h2>
+                        <p class="text-sm text-slate-500 mt-0.5">Select a category to filter mock tests</p>
+                    </div>
+                    <div class="hidden md:flex items-center gap-2 text-sm text-slate-500">
+                        <i class="fa fa-th-large text-primary"></i>
+                        <span class="font-medium">Grid View</span>
+                    </div>
                 </div>
-                <h3 class="text-xl font-bold mb-4 group-hover:text-purple-600 transition">Section Officer Model Set - Paper I</h3>
-                <p class="text-slate-500 text-sm mb-6 line-clamp-2">Complete model question set including IQ, GK and English for Officer aspirants.</p>
-                <a href="take-test.html" class="block w-full text-center bg-purple-600 text-white py-4 rounded-2xl font-bold hover:bg-purple-700 transition">Start Officer Exam</a>
+                <div class="flex overflow-x-auto gap-2.5 pb-4 no-scrollbar">
+                    <button onclick="filterTests('all', this)" class="filter-btn active whitespace-nowrap bg-primary text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md">
+                        <i class="fa fa-layer-group mr-1.5 text-xs"></i>All Tests
+                    </button>
+                    <button onclick="filterTests('officer', this)" class="filter-btn whitespace-nowrap bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-purple-500 inline-block mr-1.5"></span>Officer
+                    </button>
+                    <button onclick="filterTests('nasu', this)" class="filter-btn whitespace-nowrap bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-orange-500 inline-block mr-1.5"></span>Nasu
+                    </button>
+                    <button onclick="filterTests('kharidar', this)" class="filter-btn whitespace-nowrap bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-red-500 inline-block mr-1.5"></span>Kharidar
+                    </button>
+                    <button onclick="filterTests('ntc', this)" class="filter-btn whitespace-nowrap bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-blue-500 inline-block mr-1.5"></span>NTC
+                    </button>
+                    <button onclick="filterTests('nea', this)" class="filter-btn whitespace-nowrap bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-yellow-500 inline-block mr-1.5"></span>NEA
+                    </button>
+                    <button onclick="filterTests('caan', this)" class="filter-btn whitespace-nowrap bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 py-2.5 rounded-xl font-semibold text-sm border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-cyan-500 inline-block mr-1.5"></span>CAAN
+                    </button>
+                </div>
             </div>
 
-            <!-- 2. NASU TEST CARD -->
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition group">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-orange-100 text-orange-600 text-[10px] font-black px-3 py-1 rounded-full uppercase">Na.Su. Level</span>
-                    <span class="text-slate-400 text-sm font-mono">45 Mins</span>
+            <!-- AD PORTAL -->
+            <div class="ad-portal w-full h-20 rounded-2xl mb-12">Portal Advertisement Space</div>
+
+            <!-- TEST CARDS GRID -->
+            <div id="tests-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+
+                <!-- 1. OFFICER TEST CARD -->
+                <div class="test-card card-purple bg-white dark:bg-slate-800 rounded-2xl p-0 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:shadow-purple-100/50 dark:hover:shadow-purple-900/10" data-category="officer">
+                    <div class="p-6 pb-5">
+                        <div class="flex justify-between items-start mb-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white shadow-lg shadow-purple-200 dark:shadow-purple-900/30">
+                                    <i class="fa fa-landmark text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-widest">Officer Level</span>
+                                    <div class="flex items-center gap-1.5 mt-0.5">
+                                        <span class="diff-dot bg-emerald-400"></span>
+                                        <span class="diff-dot bg-emerald-400"></span>
+                                        <span class="diff-dot bg-emerald-400"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="text-[10px] text-slate-400 ml-1">Moderate</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs font-mono text-slate-400">90 Mins</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">Paper I</div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white group-hover:text-purple-600 transition">Section Officer Model Set</h3>
+                        <p class="text-slate-500 text-sm mb-5 leading-relaxed">Complete model question set including IQ, General Knowledge and English for Officer aspirants.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="meta-tag bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400"><i class="fa fa-list-ol text-[9px]"></i> 100 Qs</span>
+                            <span class="meta-tag bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400"><i class="fa fa-star text-[9px]"></i> +1 Mark</span>
+                            <span class="meta-tag bg-red-50 dark:bg-red-900/20 text-red-500"><i class="fa fa-minus-circle text-[9px]"></i> -0.25</span>
+                            <span class="meta-tag bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400"><i class="fa fa-check text-[9px]"></i> Free</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="take-test.html" class="start-btn block w-full text-center bg-gradient-to-r from-purple-600 to-purple-700 text-white py-3.5 rounded-xl font-bold text-sm hover:from-purple-700 hover:to-purple-800 transition-all shadow-lg shadow-purple-200 dark:shadow-purple-900/20">
+                            <i class="fa fa-play-circle mr-2"></i>Start Officer Exam
+                        </a>
+                    </div>
                 </div>
-                <h3 class="text-xl font-bold mb-4 group-hover:text-orange-600 transition">Nayab Subba First Paper - Set 10</h3>
-                <p class="text-slate-500 text-sm mb-6 line-clamp-2">Practice set focused on Geography, History and Current Affairs for Nasu level.</p>
-                <a href="take-test.html" class="block w-full text-center bg-orange-500 text-white py-4 rounded-2xl font-bold hover:bg-orange-600 transition">Start Nasu Exam</a>
+
+                <!-- 2. NASU TEST CARD -->
+                <div class="test-card card-orange bg-white dark:bg-slate-800 rounded-2xl p-0 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:shadow-orange-100/50 dark:hover:shadow-orange-900/10" data-category="nasu">
+                    <div class="p-6 pb-5">
+                        <div class="flex justify-between items-start mb-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center text-white shadow-lg shadow-orange-200 dark:shadow-orange-900/30">
+                                    <i class="fa fa-scroll text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-widest">Na.Su. Level</span>
+                                    <div class="flex items-center gap-1.5 mt-0.5">
+                                        <span class="diff-dot bg-emerald-400"></span>
+                                        <span class="diff-dot bg-emerald-400"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="text-[10px] text-slate-400 ml-1">Easy</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs font-mono text-slate-400">45 Mins</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">Set 10</div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white group-hover:text-orange-600 transition">Nayab Subba First Paper</h3>
+                        <p class="text-slate-500 text-sm mb-5 leading-relaxed">Practice set focused on Geography, History and Current Affairs for Nasu level candidates.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="meta-tag bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400"><i class="fa fa-list-ol text-[9px]"></i> 50 Qs</span>
+                            <span class="meta-tag bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400"><i class="fa fa-star text-[9px]"></i> +1 Mark</span>
+                            <span class="meta-tag bg-red-50 dark:bg-red-900/20 text-red-500"><i class="fa fa-minus-circle text-[9px]"></i> -0.20</span>
+                            <span class="meta-tag bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400"><i class="fa fa-check text-[9px]"></i> Free</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="take-test.html" class="start-btn block w-full text-center bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3.5 rounded-xl font-bold text-sm hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg shadow-orange-200 dark:shadow-orange-900/20">
+                            <i class="fa fa-play-circle mr-2"></i>Start Nasu Exam
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. NEA TEST CARD -->
+                <div class="test-card card-yellow bg-white dark:bg-slate-800 rounded-2xl p-0 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:shadow-yellow-100/50 dark:hover:shadow-yellow-900/10" data-category="nea">
+                    <div class="p-6 pb-5">
+                        <div class="flex justify-between items-start mb-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center text-white shadow-lg shadow-yellow-200 dark:shadow-yellow-900/30">
+                                    <i class="fa fa-bolt text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-black text-yellow-700 dark:text-yellow-400 uppercase tracking-widest">NEA Prep</span>
+                                    <div class="flex items-center gap-1.5 mt-0.5">
+                                        <span class="diff-dot bg-amber-400"></span>
+                                        <span class="diff-dot bg-amber-400"></span>
+                                        <span class="diff-dot bg-amber-400"></span>
+                                        <span class="diff-dot bg-amber-400"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="text-[10px] text-slate-400 ml-1">Hard</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs font-mono text-slate-400">50 Mins</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">Level 4/5</div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white group-hover:text-yellow-600 transition">NEA Level 4/5 Administration</h3>
+                        <p class="text-slate-500 text-sm mb-5 leading-relaxed">Electrical authority acts and general knowledge specific to Nepal Electricity Authority exams.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="meta-tag bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400"><i class="fa fa-list-ol text-[9px]"></i> 60 Qs</span>
+                            <span class="meta-tag bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400"><i class="fa fa-star text-[9px]"></i> +1 Mark</span>
+                            <span class="meta-tag bg-red-50 dark:bg-red-900/20 text-red-500"><i class="fa fa-minus-circle text-[9px]"></i> -0.20</span>
+                            <span class="meta-tag bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400"><i class="fa fa-check text-[9px]"></i> Free</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="take-test.html" class="start-btn block w-full text-center bg-gradient-to-r from-yellow-500 to-amber-600 text-white py-3.5 rounded-xl font-bold text-sm hover:from-yellow-600 hover:to-amber-700 transition-all shadow-lg shadow-yellow-200 dark:shadow-yellow-900/20">
+                            <i class="fa fa-play-circle mr-2"></i>Start NEA Exam
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. NTC TEST CARD -->
+                <div class="test-card card-blue bg-white dark:bg-slate-800 rounded-2xl p-0 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:shadow-blue-100/50 dark:hover:shadow-blue-900/10" data-category="ntc">
+                    <div class="p-6 pb-5">
+                        <div class="flex justify-between items-start mb-5">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-blue-200 dark:shadow-blue-900/30">
+                                    <i class="fa fa-phone-alt text-lg"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-widest">NTC Exam</span>
+                                    <div class="flex items-center gap-1.5 mt-0.5">
+                                        <span class="diff-dot bg-emerald-400"></span>
+                                        <span class="diff-dot bg-emerald-400"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="diff-dot bg-slate-200 dark:bg-slate-600"></span>
+                                        <span class="text-[10px] text-slate-400 ml-1">Easy</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs font-mono text-slate-400">45 Mins</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5">Level 4</div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white group-hover:text-blue-600 transition">Nepal Telecom Level 4 GK & IQ</h3>
+                        <p class="text-slate-500 text-sm mb-5 leading-relaxed">Standard MCQs for NTC Assistant level competitive examination preparation.</p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="meta-tag bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"><i class="fa fa-list-ol text-[9px]"></i> 50 Qs</span>
+                            <span class="meta-tag bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400"><i class="fa fa-star text-[9px]"></i> +1 Mark</span>
+                            <span class="meta-tag bg-red-50 dark:bg-red-900/20 text-red-500"><i class="fa fa-minus-circle text-[9px]"></i> -0.20</span>
+                            <span class="meta-tag bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400"><i class="fa fa-check text-[9px]"></i> Free</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="take-test.html" class="start-btn block w-full text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3.5 rounded-xl font-bold text-sm hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-200 dark:shadow-blue-900/20">
+                            <i class="fa fa-play-circle mr-2"></i>Start NTC Exam
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5. COMING SOON - CAAN -->
+                <div class="coming-soon-card card-cyan bg-white dark:bg-slate-800 rounded-2xl border-2 border-dashed border-cyan-200 dark:border-cyan-800 p-6 flex flex-col items-center justify-center text-center min-h-[320px]" data-category="caan">
+                    <div class="relative mb-5">
+                        <div class="pulse-ring absolute inset-0 w-20 h-20 rounded-full bg-cyan-200 dark:bg-cyan-900/40"></div>
+                        <div class="float-anim relative w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-50 to-cyan-100 dark:from-cyan-900/30 dark:to-cyan-800/30 flex items-center justify-center">
+                            <i class="fa fa-plane text-3xl text-cyan-500"></i>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-slate-900 dark:text-white text-lg mb-1">CAAN Test Coming Soon</h4>
+                    <p class="text-sm text-slate-500 mb-4 max-w-xs">Civil Aviation Authority exam prep is being crafted by our experts.</p>
+                    <button class="meta-tag bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600 dark:text-cyan-400 px-4 py-1.5 text-xs font-bold cursor-default">
+                        <i class="fa fa-bell mr-1 text-[9px]"></i> Notify Me
+                    </button>
+                </div>
+
+                <!-- 6. COMING SOON - KHARIDAR -->
+                <div class="coming-soon-card bg-white dark:bg-slate-800 rounded-2xl border-2 border-dashed border-red-200 dark:border-red-800 p-6 flex flex-col items-center justify-center text-center min-h-[320px]" data-category="kharidar">
+                    <div class="relative mb-5">
+                        <div class="pulse-ring absolute inset-0 w-20 h-20 rounded-full bg-red-200 dark:bg-red-900/40" style="animation-delay: 0.8s;"></div>
+                        <div class="float-anim relative w-20 h-20 rounded-2xl bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 flex items-center justify-center" style="animation-delay: 0.5s;">
+                            <i class="fa fa-pen-ruler text-3xl text-red-500"></i>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-slate-900 dark:text-white text-lg mb-1">Kharidar Test Coming Soon</h4>
+                    <p class="text-sm text-slate-500 mb-4 max-w-xs">Kharidar level mock sets are under preparation. Stay tuned for updates.</p>
+                    <button class="meta-tag bg-red-50 dark:bg-red-900/20 text-red-500 px-4 py-1.5 text-xs font-bold cursor-default">
+                        <i class="fa fa-bell mr-1 text-[9px]"></i> Notify Me
+                    </button>
+                </div>
+
             </div>
 
-            <!-- 3. NEA TEST CARD -->
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition group">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-yellow-100 text-yellow-700 text-[10px] font-black px-3 py-1 rounded-full uppercase">NEA Prep</span>
-                    <span class="text-slate-400 text-sm font-mono">50 Mins</span>
+            <!-- EXAM TIPS SECTION -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 md:p-10 mb-14 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-secondary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center text-primary">
+                            <i class="fa fa-lightbulb text-lg"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-white">Before You Start</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0 mt-0.5">
+                                <i class="fa fa-wifi text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm mb-1">Stable Internet</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">Ensure a stable connection. Your progress auto-saves every 30 seconds.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 flex-shrink-0 mt-0.5">
+                                <i class="fa fa-hourglass-half text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm mb-1">Time Management</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">Skip difficult questions first. Come back to them with remaining time.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-400 flex-shrink-0 mt-0.5">
+                                <i class="fa fa-ban text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold text-sm mb-1">No Negative Guessing</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">Avoid blind guesses. Wrong answers carry negative marks in all tests.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-xl font-bold mb-4 group-hover:text-yellow-600 transition">NEA Level 4/5 Administration Set</h3>
-                <p class="text-slate-500 text-sm mb-6 line-clamp-2">Electrical authority acts and general knowledge specific to NEA exams.</p>
-                <a href="take-test.html" class="block w-full text-center bg-yellow-500 text-white py-4 rounded-2xl font-bold hover:bg-yellow-600 transition">Start NEA Exam</a>
             </div>
 
-            <!-- 4. NTC TEST CARD -->
-            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition group">
-                <div class="flex justify-between items-start mb-4">
-                    <span class="bg-blue-100 text-blue-600 text-[10px] font-black px-3 py-1 rounded-full uppercase">NTC Exam</span>
-                    <span class="text-slate-400 text-sm font-mono">45 Mins</span>
-                </div>
-                <h3 class="text-xl font-bold mb-4 group-hover:text-blue-600 transition">Nepal Telecom Level 4 GK & IQ</h3>
-                <p class="text-slate-500 text-sm mb-6 line-clamp-2">Standard MCQs for NTC Assistant level competitive examination.</p>
-                <a href="take-test.html" class="block w-full text-center bg-blue-600 text-white py-4 rounded-2xl font-bold hover:bg-blue-700 transition">Start NTC Exam</a>
-            </div>
-
-            <!-- REGULAR POST PLACEHOLDER -->
-            <div class="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-3xl p-8 flex flex-col items-center justify-center text-slate-400">
-                <div class="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
-                    <i class="fa fa-plus-circle text-3xl"></i>
-                </div>
-                <h4 class="font-bold">CAAN Test Coming Soon</h4>
-                <p class="text-xs">Stay tuned for regular daily updates</p>
-            </div>
+            <!-- SECOND AD PORTAL -->
+            <div class="ad-portal w-full h-20 rounded-2xl mb-6">Portal Advertisement Space</div>
 
         </div>
     </div>
@@ -186,6 +571,36 @@
                 html.classList.add('dark');
                 icon.classList.replace('fa-moon', 'fa-sun');
             }
+        }
+
+        // Filter functionality
+        function filterTests(category, btn) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active', 'bg-primary', 'text-white', 'shadow-md');
+                b.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700', 'shadow-sm');
+            });
+            btn.classList.add('active', 'bg-primary', 'text-white', 'shadow-md');
+            btn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700', 'shadow-sm');
+
+            // Filter cards
+            const cards = document.querySelectorAll('#tests-grid .test-card, #tests-grid .coming-soon-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = '';
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(12px)';
+                    requestAnimationFrame(() => {
+                        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    });
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(-8px)';
+                    setTimeout(() => { card.style.display = 'none'; }, 300);
+                }
+            });
         }
     </script>
 </body>
