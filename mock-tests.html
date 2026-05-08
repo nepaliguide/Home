@@ -163,13 +163,30 @@
                     </button>
                     <a href="login.html" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition">Login</a>
                 </div>
-                <div class="md:hidden flex items-center gap-4">
-                    <button onclick="toggleDarkMode()"><i class="fa fa-moon"></i></button>
-                    <i class="fa fa-bars text-2xl"></i>
-                </div>
+               <div class="md:hidden flex items-center gap-4">
+    <button onclick="toggleDarkMode()"><i id="dark-icon-mobile" class="fa fa-moon"></i></button>
+    <!-- Added onclick and changed to a button for better control -->
+    <button onclick="toggleMobileMenu()" class="text-2xl text-primary dark:text-white">
+        <i class="fa fa-bars"></i>
+    </button>
+</div>
             </div>
         </div>
     </nav>
+
+
+
+ <!-- MOBILE MENU (Hidden by default) -->
+<div id="mobile-menu" class="hidden md:hidden glass dark:bg-slate-900 border-b dark:border-slate-800">
+    <div class="px-4 pt-2 pb-6 space-y-1">
+        <a href="index.html" class="block px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Home</a>
+        <a href="mcqs.html" class="block px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">MCQs</a>
+        <a href="mock-tests.html" class="block px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Mock Tests</a>
+        <a href="blogs.html" class="block px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Blogs</a>
+        <a href="Tools.html" class="block px-3 py-2 rounded-lg font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Tools</a>
+        <a href="login.html" class="block px-3 py-2 mt-4 bg-primary text-white text-center rounded-full font-semibold">Login</a>
+    </div>
+</div>
 
     <!-- ORIGINAL HEADER -->
     <header class="gradient-bg text-white py-12 px-4 text-center">
@@ -602,6 +619,17 @@
                 }
             });
         }
+
+
+     // Function to open/close the mobile menu
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+    } else {
+        menu.classList.add('hidden');
+    }
+}
     </script>
 </body>
 </html>
