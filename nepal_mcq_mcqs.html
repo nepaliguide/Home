@@ -1,5 +1,5 @@
  <!DOCTYPE html>
-<html lang="en">
+<html lang="ne">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,12 +83,12 @@
     </nav>
 
     <!-- TEST HEADER BAR -->
-    <div class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-16 z-40">
+    <div id="test-header" class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-16 z-40">
         <div class="max-w-7xl mx-auto px-4 py-3">
             <div class="flex items-center justify-between flex-wrap gap-3">
                 <div class="flex items-center gap-3">
                     <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase">Geography</span>
-                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 hidden sm:block">नेपालको भूगोल — Part 1</span>
+                    <span class="text-sm font-semibold text-slate-700 dark:text-slate-300 hidden sm:block">नेपालको भूगोल — Part 1 (Q1–Q25)</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="flex items-center gap-2">
@@ -112,25 +112,27 @@
     </div>
 
     <!-- MAIN TEST AREA -->
-    <div class="max-w-3xl mx-auto px-3 sm:px-4 py-5 sm:py-6">
-
-        <!-- QUESTION AREA -->
+    <div class="max-w-3xl mx-auto px-3 sm:px-4 py-5 sm:py-6" id="test-area">
         <div id="question-container" class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm p-5 sm:p-6 md:p-8 slide-up"></div>
 
         <!-- NAVIGATION BUTTONS -->
         <div class="flex items-center justify-between gap-2 sm:gap-3 mt-5">
-            <button onclick="prevQuestion()" id="prev-btn" class="flex-1 sm:flex-none sm:w-auto items-center justify-center gap-2 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+            <button onclick="prevQuestion()" id="prev-btn"
+                class="flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition disabled:opacity-40 disabled:cursor-not-allowed" disabled>
                 <i class="fa fa-arrow-left text-xs"></i> <span class="hidden sm:inline">Previous</span>
             </button>
             <div class="flex items-center gap-2">
-                <button onclick="clearResponse()" class="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition clear-response-btn">
+                <button onclick="clearResponse()"
+                    class="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition clear-response-btn">
                     <i class="fa fa-eraser text-xs"></i> <span class="hidden sm:inline">Clear</span>
                 </button>
-                <button onclick="markForReview()" id="mark-btn" class="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-3 rounded-xl border border-amber-300 dark:border-amber-700 text-sm font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition">
+                <button onclick="markForReview()" id="mark-btn"
+                    class="flex items-center justify-center gap-1.5 px-3 sm:px-4 py-3 rounded-xl border border-amber-300 dark:border-amber-700 text-sm font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition">
                     <i class="fa fa-bookmark text-xs"></i> <span id="mark-btn-text">Mark</span>
                 </button>
             </div>
-            <button onclick="nextQuestion()" id="next-btn" class="flex-1 sm:flex-none sm:w-auto items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-blue-700 transition">
+            <button onclick="nextQuestion()" id="next-btn"
+                class="flex-1 sm:flex-none sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-blue-700 transition">
                 <span>Next</span> <i class="fa fa-arrow-right text-xs"></i>
             </button>
         </div>
@@ -140,7 +142,9 @@
     <div id="submit-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-overlay">
         <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 max-w-md w-full mx-4 shadow-2xl slide-up">
             <div class="text-center">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center"><i class="fa fa-exclamation-triangle text-2xl text-red-500"></i></div>
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+                    <i class="fa fa-exclamation-triangle text-2xl text-red-500"></i>
+                </div>
                 <h3 class="text-lg sm:text-xl font-bold mb-2 text-slate-900 dark:text-white">Submit Test?</h3>
                 <p class="text-sm text-slate-500 mb-2">Are you sure you want to submit?</p>
                 <div id="modal-stats" class="text-sm text-slate-600 dark:text-slate-400 space-y-1 mb-5 py-3 border-y border-slate-100 dark:border-slate-700"></div>
@@ -159,12 +163,21 @@
                 <div id="result-header" class="p-6 sm:p-8 md:p-10 text-center"></div>
                 <div class="grid grid-cols-2 md:grid-cols-4 border-t border-slate-100 dark:border-slate-700" id="result-stats-grid"></div>
                 <div class="border-t border-slate-100 dark:border-slate-700 p-4 sm:p-6 md:p-8">
-                    <h3 class="font-bold text-base sm:text-lg mb-4 text-slate-900 dark:text-white"><i class="fa fa-list-check text-primary mr-2"></i>Answer Review</h3>
+                    <h3 class="font-bold text-base sm:text-lg mb-4 text-slate-900 dark:text-white">
+                        <i class="fa fa-list-check text-primary mr-2"></i>Answer Review
+                    </h3>
                     <div id="review-container" class="space-y-3 sm:space-y-4"></div>
                 </div>
-                <div class="border-t border-slate-100 dark:border-slate-700 p-4 sm:p-6 flex flex-col sm:flex-row gap-3 justify-center">
-                    <a href="mcqs.html" class="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition text-center"><i class="fa fa-arrow-left mr-2"></i>Back to MCQs</a>
-                    <button onclick="location.reload()" class="px-5 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-blue-700 transition text-center"><i class="fa fa-redo mr-2"></i>Retry Test</button>
+                <div class="border-t border-slate-100 dark:border-slate-700 p-4 sm:p-6 flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
+                    <a href="mcqs.html" class="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition text-center">
+                        <i class="fa fa-th-large mr-2"></i>MCQ Hub
+                    </a>
+                    <button onclick="location.reload()" class="px-5 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-blue-700 transition text-center">
+                        <i class="fa fa-redo mr-2"></i>Retry
+                    </button>
+                    <a href="nepal_mcq_quiz_part2.html" class="px-5 py-3 rounded-xl bg-emerald-500 text-white font-semibold text-sm hover:bg-emerald-600 transition text-center">
+                        Part 2 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -174,16 +187,27 @@
     <footer class="bg-slate-900 text-slate-400 py-16 mt-10">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
             <div>
-                <div class="flex items-center gap-2 mb-6"><div class="bg-primary text-white p-2 rounded-lg font-bold shadow-md">NG</div><span class="text-xl font-bold text-white">Nepali Guide</span></div>
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="bg-primary text-white p-2 rounded-lg font-bold shadow-md">NG</div>
+                    <span class="text-xl font-bold text-white">Nepali Guide</span>
+                </div>
                 <p class="text-sm leading-relaxed">The #1 community-driven platform for Nepali students and PSC aspirants. Prepare, Practice, and Succeed.</p>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Resources</h4>
-                <ul class="space-y-4 text-sm"><li><a href="mcqs.html" class="hover:text-primary">Daily Current Affairs</a></li><li><a href="mcqs.html" class="hover:text-primary">Subjective Q&A</a></li><li><a href="mcqs.html" class="hover:text-primary">Model Sets</a></li></ul>
+                <ul class="space-y-4 text-sm">
+                    <li><a href="mcqs.html" class="hover:text-primary">Daily Current Affairs</a></li>
+                    <li><a href="mcqs.html" class="hover:text-primary">Subjective Q&A</a></li>
+                    <li><a href="mcqs.html" class="hover:text-primary">Model Sets</a></li>
+                </ul>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Support</h4>
-                <ul class="space-y-4 text-sm"><li><a href="About.html" class="hover:text-primary">About</a></li><li><a href="Contact.html" class="hover:text-primary">Contact</a></li><li><a href="Privacy" class="hover:text-primary">Privacy Policy</a></li></ul>
+                <ul class="space-y-4 text-sm">
+                    <li><a href="About.html" class="hover:text-primary">About</a></li>
+                    <li><a href="Contact.html" class="hover:text-primary">Contact</a></li>
+                    <li><a href="Privacy.html" class="hover:text-primary">Privacy Policy</a></li>
+                </ul>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Follow</h4>
@@ -194,44 +218,167 @@
                 </div>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-xs">&copy; 2025 Nepali Guide. Designed for Nepali Aspirants.</div>
+        <div class="max-w-7xl mx-auto px-4 mt-16 pt-8 border-t border-slate-800 text-center text-xs">
+            &copy; 2025 Nepali Guide. Designed for Nepali Aspirants.
+        </div>
     </footer>
 
 <script>
+/* ══════════════════════════════════════════
+   QUESTIONS — Q1 to Q25
+   (Extracted from images — Nepal Geography)
+   a: 0-based index of correct answer
+══════════════════════════════════════════ */
 const questions = [
-    { q: "नेपाल समुन्द्री सतहदेखि कति कि.मि. टाढा छ?", o: ["१०८५ कि.मि.", "११२७ कि.मि.", "११५० कि.मि.", "१२०० कि.मि."], a: 1 },
-    { q: "नेपाल समुन्द्र सतहबाट कति टाढाको दूरीमा रहेको छ?", o: ["१०८५ कि.मि.", "११२७ कि.मि.", "११५० कि.मि.", "१२०० कि.मि."], a: 1 },
-    { q: "नेपालको पूर्व सीमा देखि पश्चिम सीमासम्मको लम्बाई कति रहेको छ?", o: ["८०५ कि.मि.", "८५५ कि.मि.", "८८५ कि.मि.", "९०५ कि.मि."], a: 2 },
-    { q: "नेपालको सरदर चौडाइ कति हो?", o: ["१७३ कि.मि.", "१८३ कि.मि.", "१९३ कि.मि.", "२०३ कि.मि."], a: 2 },
-    { q: "नेपालको उत्तर दक्षिण चौडाइ कति रहेको छ?", o: ["१७३ कि.मि.", "१८३ कि.मि.", "१९३ कि.मि.", "२०३ कि.मि."], a: 2 },
-    { q: "नेपालले विश्वको कुल क्षेत्रफलको कति प्रतिशत भू-भाग ओगटेको छ?", o: ["०.०३%", "०.३%", "०.००३%", "३%"], a: 0 },
-    { q: "नेपालले एसिया महादेशको कति प्रतिशत भूभाग ओगटेको छ?", o: ["०.०३%", "०.३%", "३%", "०.०३%"], a: 1 },
-    { q: "क्षेत्रफलका आधारमा नेपाल विश्वका कतिवटा मुलुकभन्दा सानो रहेको छ?", o: ["८५ औँ", "८९ औँ", "९२ औँ", "९५ औँ"], a: 1 },
-    { q: "नेपालको क्षेत्रफल चीनभन्दा कति गुणा सानो छ?", o: ["५५ गुणा", "६० गुणा", "६५ गुणा", "७० गुणा"], a: 2 },
-    { q: "तलका भनाइहरूमा सही/गलत छुट्याउनुहोस्: (१) नेपाल क्षेत्रफलका आधारमा विश्वको ९० औँ ठूलो राष्ट्र हो। (२) नेपाल क्षेत्रफलका आधारमा सार्कको ८ औँ ठूलो राष्ट्र हो।", o: ["दुवै सही", "दुवै गलत", "१ सही २ गलत", "१ गलत २ सही"], a: 2 },
-    { q: "नेपालको अक्षांशीय फैलावट कुन सही छ?", o: ["२४° २२' उत्तरी देखि ३०° २७' उत्तरीसम्म", "२६° २२' उत्तरी देखि ३०° २७' उत्तरीसम्म", "२६° २२' दक्षिणी देखि ३०° २७' उत्तरीसम्म", "२८° उत्तरी देखि ३२° उत्तरीसम्म"], a: 1 },
-    { q: "नेपालको सबैभन्दा पूर्वी बिन्दु (८८° १२' पूर्वी देशान्तर) कुन जिल्लामा पर्छ?", o: ["इलाम", "ताप्लेजुङ", "पाँचथर", "भोजपुर"], a: 1 },
-    { q: "ताप्लेजुङ जिल्लामा रहेको नेपालको सबैभन्दा पूर्वी बिन्दु कति देशान्तर रेखामा पर्छ?", o: ["८६° १२'", "८७° १२'", "८८° १२'", "८९° १२'"], a: 2 },
-    { q: "नेपालको सबैभन्दा उत्तरी बिन्दु कुन जिल्लामा पर्छ?", o: ["मुस्ताङ", "हुम्ला", "डोल्पा", "मुगु"], a: 1 },
-    { q: "नेपालका चार दिशाका बिन्दुहरू कुन-कुन हुन्?", o: ["पूर्व-इलाम, पश्चिम-डोटी, उत्तर-मुस्ताङ, दक्षिण-झापा", "पूर्व-ताप्लेजुङ, पश्चिम-डोल्पा, उत्तर-मुगु, दक्षिण-कञ्चनपुर", "पूर्व-पाँचथर, पश्चिम-कञ्चनपुर, उत्तर-हुम्ला, दक्षिण-झापा"], a: 1 },
-    { q: "नेपालको औसत लम्बाई ८८५ कि.मि. छ भने चौडाइ कति छ?", o: ["१७३ कि.मि.", "१८३ कि.मि.", "१९३ कि.मि.", "२०३ कि.मि."], a: 2 },
-    { q: "कुन कथन सही छ? (अ) नेपालको उत्तर दक्षिण सरदर चौडाइ १९३ कि.मि. छ। (आ) नेपालले विश्वको क्षेत्रफलको ०.३ प्रतिशत ओगटेको छ।", o: ["अ सही आ सही", "अ सही आ गलत", "अ गलत आ सही", "अ गलत आ गलत"], a: 1 },
-    { q: "नेपालको सबैभन्दा होचो भाग (मुसहरनिया) समुन्द्र सतहबाट कति उचाइमा छ?", o: ["५३ मिटर", "५९ मिटर", "६५ मिटर", "७१ मिटर"], a: 1 },
-    { q: "नेपालको अन्तर्राष्ट्रिय सिमाना कुल कति किलोमिटर छ?", o: ["२५६० कि.मि.", "२९२६ कि.मि.", "३३३४ कि.मि.", "३५०० कि.मि."], a: 1 },
-    { q: "नेपालको प्रमाणिक समय कुन रेखालाई आधार मानी निर्धारण गरिएको छ?", o: ["अक्षांश रेखा", "देशान्तर रेखा", "कर्क रेखा", "भूमध्य रेखा"], a: 1 },
-    { q: "कुन कथन सही छ? (अ) नेपालको पूर्व-पश्चिम औसत लम्बाई ८८५ कि.मि. छ। (आ) नेपालको समय ग्रीनवीच भन्दा ५ घण्टा ४५ मिनेट ढिलो छ।", o: ["अ सही आ सही", "अ सही आ गलत", "अ गलत आ सही", "अ गलत आ गलत"], a: 0 },
-    { q: "भारतको कुन राज्यसँग नेपालको सिमाना जोडिएको छैन?", o: ["उत्तराखण्ड", "बिहार", "झारखण्ड", "पश्चिम बंगाल"], a: 2 },
-    { q: "अन्तर्राष्ट्रिय सिमाना सम्बन्धी कुन तथ्य गलत छ?", o: ["नेपालको भारतसँगको सिमाना १७५१ कि.मि. छ", "नेपालको चीनसँगको सिमाना ११४२ कि.मि. छ", "नेपालको कुल सिमाना ३३३४ कि.मि. छ", "नेपालले ५ वटा देशसँग सिमाना जोडेको छ"], a: 1 },
-    { q: '"No Man\'s Land" भन्नाले के बुझिन्छ?', o: ["सिमाना नपरेको भूमि", "दुई देशबीचको सिमानाको जमिन (दशगजा)", "विवादित भूभाग", "अनुत्तरित क्षेत्र"], a: 1 },
-    { q: "नेपालमा कुन हिमाललाई आधार मानी प्रमाणिक समय निर्धारण गरिएको छ?", o: ["सगरमाथा", "महालंगुर", "गौरीशंकर", "चोयु"], a: 2 }
+    {
+        q: "नेपाल समुन्द्री सतहदेखि कति कि.मि. टाढा छ?",
+        o: ["९२७ कि.मि.", "१०२७ कि.मि.", "११२७ कि.मि.", "१२२७ कि.मि."],
+        a: 2
+    },
+    {
+        q: "नेपाल समुन्द्र सतहबाट कति टाढाको दूरीमा रहेको छ?",
+        o: ["९२७ कि.मी.", "१०२७ कि.मी.", "११२७ कि.मी.", "१२२७ कि.मी."],
+        a: 2
+    },
+    {
+        q: "नेपालको पूर्व सीमा देखि पश्चिम सीमासम्मको लम्बाइ कति रहेको छ?",
+        o: ["७८५ कि.मि.", "८८५ कि.मि.", "९८५ कि.मि.", "६८५ कि.मि."],
+        a: 1
+    },
+    {
+        q: "नेपालको सरदर चौडाइ कति हो?",
+        o: ["१९९ कि.मी.", "१९३ कि.मी.", "२९३ कि.मी.", "२९९ कि.मी."],
+        a: 1
+    },
+    {
+        q: "नेपालको उत्तर दक्षिण चौडाइ कति रहेको छ?",
+        o: ["१४३ कि.मि", "१७३ कि.मि", "१९३ कि.मि", "२१३ कि.मि"],
+        a: 2
+    },
+    {
+        q: "नेपालले विश्वको कुल क्षेत्रफलको कति प्रतिशत भू-भाग ओगटेको छ?",
+        o: ["०.३%", "०.०३%", "०.००३%", "०.०१%"],
+        a: 1
+    },
+    {
+        q: "नेपालले एसिया महादेशको कति प्रतिशत भूभाग ओगटेको छ?",
+        o: ["०.००३", "०.०३", "०.३", "३.०"],
+        a: 2
+    },
+    {
+        q: "क्षेत्रफलका आधारमा नेपाल विश्वका कतिवटा मुलुकभन्दा सानो रहेको छ?",
+        o: ["५९", "६९", "७९", "८९"],
+        a: 3
+    },
+    {
+        q: "नेपालको क्षेत्रफल कति वर्गमाइल छ? (५६,८२७ वर्गमाइल) नेपाल चीनभन्दा कति गुणा सानो छ?",
+        o: ["५५ गुणा", "६५ गुणा", "७५ गुणा", "८५ गुणा"],
+        a: 1
+    },
+    {
+        q: "तल दिइएका भनाइहरूमा सही गलत छुट्याउनुहोस् र दिइएको विकल्पबाट सही विकल्प छनोट गर्नुहोस्।\n१) नेपाल क्षेत्रफलको आधारमा विश्वको ९० औं ठूलो राष्ट्र हो।\n२) नेपाल क्षेत्रफलको आधारमा सार्कको ८ औं ठूलो राष्ट्र हो।",
+        o: ["१ र २ दुवै ठीक", "१ र २ दुवै बेठीक", "१ ठीक तर २ बेठीक", "१ बेठीक तर २ ठीक"],
+        a: 2
+    },
+    {
+        q: "तलका मध्ये कुन सहि छ?",
+        o: [
+            "नेपाल २६° २२' उत्तरी अक्षांशदेखि ३०° २७' उत्तरी अक्षांशसम्म फैलिएको छ।",
+            "नेपाल ८०°४' उत्तरी देशान्तरदेखि ...",
+            "नेपाल २६°२२' उत्तरी अक्षांशदेखि ३०° २७' उत्तरी अक्षांशसम्म फैलिएको छ।",
+            "नेपाल ८०° ४' पूर्वी देशान्तरदेखि ८८°१२' पश्चिम देशान्तरसम्म फैलिएको छ।"
+        ],
+        a: 2
+    },
+    {
+        q: "नेपालको सबैभन्दा पूर्वी बिन्दु ८८°१२' पूर्वी देशान्तरलाई मानिन्छ, उक्त देशान्तरले छोएको जिल्ला कुन हो?",
+        o: ["ताप्लेजुङ", "पाँचथर", "इलाम", "झापा"],
+        a: 0
+    },
+    {
+        q: "ताप्लेजुङ जिल्लामा रहेको नेपालको सबैभन्दा पूर्वी बिन्दुले डिग्री २७ मिनेट देशान्तर रेखालाई छुन्छ।",
+        o: ["८०, १२", "८०, २२", "८८, २७", "८८, १२"],
+        a: 3
+    },
+    {
+        q: "नेपालको सबैभन्दा उत्तरी बिन्दु कुन जिल्लामा पर्छ?",
+        o: ["मुस्ताङ", "हुम्ला", "गोरखा", "दार्चुला"],
+        a: 1
+    },
+    {
+        q: "नेपालको पूर्व-पश्चिम र उत्तर-दक्षिण बिन्दुहरू दिइएकामध्ये कुन-कुन हुन्?",
+        o: [
+            "पूर्व-झापा लोदावरी, पश्चिम-कञ्चनपुर चाँदनी दोधारा, उत्तर-हुम्ला चाला भञ्ज्याङ, दक्षिण-मोरङ विराटनगर",
+            "पूर्व-पाँचथर फिदिम, पश्चिम कञ्चनपुर चाँदनी दोधारा, उत्तर-हुम्ला चाला भञ्ज्याङ, दक्षिण झापा लोदावरी",
+            "पूर्व-ताप्लेजुङ, पश्चिम-कञ्चनपुर चाँदनी दोधारा, उत्तर-हुम्ला चाला भञ्ज्याङ, दक्षिण-झापा लोदावरी",
+            "पूर्व-ताप्लेजुङ, पश्चिम-कञ्चनपुर चाँदनी दोधारा, उत्तर-हुम्ला चाला भञ्ज्याङ, दक्षिण-झापा काँकरभिट्टा"
+        ],
+        a: 2
+    },
+    {
+        q: "नेपालको औसत लम्बाइ ८८५ किलोमिटर छ भने चौडाइ कति रहेको छ?",
+        o: ["१४३ कि.मि.", "१७३ कि.मि.", "१९३ कि.मि.", "२१३ कि.मि."],
+        a: 2
+    },
+    {
+        q: "कथन अध्ययन गरी उत्तर छान्नुहोस्।\nक) नेपालको उत्तर दक्षिण सरदर चौडाइ १९३ कि.मि. रहेको छ।\nख) नेपालले विश्वको क्षेत्रफलको ०.३ प्रतिशत भूभाग ओगटेको छ",
+        o: ["क ठीक ख बेठीक", "क बेठीक ख ठीक", "दुवै ठीक", "दुवै बेठीक"],
+        a: 0
+    },
+    {
+        q: "मुखियापट्टी मुसहरिया समुन्द्र सतहबाट कति मिटरको उचाइमा रहेको छ?",
+        o: ["५९ मिटर", "६० मिटर", "६१ मिटर", "६२ मिटर"],
+        a: 0
+    },
+    {
+        q: "नेपालको अन्तर्राष्ट्रिय सिमाना कति किलोमिटर रहेको छ?",
+        o: ["११२७", "१४४२", "१८९२", "३३३४"],
+        a: 3
+    },
+    {
+        q: "प्रामाणिक समय तलका मध्ये कुन रेखालाई आधार मानी निर्धारण गरिन्छ?",
+        o: ["अक्षांश रेखा", "देशान्तर रेखा", "भूमध्य रेखा", "अन्तर्राष्ट्रिय तिथि रेखा"],
+        a: 1
+    },
+    {
+        q: "नेपाल सम्बन्धी तलका कथनहरू अध्ययन गरी सही विकल्प छान्नुहोस्।\nअ) नेपालको पूर्व-पश्चिम औसत लम्बाइ ८८५ कि.मी. छ।\nआ) नेपालको समय ग्रीनवीचको समयभन्दा ५ घण्टा ४५ मिनेट ढिलो रहेको छ।",
+        o: ["क सही, ख गलत", "क गलत, ख सही", "क र ख दुवै सही", "क र ख दुवै गलत"],
+        a: 0
+    },
+    {
+        q: "तलकामध्ये भारतको कुन राज्यसँग नेपालको सिमाना जोडिएको छैन?",
+        o: ["सिक्किम (Sikkim)", "उत्तराखण्ड (Uttarakhanda)", "झारखण्ड (Jharkhanda)", "पश्चिम बंगाल (West Bengal)"],
+        a: 2
+    },
+    {
+        q: "तलका मध्ये कुन अन्तर्राष्ट्रिय सिमानासम्बन्धी तथ्य मिलेको छैन?",
+        o: [
+            "नेपालको कुल अन्तर्राष्ट्रिय सिमाना ३३३४ कि.मि. छ",
+            "नेपालको भारतसँगको सिमाना १८९२ कि.मि. छ",
+            "नेपालको चीनसँगको सिमाना ११४२ कि.मि. छ",
+            "A र B मात्र उपयुक्त विकल्प हुन्"
+        ],
+        a: 2
+    },
+    {
+        q: '"No Man\'s Land" भन्नाले के बुझिन्छ?',
+        o: ["मरुभूमि", "मानिस बस्न मिल्ने जमिन", "दैवी/प्राकृतिक प्रकोपको कारणले बसोबास स्थानान्तरण गर्नुपर्ने बस्ती", "दुई देशबीचको सिमानाको जमिन"],
+        a: 3
+    },
+    {
+        q: "नेपालमा कुन हिमाललाई आधार मानी प्रामाणिक समय निर्धारण गरिएको छ?",
+        o: ["गौरीशंकर", "सगरमाथा", "अन्नपूर्ण", "मनास्लु"],
+        a: 0
+    }
 ];
 
-let currentQ = 0;
-let userAnswers = new Array(questions.length).fill(-1);
+/* ─── STATE ─── */
+let currentQ        = 0;
+let userAnswers     = new Array(questions.length).fill(-1);
 let markedForReview = new Array(questions.length).fill(false);
-let timerSeconds = 15 * 60;
-let timerInterval = null;
-let testSubmitted = false;
+let timerSeconds    = 15 * 60;
+let timerInterval   = null;
+let testSubmitted   = false;
 
 function init() { renderQuestion(); startTimer(); updateCounts(); }
 
@@ -249,23 +396,23 @@ function startTimer() {
 
 function updateCounts() {
     const answered = userAnswers.filter(a => a !== -1).length;
-    const marked = markedForReview.filter(m => m).length;
-    document.getElementById('answered-count').textContent = answered;
-    document.getElementById('marked-count').textContent = marked;
+    const marked   = markedForReview.filter(m => m).length;
+    document.getElementById('answered-count').textContent  = answered;
+    document.getElementById('marked-count').textContent    = marked;
     document.getElementById('remaining-count').textContent = questions.length - answered;
-    document.getElementById('progress-bar').style.width = `${(answered / questions.length) * 100}%`;
+    document.getElementById('progress-bar').style.width   = `${(answered / questions.length) * 100}%`;
 }
 
 function renderQuestion() {
     const q = questions[currentQ];
-    const labels = ['अ', 'आ', 'इ', 'ई'];
+    const labels = ['A', 'B', 'C', 'D'];
     let html = `
         <div class="flex items-center gap-3 mb-5">
             <span class="text-xs font-bold text-slate-400">प्रश्न ${currentQ + 1} of ${questions.length}</span>
+            <span class="text-xs text-slate-400">• Q${currentQ + 1} (Series)</span>
         </div>
-        <h2 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white leading-relaxed mb-7">${q.q}</h2>
-        <div class="space-y-3">
-    `;
+        <h2 class="text-base md:text-lg font-bold text-slate-900 dark:text-white leading-relaxed mb-7">${q.q.replace(/\n/g,'<br>')}</h2>
+        <div class="space-y-3">`;
     q.o.forEach((opt, i) => {
         const sel = userAnswers[currentQ] === i;
         html += `<div class="option-card ${sel ? 'selected' : ''}" onclick="selectOption(${i})">
@@ -276,51 +423,64 @@ function renderQuestion() {
     html += '</div>';
     document.getElementById('question-container').innerHTML = html;
     document.getElementById('prev-btn').disabled = currentQ === 0;
-    document.getElementById('next-btn').innerHTML = currentQ === questions.length - 1 ? 'Finish <i class="fa fa-flag-checkered text-xs"></i>' : 'Next <i class="fa fa-arrow-right text-xs"></i>';
+    document.getElementById('next-btn').innerHTML = currentQ === questions.length - 1
+        ? 'Finish <i class="fa fa-flag-checkered text-xs ml-1"></i>'
+        : 'Next <i class="fa fa-arrow-right text-xs ml-1"></i>';
     document.getElementById('mark-btn-text').textContent = markedForReview[currentQ] ? 'Unmark' : 'Mark';
     updateCounts();
 }
 
 function selectOption(idx) { if (testSubmitted) return; userAnswers[currentQ] = idx; renderQuestion(); }
-function clearResponse() { if (testSubmitted) return; userAnswers[currentQ] = -1; renderQuestion(); }
-function markForReview() { if (testSubmitted) return; markedForReview[currentQ] = !markedForReview[currentQ]; renderQuestion(); }
-function nextQuestion() { if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } else openSubmitModal(); }
-function prevQuestion() { if (currentQ > 0) { currentQ--; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } }
+function clearResponse()   { if (testSubmitted) return; userAnswers[currentQ] = -1; renderQuestion(); }
+function markForReview()   { if (testSubmitted) return; markedForReview[currentQ] = !markedForReview[currentQ]; renderQuestion(); }
+function nextQuestion()    { if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } else openSubmitModal(); }
+function prevQuestion()    { if (currentQ > 0) { currentQ--; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); } }
 
 function openSubmitModal() {
     const answered = userAnswers.filter(a => a !== -1).length;
-    const marked = markedForReview.filter(m => m).length;
-    document.getElementById('modal-stats').innerHTML = `<div class="flex justify-between"><span>Answered:</span><strong class="text-emerald-600">${answered}</strong></div><div class="flex justify-between"><span>Marked:</span><strong class="text-amber-600">${marked}</strong></div><div class="flex justify-between"><span>Not Attempted:</span><strong class="text-red-500">${questions.length - answered}</strong></div>`;
-    const m = document.getElementById('submit-modal'); m.classList.remove('hidden'); m.classList.add('flex');
+    const marked   = markedForReview.filter(m => m).length;
+    document.getElementById('modal-stats').innerHTML = `
+        <div class="flex justify-between"><span>Answered:</span><strong class="text-emerald-600">${answered}</strong></div>
+        <div class="flex justify-between"><span>Marked:</span><strong class="text-amber-600">${marked}</strong></div>
+        <div class="flex justify-between"><span>Not Attempted:</span><strong class="text-red-500">${questions.length - answered}</strong></div>`;
+    const m = document.getElementById('submit-modal');
+    m.classList.remove('hidden'); m.classList.add('flex');
 }
-function closeSubmitModal() { const m = document.getElementById('submit-modal'); m.classList.add('hidden'); m.classList.remove('flex'); }
+function closeSubmitModal() {
+    const m = document.getElementById('submit-modal');
+    m.classList.add('hidden'); m.classList.remove('flex');
+}
 
 function submitTest() {
     testSubmitted = true; clearInterval(timerInterval); closeSubmitModal(); showResults();
 }
 
 function showResults() {
-    document.querySelector('.max-w-3xl.mx-auto.px-3.sm\\:px-4.py-5\\:sm:py-6').classList.add('hidden');
-    document.querySelector('.bg-white.dark\\:bg-slate-800.border-b').classList.add('hidden');
+    document.getElementById('test-area').classList.add('hidden');
+    document.getElementById('test-header').classList.add('hidden');
     document.getElementById('result-page').classList.remove('hidden');
 
     let correct = 0, wrong = 0, unanswered = 0;
-    questions.forEach((q, i) => { if (userAnswers[i] === -1) unanswered++; else if (userAnswers[i] === q.a) correct++; else wrong++; });
+    questions.forEach((q, i) => {
+        if (userAnswers[i] === -1) unanswered++;
+        else if (userAnswers[i] === q.a) correct++;
+        else wrong++;
+    });
 
-    const neg = wrong * 0.20;
+    const neg   = wrong * 0.20;
     const total = Math.max(0, correct - neg);
-    const pct = Math.max(0, (total / questions.length) * 100);
+    const pct   = Math.max(0, (total / questions.length) * 100);
 
-    let grade, gradeColor, gradeBg, msg;
-    if (pct >= 70) { grade='Excellent'; gradeColor='text-emerald-400'; gradeBg='from-emerald-500 to-emerald-700'; msg='Outstanding! तपाईंले उत्कृष्ट प्रदर्शन गर्नुभयो।'; }
-    else if (pct >= 50) { grade='Good'; gradeColor='text-blue-400'; gradeBg='from-blue-500 to-blue-700'; msg='Good attempt! थप प्रयास गर्नुहोस्।'; }
-    else if (pct >= 30) { grade='Average'; gradeColor='text-amber-400'; gradeBg='from-amber-500 to-amber-700'; msg='सुधार गर्नुहोस्। कमजोर भागमा ध्यान दिनुहोस्।'; }
-    else { grade='Needs Work'; gradeColor='text-red-400'; gradeBg='from-red-500 to-red-700'; msg='चिन्ता नगर्नुहोला! पुन: अभ्यास गर्नुहोस्।'; }
+    let grade, gradeBg, msg;
+    if (pct >= 70)      { grade='Excellent'; gradeBg='from-emerald-500 to-emerald-700'; msg='Outstanding! तपाईंले उत्कृष्ट प्रदर्शन गर्नुभयो।'; }
+    else if (pct >= 50) { grade='Good';      gradeBg='from-blue-500 to-blue-700';       msg='Good attempt! थप प्रयास गर्नुहोस्।'; }
+    else if (pct >= 30) { grade='Average';   gradeBg='from-amber-500 to-amber-700';     msg='सुधार गर्नुहोस्। कमजोर भागमा ध्यान दिनुहोस्।'; }
+    else                { grade='Needs Work';gradeBg='from-red-500 to-red-700';         msg='चिन्ता नगर्नुहोला! पुन: अभ्यास गर्नुहोस्।'; }
 
     document.getElementById('result-header').className = `p-6 sm:p-8 md:p-10 text-center bg-gradient-to-br ${gradeBg} text-white`;
     document.getElementById('result-header').innerHTML = `
         <div class="count-up text-5xl sm:text-6xl md:text-7xl font-extrabold mb-2">${total.toFixed(1)}<span class="text-xl font-medium opacity-80">/${questions.length}</span></div>
-        <div class="text-base sm:text-lg font-semibold ${gradeColor} mb-1">${grade}</div>
+        <div class="text-base sm:text-lg font-semibold mb-1">${grade}</div>
         <p class="text-white/70 text-sm max-w-md mx-auto">${msg}</p>`;
 
     document.getElementById('result-stats-grid').innerHTML = `
@@ -329,24 +489,26 @@ function showResults() {
         <div class="p-4 text-center border-r border-slate-100 dark:border-slate-700"><div class="text-xl sm:text-2xl font-bold text-slate-400 count-up" style="animation-delay:0.3s">${unanswered}</div><div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">छोडिएको</div></div>
         <div class="p-4 text-center"><div class="text-xl sm:text-2xl font-bold text-red-400 count-up" style="animation-delay:0.4s">-${neg.toFixed(1)}</div><div class="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">नेगेटिभ</div></div>`;
 
-    const labels = ['अ','आ','इ','ई'];
+    const labels = ['A','B','C','D'];
     let reviewHTML = '';
     questions.forEach((q, i) => {
-        const ok = userAnswers[i] === q.a;
-        const bad = userAnswers[i] !== -1 && userAnswers[i] !== q.a;
-        const skip = userAnswers[i] === -1;
+        const ok   = userAnswers[i] === q.a;
+        const bad  = userAnswers[i] !== -1 && userAnswers[i] !== q.a;
         const icon = ok ? '<i class="fa fa-check-circle text-emerald-500"></i>' : bad ? '<i class="fa fa-times-circle text-red-500"></i>' : '<i class="fa fa-minus-circle text-slate-400"></i>';
-        const bc = ok ? 'border-emerald-200 dark:border-emerald-800' : bad ? 'border-red-200 dark:border-red-800' : 'border-slate-100 dark:border-slate-700';
+        const bc   = ok ? 'border-emerald-200 dark:border-emerald-800' : bad ? 'border-red-200 dark:border-red-800' : 'border-slate-100 dark:border-slate-700';
         reviewHTML += `<div class="rounded-xl border ${bc} p-3 sm:p-4">
-            <div class="flex items-start gap-3 mb-2"><div class="mt-0.5">${icon}</div><div class="flex-1"><span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Q${i+1}</span><p class="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-0.5">${q.q}</p></div></div>
+            <div class="flex items-start gap-3 mb-2"><div class="mt-0.5">${icon}</div><div class="flex-1">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Q${i+1}</span>
+                <p class="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-0.5">${q.q.replace(/\n/g,'<br>')}</p>
+            </div></div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 ml-8">${q.o.map((opt, oi) => {
                 let cls = 'bg-slate-50 dark:bg-slate-700/50 text-slate-500';
-                if (oi === q.a) cls = 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-semibold';
-                if (oi === userAnswers[i] && oi !== q.a) cls = 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 line-through';
+                if (oi === q.a)                           cls = 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 font-semibold';
+                if (oi === userAnswers[i] && oi !== q.a)  cls = 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 line-through';
                 return `<div class="text-xs px-3 py-2 rounded-lg ${cls}"><span class="font-bold mr-1">${labels[oi]}.</span>${opt}</div>`;
             }).join('')}</div>
-            ${bad ? '<p class="text-[11px] text-red-500 mt-2 ml-8"><i class="fa fa-info-circle mr-1"></i>गलत उत्तर। नेगेटिभ मार्किङ लागेको छ।</p>' : ''}
-            ${skip ? '<p class="text-[11px] text-slate-400 mt-2 ml-8"><i class="fa fa-info-circle mr-1"></i>उत्तर दिइएको। कुनै मार्क लागेन।</p>' : ''}
+            ${bad  ? '<p class="text-[11px] text-red-500 mt-2 ml-8"><i class="fa fa-info-circle mr-1"></i>गलत उत्तर। नेगेटिभ मार्किङ लागेको छ।</p>' : ''}
+            ${userAnswers[i] === -1 ? '<p class="text-[11px] text-slate-400 mt-2 ml-8"><i class="fa fa-info-circle mr-1"></i>उत्तर दिइएको छैन। कुनै मार्क लागेन।</p>' : ''}
         </div>`;
     });
     document.getElementById('review-container').innerHTML = reviewHTML;
@@ -361,11 +523,11 @@ function toggleDarkMode() {
 document.addEventListener('keydown', e => {
     if (testSubmitted) return;
     if (e.key === 'ArrowRight' || e.key === 'n') nextQuestion();
-    if (e.key === 'ArrowLeft' || e.key === 'p') prevQuestion();
+    if (e.key === 'ArrowLeft'  || e.key === 'p') prevQuestion();
     if (e.key === '1' || e.key === 'a') selectOption(0);
     if (e.key === '2' || e.key === 'b') selectOption(1);
     if (e.key === '3' || e.key === 'c') selectOption(2);
-    if (e.key === '4' || e.key === 'e') selectOption(3);
+    if (e.key === '4' || e.key === 'd') selectOption(3);
     if (e.key === 'm') markForReview();
 });
 
