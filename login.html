@@ -102,7 +102,29 @@
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300">
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB0KYOi839PIvl1u8vqIHr5qhPPzb9Ty6k",
+    authDomain: "toolswebsitefree.firebaseapp.com",
+    projectId: "toolswebsitefree",
+    storageBucket: "toolswebsitefree.firebasestorage.app",
+    messagingSenderId: "471281852384",
+    appId: "1:471281852384:web:59b941c617caa2ac0a9585",
+    measurementId: "G-HW8D6JTCVB"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
     <!-- NAVIGATION (same as index.html) -->
     <nav class="sticky top-0 z-50 glass dark:bg-slate-900/90 border-b dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
